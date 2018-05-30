@@ -1,0 +1,34 @@
+WB\QbankBundle\Entity\QuestionnaireGroupRelCustodians:
+    type: entity
+    table: questionnaire_group_rel_custodians
+    repositoryClass: WB\QbankBundle\Entity\QuestionnaireGroupRelCustodiansRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        weight:
+            type: integer
+            nullable: TRUE
+    manyToOne:
+        questGroupId:
+            type: integer
+            column: quest_group_id
+            targetEntity: QuestionnaireGroups
+            inversedBy: questionnaireGroupRelCustodians
+            joinColumn:
+                name: quest_group_id
+                referencedColumnName: id
+                onDelete: CASCADE
+        organizationId:
+            type: integer
+            column: organization_id
+            targetEntity: Organizations
+            inversedBy: questionnaireGroupRelCustodians
+            joinColumn:
+                name: organization_id
+                referencedColumnName: id
+                onDelete: CASCADE
+    lifecycleCallbacks: {  }

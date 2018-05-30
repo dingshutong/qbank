@@ -1,0 +1,12 @@
+{% if concepts|length %}
+    <table>
+        {% for concept in concepts %}
+            <tr>
+                <td><input id="concepts-checkbox-{{ concept.id }}" type="checkbox"
+                           value="{{ concept.id }}"/></td>
+                <td><label for="concepts-checkbox-{{ concept.id }}">{{ concept.name }}</label></td>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}

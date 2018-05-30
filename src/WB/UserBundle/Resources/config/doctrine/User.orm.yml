@@ -1,0 +1,35 @@
+WB\UserBundle\Entity\User:
+    type: entity
+    table: qbank_user
+    repositoryClass: WB\UserBundle\Entity\UserRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        firstName:
+            type: string
+            length: 255
+            column: first_name
+        lastName:
+            type: string
+            length: 255
+            column: last_name
+        phone:
+            type: string
+            length: 255
+        company:
+            type: string
+            length: 255
+    manyToOne:
+        countryId:
+            type: integer
+            targetEntity: WB\QbankBundle\Entity\Countries
+            column: country
+            inversedBy: users
+            joinColumn:
+                name: country
+                referencedColumnName: id
+    lifecycleCallbacks: {  }

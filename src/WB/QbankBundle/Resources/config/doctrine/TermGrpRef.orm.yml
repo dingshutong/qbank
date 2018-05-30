@@ -1,0 +1,32 @@
+WB\QbankBundle\Entity\TermGrpRef:
+    type: entity
+    table: term_grp_ref
+    repositoryClass: WB\QbankBundle\Entity\TermGrpRefRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        weight:
+            type: integer
+            nullable: TRUE
+    manyToOne:
+        termId:
+            type: integer
+            targetEntity: Terms
+            inversedBy: termGrpRef
+            joinColumn:
+                name: term_id
+                referencedColumnName: id
+                onDelete: CASCADE
+        termGroupId:
+            type: integer
+            targetEntity: TermGroups
+            inversedBy: termGrpRef
+            joinColumn:
+                name: term_group_id
+                referencedColumnName: id
+                onDelete: CASCADE
+    lifecycleCallbacks: {  }

@@ -1,0 +1,34 @@
+WB\QbankBundle\Entity\ClassificationRelCustodians:
+    type: entity
+    table: classification_rel_custodians
+    repositoryClass: WB\QbankBundle\Entity\ClassificationRelCustodiansRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        weight:
+            type: integer
+            nullable: TRUE
+    manyToOne:
+        organizationId:
+            type: integer
+            column: organization_id
+            targetEntity: Organizations
+            inversedBy: classificationRelCustodians
+            joinColumn:
+                name: organization_id
+                referencedColumnName: id
+                onDelete: CASCADE
+        classificationId:
+            type: integer
+            column: classification_id
+            targetEntity: Classifications
+            inversedBy: classificationRelCustodians
+            joinColumn:
+                name: classification_id
+                referencedColumnName: id
+                onDelete: CASCADE
+    lifecycleCallbacks: {  }

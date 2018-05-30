@@ -1,0 +1,34 @@
+WB\QbankBundle\Entity\IndicatorRelCustodians:
+    type: entity
+    table: indicator_rel_custodians
+    repositoryClass: WB\QbankBundle\Entity\IndicatorRelCustodiansRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        weight:
+            type: integer
+            nullable: TRUE
+    manyToOne:
+         organizationId:
+            type: integer
+            column: organization_id
+            targetEntity: Organizations
+            inversedBy: indicatorRelCustodians
+            joinColumn:
+                name: organization_id
+                referencedColumnName: id
+                onDelete: CASCADE
+         indId:
+            type: integer
+            column: ind_id
+            targetEntity: Indicators
+            inversedBy: indicatorRelCustodians
+            joinColumn:
+                name: ind_id
+                referencedColumnName: id
+                onDelete: CASCADE
+    lifecycleCallbacks: {  }

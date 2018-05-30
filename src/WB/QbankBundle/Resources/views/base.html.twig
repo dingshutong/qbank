@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}QBank{% endblock %}</title>
+        {% block stylesheets %}
+            {% stylesheets
+                'bundles/wbqbank/css/ui-lightness/jquery-ui.min.css' filter='cssrewrite'
+                'bundles/wbqbank/css/ui-layout.css' filter='cssrewrite'
+                'bundles/wbqbank/css/jstree.min.css' filter='cssrewrite'
+                'bundles/wbqbank/css/dataTables.css' filter='cssrewrite'
+                'bundles/wbqbank/css/jquery.fancybox.css' filter='cssrewrite'
+                'bundles/wbqbank/css/bootstrap.css' filter='cssrewrite' %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,800,600,700' rel='stylesheet' type='text/css'>
+            
+        <!-- user defined js parameters -->
+        <script>
+            var ga_tracking='{{ga_tracking}}';
+        </script>    
+
+        <!-- Ajax routing -->
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+    </head>
+    <body>
+        <input type="hidden" id="locale" value="{{ app.request.locale }}">
+        {% block body %}{% endblock %}
+        {% block javascripts %}
+            {% javascripts
+                '@jquery_and_bootstrap'
+                '@WBQbankBundle/Resources/public/js/flow.min.js'
+                '@WBQbankBundle/Resources/public/js/script.js'
+                '@WBQbankBundle/Resources/public/js/back-hash.js'
+                '@WBQbankBundle/Resources/public/js/jquery.fancybox.js'
+                '@WBQbankBundle/Resources/public/js/jquery-ui.min.js'                
+            %}
+            {#'@WBQbankBundle/Resources/public/js/oldJS.js'#}
+
+            <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}
+
+        <div class="modal" id="ajax-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                </div>
+            </div>
+        </div>
+
+        <div id="secondary-modal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

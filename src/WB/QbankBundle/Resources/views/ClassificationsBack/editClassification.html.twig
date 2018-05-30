@@ -1,0 +1,494 @@
+<style>
+    .attachment-container .attachments{padding:5px;}
+    .attachments .file{font-size:60px;}
+    .attach-file{cursor:pointer;color:navy;}
+    .attachment-actions .glyphicon{font-size:14px;}
+    .file-na{color:gainsboro;}
+    .no-attachment .attachment-remove{display:none;}
+</style>
+
+{{ render(controller('WBQbankBundle:ClassificationsBack:classificationBreadcrumbs', {
+'classId': classificationId,
+'public': false
+})) }}
+
+
+{{ form_start(form, { 'attr' : { 'class' : 'edit-node' }}) }}
+
+<input type="hidden" name="nodeId" value="{{ classificationId }}"/>
+
+<div class="publish-button">
+    <button type="button" class="btn btn-success {% if form.published.vars.value != true %}hidden{% endif %}">
+        {{ 'forms.published'|trans }}
+    </button>
+    <button type="button" class="btn btn-default {% if form.published.vars.value == true %}hidden{% endif %}">
+        {{ 'forms.unpublished'|trans }}
+    </button>
+</div>
+
+{{ form_row(form.name, {'label': 'forms.labels.name'|trans, 'attr': {'class': 'node-name-field', 'spellcheck': 'true' }}) }}
+
+{{ form_row(form.description, {'label': 'forms.labels.description'|trans, 'attr': {'spellcheck': 'true' }}) }}
+
+{{ form_row(form.notes, {'label': 'forms.labels.notes'|trans, 'attr': {'spellcheck': 'true' }}) }}
+
+<fieldset>
+    <div class="related-items-header">
+        <label>{{ 'strings.codes'|trans }}</label>
+        <div class="form-buttons">
+            <a id="add-code" class="btn btn-info"
+               role="button">{{ 'forms.add'|trans }}</a>
+            <a class="remove-related-items btn btn-danger" role="button">{{ 'forms.remove'|trans }}</a>
+        </div>
+    </div>
+    <div class="form-related-items">
+        <div class="related-items-info">{{ 'forms.add_info'|trans }}</div>
+        <table class="table table-bordered" id="codes">
+            <thead>
+                <tr>
+                    <th class="check"></th>
+                    <th class="value">{{ 'forms.labels.value'|trans }}</th>
+                    <th>{{ 'forms.labels.label'|trans }}</th>
+                    <th>{{ 'forms.labels.description'|trans }}</th>
+                    <th>upload images</th>
+                    <th class="reorder"></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                {% for code in form.classificationCodes %}
+                    <tr>
+                        <td>
+                            <input type="checkbox"/>
+                        </td>
+                        <td class="editable-field">
+                            {{ form_row(code.value) }}
+                        </td>
+                        <td class="editable-field">
+                            {{ form_row(code.label, { 'attr': {'spellcheck': 'true'} }) }}
+                        </td>
+                        <td class="editable-field">
+                            {{ form_row(code.description, { 'attr': {'spellcheck': 'true'} }) }}
+                        </td>
+                            
+                        {% set container_class='no-attachment' %}
+                        {% if code.vars.value.attachments %}
+                            {% set container_class='has-attachment' %}
+                        {% endif %}
+                        
+                        <td class="attachment-container {{container_class}}" id="attachments-{{loop.index0}}" data-id="{{loop.index0}}">
+                            {{ form_row(code.attachments, { 'attr': {'class': 'attachment-value'} }) }}
+                            <div class="attachments">
+                                {% if code.vars.value.attachments %}
+                                <a target="_blank" href="{{ asset('uploads/resources/') }}{{code.vars.value.attachments}}">
+                                    <span class="glyphicon glyphicon-picture file" aria-hidden="true"></span>
+                                </a>
+                            {% else %}
+                                <span class="glyphicon glyphicon-picture file file-na" aria-hidden="true"></span>                                
+                                {% endif %}
+                            </div>
+                            <div class="attachment-actions">                            
+                                <span class="attach-file">
+                                    <span class="glyphicon glyphicon-link" data-id="{{loop.index0}}" aria-hidden="true"></span>                        
+                                </span>
+                                
+                                <span class="attachment-remove">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                </span>                                
+                            </div>
+                        </td>
+                        <td>
+                            <a href="#" class="move-related-item move-down" data-direction="down"
+                               title="{{ 'actions.move_down'|trans }}">Move down</a>
+                            <a href="#" class="move-related-item move-up" data-direction="up"
+                               title="{{ 'actions.move_up'|trans }}">Move up</a>
+                            {{ form_row(code.weight, {'attr': {'class': 'relation-weight' }}) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</fieldset>
+
+
+{% if form.vars.value.questionClassifications|length %}
+<div class="row">
+
+    <p>{{ 'messages.message4'|trans }} {{ form.vars.value.questionClassifications|length }} {{ 'strings.questions'|trans }}.</p>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>{{ 'forms.labels.module'|trans }}</th>
+            <th>{{ 'forms.labels.question'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for question in form.vars.value.questionClassifications %}
+            <tr>
+                <td>{{ question.questModuleId.name }}</td>
+                <td>{{ question.name }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<fieldset>
+    <div class="related-items-header">
+        {% if form.classificationRelCustodians|length %}
+            {{ form_label(form.classificationRelCustodians, 'forms.labels.organizations'|trans) }}
+        {% else %}
+            {{ form_row(form.classificationRelCustodians, {'label': 'forms.labels.organizations'|trans}) }}
+        {% endif %}
+
+        <div class="form-buttons">
+            <a class="add-related-items btn btn-info"
+               role="button"
+               data-url="{{ path('organizations_modal',  {'entityName' : 'classificationsEdit', 'propertyName' : 'classificationRelCustodians'}) }}"
+               data-target="#ajax-modal" data-container="#organizations-items">{{ 'forms.add'|trans }}</a>
+            <img class="ajax-loader-inline" src="{{ asset('bundles/wbqbank/images/ajax-loader.gif') }}" alt="Loading...">
+            <a class="remove-related-items btn btn-danger" role="button">{{ 'forms.remove'|trans }}</a>
+        </div>
+    </div>
+    <div class="form-related-items">
+        <div class="related-items-info">{{ 'forms.add_info'|trans }}</div>
+        <table class="table table-bordered" id="organizations-items">
+            <thead>
+                <tr>
+                    <th class="check"></th>
+                    <th>{{ 'forms.labels.name'|trans }}</th>
+                    <th>{{ 'forms.labels.nickname'|trans }}</th>
+                    <th class="reorder"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for custodian in form.classificationRelCustodians %}
+                    <tr>
+                        <td><input type="checkbox" value="{{ custodian.vars.value.organizationId.id }}"/></td>
+                        <td>{{ custodian.vars.value.organizationId.name }}</td>
+                        <td>{{ custodian.vars.value.organizationId.nickname }}</td>
+                        <td>
+                            <a href="#" class="move-related-item move-down" data-direction="down"
+                               title="{{ 'actions.move_down'|trans }}">Move down</a>
+                            <a href="#" class="move-related-item move-up" data-direction="up"
+                               title="{{ 'actions.move_up'|trans }}">Move up</a>
+                            {{ form_row(custodian.weight, {'attr': {'class': 'relation-weight' }}) }}
+                            {{ form_row(custodian.organizationId, { 'attr': {'class': 'hidden'} }) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</fieldset>
+
+<fieldset>
+    <div class="related-items-header">
+        {% if form.classificationRelTerms|length %}
+            {{ form_label(form.classificationRelTerms, 'forms.labels.concepts'|trans) }}
+        {% else %}
+            {{ form_row(form.classificationRelTerms, {'label': 'forms.labels.concepts'|trans}) }}
+        {% endif %}
+
+        <div class="form-buttons">
+            <a class="add-related-items btn btn-info"
+               role="button"
+               data-url="{{ path('concepts_modal', {'entityName' : 'classificationsEdit', 'propertyName' : 'classificationRelTerms'}) }}"
+               data-target="#ajax-modal" data-container="#concepts-items">{{ 'forms.add'|trans }}</a>
+            <img class="ajax-loader-inline" src="{{ asset('bundles/wbqbank/images/ajax-loader.gif') }}" alt="Loading...">
+            <a class="remove-related-items btn btn-danger" role="button">{{ 'forms.remove'|trans }}</a>
+        </div>
+    </div>
+    <div class="form-related-items">
+        <div class="related-items-info">{{ 'forms.add_info'|trans }}</div>
+        <table class="table table-bordered" id="concepts-items">
+            <thead>
+                <tr>
+                    <th class="check"></th>
+                    <th>{{ 'forms.labels.name'|trans }}</th>
+                    <th class="reorder"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for concept in form.classificationRelTerms %}
+                    <tr>
+                        <td><input type="checkbox" value="{{ concept.vars.value.termId.id }}"/></td>
+                        <td>{{ concept.vars.value.termId.name }}</td>
+                        <td>
+                            <a href="#" class="move-related-item move-down" data-direction="down"
+                               title="{{ 'actions.move_down'|trans }}">Move down</a>
+                            <a href="#" class="move-related-item move-up" data-direction="up"
+                               title="{{ 'actions.move_up'|trans }}">Move up</a>
+                            {{ form_row(concept.weight, {'attr': {'class': 'relation-weight' }}) }}
+                            {{ form_row(concept.termId, { 'attr': {'class': 'hidden'} }) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</fieldset>
+
+<fieldset>
+    <div class="related-items-header">
+        {% if form.classificationRelResources|length %}
+            {{ form_label(form.classificationRelResources, 'forms.labels.resources'|trans) }}
+        {% else %}
+            {{ form_row(form.classificationRelResources, {'label': 'forms.labels.resources'|trans}) }}
+        {% endif %}
+
+        <div class="form-buttons">
+            <a class="add-related-items btn btn-info"
+               role="button"
+               data-url="{{ path('resources_modal', {'entityName' : 'classificationsEdit', 'propertyName' : 'classificationRelResources'}) }}"
+               data-target="#ajax-modal" data-container="#resources-items">{{ 'forms.add'|trans }}</a>
+            <img class="ajax-loader-inline" src="{{ asset('bundles/wbqbank/images/ajax-loader.gif') }}" alt="Loading...">
+            <a class="remove-related-items btn btn-danger" role="button">{{ 'forms.remove'|trans }}</a>
+        </div>
+    </div>
+    <div class="form-related-items">
+        <div class="related-items-info">{{ 'forms.add_info'|trans }}</div>
+        <table class="table table-bordered" id="resources-items">
+            <thead>
+                <tr>
+                    <th class="check"></th>
+                    <th>{{ 'forms.labels.name'|trans }}</th>
+                    <th class="reorder"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for resource in form.classificationRelResources %}
+                    <tr>
+                        <td><input type="checkbox" value="{{ resource.vars.value.resourceId.id }}"/></td>
+                        <td><a href="{{ path('edit_resource', {id: resource.vars.value.resourceId.id}) }}" target="_blank">{{ resource.vars.value.resourceId.title }}</a>
+                            <p>{{ resource.vars.value.resourceId.creator }},
+                                {{ resource.vars.value.resourceId.pubDate }}</p></td>
+                        <td>
+                            <a href="#" class="move-related-item move-down" data-direction="down"
+                               title="{{ 'actions.move_down'|trans }}">Move down</a>
+                            <a href="#" class="move-related-item move-up" data-direction="up"
+                               title="{{ 'actions.move_up'|trans }}">Move up</a>
+                            {{ form_row(resource.weight, {'attr': {'class': 'relation-weight' }}) }}
+                            {{ form_row(resource.resourceId, { 'attr': {'class': 'hidden'} }) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</fieldset>
+
+
+<fieldset>
+    <div class="related-items-header">
+        {% if form.classificationRelSources|length %}
+            {{ form_label(form.classificationRelSources, 'forms.labels.sources'|trans) }}
+        {% else %}
+            {{ form_row(form.classificationRelSources, {'label': 'forms.labels.sources'|trans}) }}
+        {% endif %}
+
+        <div class="form-buttons">
+            <a class="add-related-items btn btn-info"
+               role="button"
+               data-url="{{ path('sources_modal', {'entityName' : 'classificationsEdit', 'propertyName' : 'classificationRelSources'}) }}"
+               data-target="#ajax-modal" data-container="#sources-items">{{ 'forms.add'|trans }}</a>
+            <img class="ajax-loader-inline" src="{{ asset('bundles/wbqbank/images/ajax-loader.gif') }}" alt="Loading...">
+            <a class="remove-related-items btn btn-danger" role="button">{{ 'forms.remove'|trans }}</a>
+        </div>
+    </div>
+    <div class="form-related-items">
+        <div class="related-items-info">{{ 'forms.add_info'|trans }}</div>
+        <table class="table table-bordered" id="sources-items">
+            <thead>
+                <tr>
+                    <th class="check"></th>
+                    <th>{{ 'forms.labels.name'|trans }}</th>
+                    <th class="reorder"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for resource in form.classificationRelSources %}
+                    <tr>
+                        <td><input type="checkbox" value="{{ resource.vars.value.resourceId.id }}"/></td>
+                        <td><a href="{{ path('edit_resource', {id: resource.vars.value.resourceId.id}) }}" target="_blank">{{ resource.vars.value.resourceId.title }}</a>
+                            <p>{{ resource.vars.value.resourceId.creator }},
+                                {{ resource.vars.value.resourceId.pubDate }}</p></td>
+                        <td>
+                            <a href="#" class="move-related-item move-down" data-direction="down"
+                               title="{{ 'actions.move_down'|trans }}">Move down</a>
+                            <a href="#" class="move-related-item move-up" data-direction="up"
+                               title="{{ 'actions.move_up'|trans }}">Move up</a>
+                            {{ form_row(resource.weight, {'attr': {'class': 'relation-weight' }}) }}
+                            {{ form_row(resource.resourceId, { 'attr': {'class': 'hidden'} }) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</fieldset>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+        if ($('table#codes tbody tr').length == 0) {
+            $('table#codes').hide();
+        }
+        $('#add-code').on('click', function (e) {
+            e.preventDefault();
+            var container = $("#codes").find("tbody");
+            var rows = $('#codes').find("tbody").find(".tr");
+            var numOfRows = rows.length;
+            var random = new Date().getTime();
+            
+            var attachment_html='<input type="hidden" name="classificationsEdit[classificationCodes]['+random+'][attachments]" class="attachment-value">';
+            attachment_html+='<div class="attachments"><span class="glyphicon glyphicon-picture file file-na" aria-hidden="true"></span></div>';
+            attachment_html+='<div class="attachment-actions"><span class="attach-file"><span class="glyphicon glyphicon-link" data-id="" aria-hidden="true"></span></span>';
+            attachment_html+='<span class="attachment-remove"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></span></div>';
+            
+            var row = $('<tr id="row-'+random+'" data-id="'+random+'">');
+            var cell0 = $("<td>").html("<input type='checkbox'/>");
+            var cell1 = $("<td>").html("<input type='text' name='classificationsEdit[classificationCodes][" + random + "][value]'/>");
+            var cell2 = $("<td>").html("<input type='text' name='classificationsEdit[classificationCodes][" + random + "][label]' required='required'/>");
+            var cell3 = $("<td>").html("<input type='text' name='classificationsEdit[classificationCodes][" + random + "][description]'/>");
+            var cell3a = $("<td class=\"attachment-container no-attachment\" id=\"attachments-"+random+"\" data-id=\""+random+"\" > ").html(attachment_html);
+            var cell4 = $("<td>").html('<a href="#" class="move-related-item move-down" data-direction="down" title="Move down">Move down</a> <a href="#" class="move-related-item move-up" data-direction="up" title="Move up">Move up</a>');
+            var hiddenInput = $("<input type='hidden' name='classificationsEdit[classificationCodes][" + random + "][weight]' value='' class='relation-weight'/>");
+            row.append(cell0).append(cell1).append(cell2).append(cell3).append(cell3a).append(cell4.append(hiddenInput));
+            container.append(row);
+            var weight = 1;
+            container.find('.relation-weight').each(function () {
+                $(this).val(weight++);
+            });
+            $('table#codes').prev('.related-items-info').hide();
+            $('table#codes').show();
+            
+            //assign file browse
+            window.flow_obj.assignBrowse($("#row-" + random + " .attach-file"));
+            
+
+        });
+        $("body").on("click", ".remove-code", function (e) {
+            e.preventDefault();
+            $(this).parents("tr").remove();
+        });
+    });
+</script>
+
+{{ form_widget(form.published, {'attr': { 'class': 'node-published' }}) }}
+
+
+<div class="save-actions">
+    {{ form_widget(form.save, {'label': 'forms.labels.save'|trans}) }}
+    <a class="btn btn-cancel cancel-editing" href="#">{{ 'forms.cancel'|trans }}</a>
+    <a class="btn btn-cancel preview" style="left:200px;" href="{{ path("classification_data", {id : form.vars.value.id}) }}">{{ 'forms.preview'|trans }}</a>
+
+    <p class="saved">{{ 'forms.saved'|trans }}</p>
+    <p class="unsaved">{{ 'forms.unsaved'|trans }}</p>
+
+    <div class="publish-button">
+        <button type="button" class="btn btn-success {% if form.published.vars.value != true %}hidden{% endif %}">
+            {{ 'forms.published'|trans }}
+        </button>
+        <button type="button" class="btn btn-default {% if form.published.vars.value == true %}hidden{% endif %}">
+            {{ 'forms.unpublished'|trans }}
+        </button>
+    </div>
+</div>
+
+{{ form_end(form) }}
+
+{% javascripts '@WBQbankBundle/Resources/public/js/editModal.js' %}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("a.preview").fancybox({ type: 'ajax', autoSize: false, width: 650, height: 500 });
+    });
+</script>
+
+<script  type="text/javascript">
+    //html5 file uploads
+    jQuery(document).ready(function ($) {
+        
+        var flow = new Flow({
+          target:Routing.generate('file_uploads'), 
+          query:{upload_token:'my_token'},
+          testChunks:false,
+          allowDuplicateUploads:true,
+          singleFile:true
+        });
+        
+        window.flow_obj=flow;
+        
+        flow.last_event=null;//store last upload event info
+        
+        // Flow.js isn't supported, fall back on a different method
+        if(!flow.support) {
+            alert("uploads not supported");
+        }
+        else{
+            //browse button        
+            flow.assignBrowse($('.attachment-container .attach-file'));
+            
+            //drag/drop target
+            //flow.assignDrop($('.attachment-container .attach-file'));
+            
+            flow.on('fileAdded', function(file, event){
+                console.log(file, event);
+                window.event_=event;
+                flow.last_event=event;
+            });
+            
+            flow.on('fileSuccess', function(file,message){
+                //console.log("success.................................");
+                //console.log(file,message);
+                message=jQuery.parseJSON(message);
+                window.message_=message;                
+                                
+                //get the target element info from last_event
+                data_id=$(flow.last_event.srcElement).closest(".attachment-container").prop("data-id");;
+                container_id=$(flow.last_event.srcElement).closest(".attachment-container").prop("id");                
+                
+                $("#"+container_id).find(".attachment-value").val(message.path);
+                
+                html='<a target="_blank" href="{{ asset("uploads/resources/") }}'+message.path+'">';
+                html+='<span class="glyphicon glyphicon-picture file" aria-hidden="true"></span>';
+                html+='</a>';
+                                
+                //replace image part
+                $("#"+container_id).find(".attachments").html(html);
+                
+                window.html_=html;
+                window.container_id=container_id;
+                                
+                
+                //show the delete button
+                $("#"+container_id).addClass("has-attachment").removeClass("no-attachment");
+                
+                flow.removeFile(file);
+                
+            });
+            flow.on('fileError', function(file, message){
+                console.log("error.................................");
+                console.log(file, message);
+            });
+            flow.on('filesSubmitted', function(file, message){
+                console.log(file, message);
+                flow.upload();
+            });
+        }
+        
+        //delete button
+        $( ".attachment-container .attachment-remove" ).on( "click", function() {
+            $(this).closest(".attachment-container").find(".attachment-value").val("");
+            $(this).closest(".attachment-container").addClass("no-attachment").removeClass("has-attachment");
+            $(this).closest(".attachment-container").find(".attachments").html('<span class="glyphicon glyphicon-picture file file-na" aria-hidden="true"></span>');
+        });
+    
+    });        
+</script>
+

@@ -1,0 +1,35 @@
+WB\QbankBundle\Entity\IndicatorRelResources:
+    type: entity
+    table: indicator_rel_resources
+    repositoryClass: WB\QbankBundle\Entity\IndicatorRelResourcesRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        weight:
+            type: integer
+            nullable: TRUE
+            
+    manyToOne:
+        resourceId:
+            type: integer
+            column: resource_id
+            targetEntity: Resources
+            inversedBy: indicatorRelResources
+            joinColumn:
+                name: resource_id
+                referencedColumnName: id
+                onDelete: CASCADE
+        indId:
+            type: integer
+            column: ind_id
+            targetEntity: Indicators
+            inversedBy: indicatorRelResources
+            joinColumn:
+                name: ind_id
+                referencedColumnName: id
+                onDelete: CASCADE
+    lifecycleCallbacks: {  }

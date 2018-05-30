@@ -1,0 +1,37 @@
+{{ render(controller('WBQbankBundle:ClassificationsBack:classificationGroupBreadcrumb', {
+'grpId': group.id,
+'public': true
+})) }}
+
+<h2>{{ group.name }}</h2>
+<p>{{ group.description|nl2br }}</p>
+
+{% if classifications %}
+    <ul class="nodes-for-group">
+        {% for classification in classifications %}
+            {%if classification.published %}
+            <li data-node="{{ classification.id }}"><a href="#">{{ classification.name }}</a></li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+{% if childGroupsTree %}
+    {% for childGroup in childGroupsTree %}
+
+        <h3>{{ childGroup.name }}</h3>
+        <p>{{ childGroup.desc|nl2br }}</p>
+
+        {% if childGroup.classifications %}
+            <ul class="nodes-for-group">
+                {% for classification in childGroup.classifications %}
+                    <li data-node="{{ classification.classificationId }}"><a href="#">{{ classification.classificationName }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+
+    {% endfor %}
+{% endif %}
+

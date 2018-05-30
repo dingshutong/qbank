@@ -1,0 +1,54 @@
+{{ render(controller('WBQbankBundle:ConceptsBack:conceptBreadcrumbs', {
+'concId': concept.id,
+'public': true
+})) }}
+
+<h2>{{ concept.name }}
+    {% if lightbox %}
+        <a class="btn btn-info" href="{{ url('concepts') }}#concept/{{ concept.id }}">{{ 'actions.open'|trans }}</a>
+    {% endif %}
+</h2>
+
+{% if concept.description %}
+    <h3>{{ 'forms.labels.description'|trans }}</h3>
+    <p>{{ concept.description|nl2br }}</p>
+{% endif %}
+
+{% if concept.notes %}
+    <h3>Notes</h3>
+    <p>{{ concept.notes|nl2br }}</p>
+{% endif %}
+
+
+{% if organizations|length %}
+    <h3>{{ 'forms.labels.organizations'|trans }}:</h3>
+    <ul>
+        {% for organization in organizations %}
+            <li><a class="related-item" href="{{ path('organization', {id: organization.id, lightbox: true}) }}">{{ organization.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% if resources|length %}
+    <h3>{{ 'forms.labels.resources'|trans }}:</h3>
+    
+    {% for key,resource_type in resources %}
+       <fieldset class="resources-list">
+        <legend>{{key}}</legend>
+        {% include 'WBQbankBundle:Default:resources-list.html.twig' with {'resources': resource_type} only %}
+        </fieldset>
+    {% endfor %}    
+{% endif %}
+
+
+{#related sources list#}
+{% if sources is defined and sources|length %}
+    {% include 'WBQbankBundle:Default:sources.html.twig' with {'sources': sources} only %}
+{% endif %}
+
+
+
+<script type="text/javascript">$(document).ready(function () {
+        $("a.related-item").fancybox({ type: 'ajax', autoSize: false, width: 650, height: 500 });
+    });
+</script>

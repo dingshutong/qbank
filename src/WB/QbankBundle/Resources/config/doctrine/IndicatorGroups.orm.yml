@@ -1,0 +1,38 @@
+WB\QbankBundle\Entity\IndicatorGroups:
+    type: entity
+    table: indicator_groups
+    repositoryClass: WB\QbankBundle\Entity\IndicatorGroupsRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        alternateId:
+            type: string
+            length: '100'
+            column: alternate_id
+            nullable: TRUE
+        name:
+            type: string
+            length: '255'
+        description:
+            type: text
+            nullable: TRUE
+        pid:
+            type: integer
+            nullable: TRUE
+            options:
+                default: 0
+        weight:
+            type: integer
+            nullable: TRUE
+        published:
+            type: boolean
+            nullable: TRUE
+    oneToMany:
+        indicatorGrpRef:
+            targetEntity: IndGrpRef
+            mappedBy: indGroupId
+    lifecycleCallbacks: {  }

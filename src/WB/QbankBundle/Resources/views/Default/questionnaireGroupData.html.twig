@@ -1,0 +1,66 @@
+{{ render(controller('WBQbankBundle:QuestionnairesBack:questionnaireGroupBreadcrumb', {
+'grpId': group.id,
+'public': true
+})) }}
+
+<h2>{{ group.name }}</h2>
+<p>{{ group.description|nl2br }}</p>
+<p>{{ group.notes|nl2br }}</p>
+
+
+{% if childGroupsTree %}
+    <h3>{{ 'forms.labels.questionnaires_and_modules'|trans }}</h3>
+    <ul>
+    {% for childGroup in childGroupsTree %}
+        <li><a href="{{ url('questionnaires') }}#questionnaire-group/{{ childGroup.id }}">{{ childGroup.name }}</h3></a></li>
+    {% endfor %}
+    </ul>
+{% endif %}
+
+{% if questionnaires %}
+    <h3>{{ 'forms.labels.questionnaire_related_modules'|trans }}:</h3>
+    <ul class="nodes-for-group">
+        {% for questionnaire in questionnaires %}
+            {% if questionnaire.published %}
+            <li data-node="{{ questionnaire.id }}"><a href="{{ url('questionnaires') }}#questionnaire/{{ questionnaire.id }}">{{ questionnaire.name }}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+{% if organizations|length %}
+    <h3>{{ 'forms.labels.organizations'|trans }}:</h3>
+    <ul>
+        {% for organization in organizations %}
+            <li><a class="related-item" href="{{ path('organization', {id: organization.id, lightbox: true}) }}">{{ organization.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+{% if resources|length %}
+    <h3>{{ 'forms.labels.resources'|trans }}:</h3>
+    
+    {% for key,resource_type in resources %}
+       <fieldset class="resources-list">
+        <legend>{{key}}</legend>
+        {% include 'WBQbankBundle:Default:resources-list.html.twig' with {'resources': resource_type} only %}
+        </fieldset>
+    {% endfor %}
+    
+{% endif %}
+
+
+{#related sources list#}
+{% if sources is defined and sources|length %}
+    {% include 'WBQbankBundle:Default:sources.html.twig' with {'sources': sources} only %}
+{% endif %}
+
+
+
+<script type="text/javascript">$(document).ready(function () {
+        $("a.related-item").fancybox({ type: 'ajax', autoSize: false, width: 650, height: 500 });
+    });
+</script>
+

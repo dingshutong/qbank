@@ -1,0 +1,55 @@
+WB\QbankBundle\Entity\QuestionnaireModuleResources:
+    type: entity
+    table: questionnaire_module_resources
+    repositoryClass: WB\QbankBundle\Entity\QuestionnaireModuleResourcesRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: '200'
+            nullable: TRUE
+        description:
+            type: text
+            nullable: TRUE
+        useOfLayout:
+            type: boolean
+            column: use_of_layout
+            nullable: TRUE
+        location:
+            type: text
+            nullable: TRUE
+        fileType:
+            type: string
+            length: '50'
+            column: file_type
+            nullable: TRUE
+        published:
+            type: boolean
+            nullable: TRUE
+        created:
+            type: datetime
+            nullable: TRUE
+        changed:
+            type: datetime
+            nullable: TRUE
+        dateAccessed:
+            type: integer
+            column: date_accessed
+            nullable: TRUE
+    manyToOne:
+        questModuleId:
+            type: integer
+            column: quest_module_id
+            nullable: TRUE
+            targetEntity: QuestionnaireModules
+            inversedBy: questionnaireModuleResources
+            joinColumn:
+                name: quest_module_id
+                referencedColumnName: id
+                onDelete: CASCADE
+    lifecycleCallbacks: {  }

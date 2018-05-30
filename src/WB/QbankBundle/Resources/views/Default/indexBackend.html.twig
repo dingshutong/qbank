@@ -1,0 +1,32 @@
+{% extends 'WBQbankBundle::base.html.twig' %}
+
+{% block body %}
+
+    {{ render(controller('WBQbankBundle:Default:headerMenu', { activeButton: active_button})) }}
+    
+    <div class="ui-layout-center">
+        <div class="container index-container">
+            <div class="row">
+                <div class="col-md-3"><strong>{{ 'strings.indicators'|trans }}</strong></div>
+                <div class="col-md-3"><strong>{{ 'strings.concepts'|trans }}</strong></div>
+                <div class="col-md-3"><strong>{{ 'strings.classifications'|trans }}</strong></div>
+                <div class="col-md-3"><strong>{{ 'strings.questionnaires'|trans }}</strong></div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">{{ 'strings.groups'|trans }}: {{ indGrpCount }}</div>
+                <div class="col-md-3">{{ 'strings.groups'|trans }}: {{ termGrpCount }}</div>
+                <div class="col-md-3">{{ 'strings.groups'|trans }}: {{ classifGrpCount }}</div>
+                <div class="col-md-3">{{ 'strings.groups'|trans }}: {{ questGrpCount }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">{{ 'strings.indicators'|trans }}: {{ indCount }}</div>
+                <div class="col-md-3">{{ 'strings.concepts'|trans }}: {{ termCount }}</div>
+                <div class="col-md-3">{{ 'strings.classifications'|trans }}: {{ classifCount }}</div>
+                <div class="col-md-3">{{ 'strings.questionnaires'|trans }}: {{ questCount }}</div>
+            </div>
+        </div>
+    </div>
+    
+
+        
+{% endblock %}

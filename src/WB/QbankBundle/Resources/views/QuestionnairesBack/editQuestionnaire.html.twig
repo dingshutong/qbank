@@ -1,0 +1,932 @@
+{{ render(controller('WBQbankBundle:QuestionnairesBack:questionnaireBreadcrumbs', {
+    'questId': questionnaireId,
+    'public': false
+})) }}
+
+{{ form_start(form, { 'attr' : { 'class' : 'edit-node' }}) }}
+
+<input type="hidden" name="nodeId" value="{{ questionnaireId }}" xmlns="http://www.w3.org/1999/html"/>
+
+<div class="hidden" id="visualRepFormatTypes">
+
+    <div data-format-id="{{ constant('Numeric', visualRepFormatTypes) }}">
+        <div class="visual-format-input">
+            <input type="text"/>
+            .
+            <input type="text"/>
+        </div>
+        <div class="visual-format-numeric">
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li class="format-dot">.</li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+    </div>
+
+    <div data-format-id="{{ constant('Text', visualRepFormatTypes) }}">
+        <div class="visual-format-input">
+            <input type="text"/>
+        </div>
+        <div class="visual-format-text">
+            <span></span>
+        </div>
+    </div>
+
+</div>
+<div class="publish-button">
+    <button type="button" class="btn btn-success  {% if form.published.vars.value != true %}hidden{% endif %}"
+            data-id="{{ questionnaireId }}">
+        {{ 'forms.published'|trans }}
+    </button>
+    <button type="button" class="btn btn-default {% if form.published.vars.value == true %}hidden{% endif %}"
+            data-id="{{ questionnaireId }}">
+        {{ 'forms.unpublished'|trans }}
+    </button>
+</div>
+
+{{ form_row(form.name, {'label': 'forms.labels.name'|trans, 'attr': {'class': 'node-name-field' }}) }}
+
+{{ form_row(form.description, {'label': 'forms.labels.description'|trans, 'attr': {'spellcheck': 'true' }}) }}
+
+{{ form_row(form.notes, {'label': 'forms.labels.notes'|trans, 'attr': {'spellcheck': 'true' }}) }}
+
+<label>{{ 'strings.questions'|trans }}</label>
+
+<fieldset>
+
+    <div class="form-related-items">
+        <div class="related-items-info">{{ 'forms.add_info'|trans }}</div>
+        <table class="table table-bordered table-hover" id="questions-items">
+            <thead>
+            <tr>
+                <th class="check"></th>
+                <th>{{ 'forms.labels.name'|trans }}</th>
+                <th>{{ 'forms.labels.description'|trans }}</th>
+                <th>{{ 'forms.labels.visul_rep_format'|trans }}</th>
+                <th></th>
+                <th class="reorder"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for key, question in questions %}
+                <tr data-id="{{ question.id }}" class="draggable">
+                    <td><input type="checkbox" data-id="{{ question.id }}" class="entry-id"/></td>
+                    <td>{{ question.name }}</td>
+                    <td>{{ question.description }}</td>
+                    <td> {% if question.visualRepFormat ==1 %} {{ 'questions.visual_rep_format_numeric'|trans }} {% elseif question.visualRepFormat ==2 %}{{ 'questions.visual_rep_format_text'|trans }}
+                        {% elseif question.visualRepFormat ==3 %} {{ question.classificationName }} {% endif %}
+                    </td>
+                    <td>
+                        <a href="#" data-id="{{ question.id }}" data-position="{{ loop.index }}"
+                           class="edit-question btn btn-info">{{ 'forms.edit'|trans }}</a>
+                    </td>
+                    <td>
+                        <a href="#" class="move-related-item move-down" data-id="{{ question.id }}"
+                           data-direction="down"
+                           title="{{ 'actions.move_down'|trans }}">Move down</a>
+                        <a href="#" class="move-related-item move-up" data-id="{{ question.id }}" data-direction="up"
+                           title="{{ 'actions.move_up'|trans }}">Move up</a>
+
+                        <!--<input type="hidden" id="question-weight-{{ question.id }}" value="{{ question.weight }}"
+                               class="question-weight-field weight_"/>-->
+                               
+                        <input type="hidden" name="QuestionnaireEdit[QuestionModuleRelQuestions][{{question.id}}][questionId]" value="{{question.id}}"/>
+                        <input type="hidden" name="QuestionnaireEdit[QuestionModuleRelQuestions][{{question.id}}][weight]" value="{{question.weight}}"
+                               class="question-weight-field weight_"/>                        
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</fieldset>
+
+<div class="related-items-header">
+    <div class="form-buttons">
+        <a class="add-question btn btn-info" role="button"> {{ 'forms.add'|trans }}</a>
+        <a class="remove-questions hidden btn btn-danger" role="button">{{ 'forms.remove'|trans }}</a>
+    </div>
+</div>
+
+
+
+
+<!---  saving translated values to be used by javacript --->
+<input type="hidden" id="edit-translated" value="{{ 'forms.edit'|trans }}"/>
+<input type="hidden" id="numeric-translated" value="{{ 'questions.visual_rep_format_numeric'|trans }}"/>
+<input type="hidden" id="text-translated" value="{{ 'questions.visual_rep_format_text'|trans }}"/>
+<input type="hidden" id="classification-translated" value="{{ 'questions.visual_rep_format_classification'|trans }}"/>
+<input type="hidden" id="move-up-translated" value="{{ 'actions.move_up'|trans }}"/>
+<input type="hidden" id="move-down-translated" value="{{ 'actions.move_down'|trans }}"/>
+
+
+<div class="hidden-form-elements hidden">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"
+                aria-hidden="true">&times;</button>
+        <h4 class="modal-title">{{ 'forms.labels.edit_question'|trans }}</h4>
+    </div>
+    <div class="modal-body">
+        <div class="modal-data">
+            <input type="hidden" name="question-id" class="question-id"/>
+
+            <label for="question-name">{{ 'forms.labels.name'|trans }}</label>
+            <input type="text" name="question-name" class="question-name" spellcheck="true"/>
+
+            <div id="alert-question-title" class="hidden alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span>
+                {{ 'messages.message10'|trans }}
+            </div>
+            <label for="question-description">{{ 'forms.labels.description'|trans }}</label>
+            <input name="question-description" class="question-description" spellcheck="true"/>
+            <label for="question-pre_text">{{ 'forms.labels.pre_text'|trans }}</label>
+            <textarea name="question-pre_text" class="question-pre_text"></textarea>
+            <label for="question-literal_text">{{ 'forms.labels.literal_text'|trans }}</label>
+            <textarea name="question-literal_text" class="question-literal_text"></textarea>
+            <label for="question-post_text">{{ 'forms.labels.post_text'|trans }}</label>
+            <textarea name="question-post_text" class="question-post_text"></textarea>
+            <label for="question-visual_rep_format">{{ 'forms.labels.visul_rep_format'|trans }}</label>
+            <select name="question-visual_rep_format" class="visual-rep-format-select">
+                <option value="0"> --</option>
+                <option value="1"> Numeric</option>
+                <option value="2"> Text</option>
+                <option value="3"> Classification List</option>
+            </select>
+
+            <div class="visual-rep-formats-holder">
+
+                <div class="visual-rep-format-ajax"></div>
+            </div>
+            <div class="visual-format-preview"></div>
+            <div class="classification-table hidden">
+                <div class="form-buttons">
+                    <a class="add-related-items btn btn-info" role="button"
+                       data-url="{{ path('classifications_modal', {'entityName': 'questions', 'propertyName': 'questionsRelClassifications'}) }}"
+                       data-target="#secondary-modal" data-container="#classifications-items">Add</a>
+                    <img class="ajax-loader-inline" src='{{ asset('bundles/wbqbank/images/ajax-loader.gif') }}'
+                         alt="Loading..."/>
+                    <a class="remove-classification btn btn-danger hidden" role="button">Remove</a>
+                </div>
+                <input type="hidden" class="classification-id-field"/>
+
+                <div class="related-classification-name"></div>
+                <table class="classification-codes-table table">
+                    <tr>
+                        <th>
+                            <input type="hidden" id="classification-id"/>
+                            {{ "forms.labels.label" | trans }}
+                        </th>
+                        <th>
+                            {{ "forms.labels.value" | trans }}
+                        </th>
+                        <th>
+                            {{ "forms.labels.skip" | trans }}
+                        </th>
+                    </tr>
+                </table>
+            </div>
+            <div id="alert-question-visual_rep_format" class="hidden alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span>
+                {{ 'messages.message11' | trans }}
+            </div>
+            <label for="question-instructions">{{ 'forms.labels.int_instructions'|trans }}</label>
+            <textarea id="question-instructions" class="question-instructions"></textarea>
+            <label for="question-notes">{{ 'forms.labels.notes'|trans }}</label>
+            <textarea id="question-notes" class="question-notes"></textarea>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default"
+                data-dismiss="modal">{{ 'forms.close'|trans }}</button>
+        <button type="button" class="save-question btn btn-info"
+                data-id=""
+                data-dismiss="modal"
+                data-index="">{{ 'forms.save'|trans }}
+        </button>
+    </div>
+
+
+</div>
+
+{# related resources #}
+<label>{{ 'strings.resources'|trans }}</label>
+<fieldset>
+    <div class="related-items-header">
+        <div class="form-buttons">
+            <a class="add-related-items btn btn-info"
+               role="button"
+               data-url="{{ path('resources_modal', {'entityName' : 'QuestionnaireEdit', 'propertyName' : 'QuestionModuleRelResources'}) }}"
+               data-target="#ajax-modal" data-container="#resources-items">{{ 'forms.add'|trans }}</a>
+            <img class="ajax-loader-inline" src="{{ asset('bundles/wbqbank/images/ajax-loader.gif') }}" alt="Loading...">
+            <a class="remove-related-items btn btn-danger" role="button">{{ 'forms.remove'|trans }}</a>
+        </div>
+    </div>
+    <div class="form-related-items">
+        <div class="related-items-info">{{ 'forms.add_info'|trans }}</div>
+        <table class="table table-bordered" id="resources-items">
+            <thead>
+                <tr>
+                    <th class="check"></th>
+                    <th>{{ 'forms.labels.name'|trans }}</th>
+                    <th>Use for layout</th>
+                    <th class="reorder"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for resource in resources %}
+                    <tr>
+                        <td><input type="checkbox" value="{{ resource.id }}"/></td>
+                        <td><a href="{{ path('edit_resource', {id: resource.id}) }}" target="_blank">{{ resource.title }}</a>
+                        <p>{{ resource.creator }},
+                        <span class="resource-date">{{ resource.pubDate }}</span></p></td>
+                        <td>
+                            <input type="radio" name="QuestionnaireEdit[QuestionModuleRelResources][useOfLayout]" value="{{resource.id}}" {{ resource.useOfLayout == 1 ? 'checked="checked"' : '' }} />
+                        </td>
+                        <td>
+                            <a href="#" class="move-related-item move-down" data-direction="down"
+                               title="{{ 'actions.move_down'|trans }}">Move down</a>
+                            <a href="#" class="move-related-item move-up" data-direction="up"
+                               title="{{ 'actions.move_up'|trans }}">Move up</a>
+                            <input class=" weight_" type="hidden" name="QuestionnaireEdit[QuestionModuleRelResources][{{resource.id}}][weight]" value="{{resource.weight}}"/>
+                            <input type="hidden" name="QuestionnaireEdit[QuestionModuleRelResources][{{resource.id}}][resourceId]" value="{{resource.id}}"/>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</fieldset>
+
+{#related sources#}
+{# related resources #}
+<label>{{ 'strings.sources'|trans }}</label>
+<fieldset>
+    <div class="related-items-header">
+        <div class="form-buttons">
+            <a class="add-related-items btn btn-info"
+               role="button"
+               data-url="{{ path('sources_modal', {'entityName' : 'QuestionnaireEdit', 'propertyName' : 'QuestionModuleRelSources'}) }}"
+               data-target="#ajax-modal" data-container="#sources-items">{{ 'forms.add'|trans }}</a>
+            <img class="ajax-loader-inline" src="{{ asset('bundles/wbqbank/images/ajax-loader.gif') }}" alt="Loading...">
+            <a class="remove-related-items btn btn-danger" role="button">{{ 'forms.remove'|trans }}</a>
+        </div>
+    </div>
+    <div class="form-related-items">
+        <div class="related-items-info">{{ 'forms.add_info'|trans }}</div>
+        <table class="table table-bordered" id="sources-items">
+            <thead>
+                <tr>
+                    <th class="check"></th>
+                    <th>{{ 'forms.labels.name'|trans }}</th>
+                    <th class="reorder"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for resource in sources %}
+                    <tr>
+                        <td><input type="checkbox" value="{{ resource.id }}"/></td>
+                        <td><a href="{{ path('edit_resource', {id: resource.id}) }}" target="_blank">{{ resource.title }}</a>
+                            <p>{{ resource.creator }},
+                            <span class="resource-date">{{ resource.pubDate }}</span></p>
+                        </td>
+                        <td>
+                            <a href="#" class="move-related-item move-down" data-direction="down"
+                               title="{{ 'actions.move_down'|trans }}">Move down</a>
+                            <a href="#" class="move-related-item move-up" data-direction="up"
+                               title="{{ 'actions.move_up'|trans }}">Move up</a>
+                            <input type="hidden" class="weight_" name="QuestionnaireEdit[QuestionModuleRelSources][{{resource.id}}][weight]" value="{{resource.weight}}"/>
+                            <input type="hidden" name="QuestionnaireEdit[QuestionModuleRelSources][{{resource.id}}][resourceId]" value="{{resource.id}}"/>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</fieldset>
+
+<script type="text/javascript">
+
+    var updatedQuestions = new Array();
+    var deletedQuestions = new Array();
+    var updatedResources = new Array();
+    var deletedResources = new Array();
+    
+    var filesToUpload = new Array();
+
+    var c = {};
+
+    var changeMade = false;
+
+    $(document).ready(function () {
+        
+        // prompt user to save the changes before close
+        $("#ajax-modal").off("shown.bs.modal").on("shown.bs.modal", function (e) {
+            setTimeout(function () {
+                changeMade = false;
+                autosize($('#ajax-modal textarea'));
+            }, 1000);
+        });
+        $('body')
+                .off("change", ".questions-modal input, .questions-modal textarea, .questions-modal select")
+                .on("change", ".questions-modal input, .questions-modal textarea, .questions-modal select", function () {
+                    changeMade = true;
+                });
+        $('body')
+                .off("click", ".questions-modal .classification-table a")
+                .on("click", ".questions-modal .classification-table a", function () {
+                    changeMade = true;
+                });
+        $("#ajax-modal").off("hide.bs.modal").on("hide.bs.modal", function (e) {
+            if (changeMade == true) {
+                if (confirm("Leave without saving changes?") !== true) {
+                    e.preventDefault();
+                }
+            }
+        });
+        $("#ajax-modal").off("hidden.bs.modal").on("hidden.bs.modal", function (e) {
+            changeMade = false;
+        });
+
+
+        $('body').off("input", "#ajax-modal .visual-rep-modifier").on("input", "#ajax-modal .visual-rep-modifier", function () {
+            var value = parseFloat($(this).val());
+
+            var alertDiv = $("#ajax-modal #alert-question-visual_rep_format");
+            //console.log(alertDiv);
+            if (value <= 0 || isNaN(value)) {
+                if (alertDiv.hasClass("hidden")) {
+                    alertDiv.removeClass("hidden");
+                }
+            }
+            else {
+                if (!alertDiv.hasClass("hidden")) {
+                    alertDiv.addClass("hidden");
+                }
+            }
+        });
+
+        //saving questionnaire
+        $('body').off('click', '.save-questionnaire').on('click', ".save-questionnaire", function () {
+            var questionnaire = new Object();
+            questionnaire.id = $(".publish-button .btn-default").data("id"); //getting id of questionnaire
+            questionnaire.name = $("#questionnaires_name").val();
+            questionnaire.description = $("#questionnaires_description").val();
+            questionnaire.notes = $("#questionnaires_notes").val();
+
+            //update weights for all related sections e.g. resources, sources, questions            
+            var weights = $(".weight_, .relation-weight");
+            var weight = 1;
+            weights.each(function(){
+                $(this).val(weight++);
+            });
+
+            //get serialized array of attached resources
+            $related_resources=$("#resources-items input").serialize();
+            $related_sources=$("#sources-items input").serialize();
+            //$related_resources=JSON.stringify($related_resources);
+
+            //related questions
+            $related_questions=$("#questions-items input").serialize();
+            
+            
+            //ajax call with questionnaire informations, questions and resources arrays
+            $.ajax({
+                url: Routing.generate('save_questionnaire'),
+                method: "POST",
+                data:{
+                    _locale: locale,
+                    questionnaire: JSON.stringify(questionnaire),
+                    resources: $related_resources,
+                    sources: $related_sources,
+                    questions: $related_questions                    
+                },
+                success: function (data) {
+                    $('form .unsaved').hide();
+                    $('form .saved').show();
+                },
+                error: function (error) {
+                    alert("Error occured: Failed to save your changes!");
+                }
+            });
+        });
+        
+
+        $("body").off("change",".resource-file").on("change",".resource-file",function(){
+            var id = parseInt($(this).attr("data-id"));
+            //console.log(id);
+            var radio = $("#resource-layout-".concat(id.toString()));
+
+            if (radio.attr('disabled') == "disabled") {
+                var extension = getFileExtension($(this).val());
+                if (extension == "pdf"){
+                    radio.attr('disabled',false);
+                }
+            }
+
+        });
+
+        $("body").off("change", "table#resources input[type=radio]").on("change", "table#resources input[type=radio]", function () {
+            var selectedId = parseInt($(this).attr("data-id"));
+
+            var previousId = $("#resourceLayoutId").val();
+
+            var fileExtension = getFileExtension($("#resource-file-".concat(selectedId)).val());
+            var uploadedFile = $('#resource-location-'.concat(selectedId));
+            var uploadedFileExtension; // valid value
+            if (typeof uploadedFile.html() != 'undefined') {
+                uploadedFileExtension = uploadedFile.html().split(" ");
+                uploadedFileExtension = getFileExtension(uploadedFileExtension[uploadedFileExtension.length - 1]);
+                //console.log("uploadedFileExtension");
+                //console.log(uploadedFileExtension);
+            }
+            else {
+                uploadedFileExtension = null;
+            }
+            //console.log(fileExtension);
+
+            if (fileExtension.length <= 0 && uploadedFileExtension) {
+                //console.log("usao ovde");
+                if (uploadedFileExtension != "pdf") {
+                    $('#resource-layout-'.concat(previousId)).trigger('click');
+                    alert("{{ 'messages.layout_file_type'|trans  }}");
+                    return;
+                }
+            }
+            else if (fileExtension.length > 0) {
+                if (fileExtension != "pdf") {
+                    $('#resource-layout-'.concat(previousId)).trigger('click');
+                    alert("{{ 'messages.layout_file_type'|trans  }}");
+                    return;
+                }
+            }
+            else if (fileExtension.length <= 0 && !uploadedFileExtension) {
+                $('#resource-layout-'.concat(previousId)).trigger('click');
+                alert("{{ 'messages.layout_file_type'|trans  }}");
+                return;
+            }
+
+
+            var selectedResourceDTO = createResourceDTO(selectedId);
+            var elementIndex = containsObject(selectedResourceDTO, updatedResources);
+            if (elementIndex > -1) {
+                updatedResources[elementIndex] = selectedResourceDTO;
+            }
+            else {
+                updatedResources.push(selectedResourceDTO);
+            }
+            if (previousId != null && previousId != " ") {
+                var previouslySelectedResourceDTO = createResourceDTO(previousId);
+                elementIndex = containsObject(previouslySelectedResourceDTO, updatedResources);
+                if (elementIndex > -1) {
+                    updatedResources[elementIndex] = previouslySelectedResourceDTO;
+                }
+                else {
+                    updatedResources.push(previouslySelectedResourceDTO);
+                }
+            }
+            $("#resourceLayoutId").val(selectedId);
+        });
+        
+
+        //removing questions
+        $("body").on("click", ".remove-questions", function () {
+
+            var checked = $(".form-related-items input:checkbox:checked");
+            checked.each(function () {
+                deletedQuestions.push($(this).data("id"));
+                $(this).closest("tr").remove();
+            });
+            $('.remove-questions').addClass("hidden");
+        });
+
+        
+    //helper to preserve table width
+    var fixHelper = function(e, ui) {
+      ui.children().each(function() {
+          $(this).width($(this).width());
+      });
+      return ui;
+    };
+        
+    $( "#questions-items tbody").sortable({
+        placeholder: "ui-state-highlight",
+        scroll:true,
+        scrollSpeed: 50,
+        scrollSensitivity: 10,
+        //helper: "clone",
+        helper: fixHelper,
+        start: function (event, ui) {
+            $(ui.helper).css("background","#ccc");
+        },
+    
+        stop: function (event, ui) {
+            ui.item.css("background","#ccc");
+            ui.item.animate({backgroundColor: "transparent", color:"black" },1200);
+
+            $( ".weight" ).each(function( index ) {
+                $(this).val(index);
+            });
+            
+            $('form .saved').hide();
+            $('form .unsaved').show();
+        }
+    });
+   
+    $( "#questions-items tbody" ).disableSelection();
+        
+    });
+
+    $(".add-question").off("click").on("click", function () {
+        var ajaxModal = $("#ajax-modal");
+        ajaxModal.find(".modal-content").html(" ");
+        var classificationCodesTable = ajaxModal.find(".classification-codes-table");
+        classificationCodesTable.children('tr:not(:first)').remove();
+        questionVisualRepAjax(0, 0);
+
+        var modal = $(".hidden-form-elements");
+        var cloned = modal.clone(true);
+        ajaxModal.addClass("edit-state").addClass("questions-modal").addClass('modal-wide');
+        ajaxModal.find(".modal-content").html(cloned.removeClass("hidden"));
+        ajaxModal.find(".visual-rep-format-1").addClass("hidden");
+
+        ajaxModal.modal('show');
+        ajaxModal.find(".visual-rep-format-select").on("change", visualRepOnChange);
+    });
+    
+
+    $("#ajax-modal").off("click", ".save-question").on("click", ".save-question", function () {
+        changeMade = false;
+        var ajaxModal = $("#ajax-modal");
+
+        ajaxModal.data('bs.modal').isShown = false;
+
+        var question = new Object();
+        question.questionnaireId = $(".publish-button .btn-default").data("id"); //getting id of questionnaire
+        question.id = ajaxModal.find(".question-id").val();
+        question.name = ajaxModal.find(".question-name").val();
+
+        if (question.name == null || question.name == "") {
+            if ($("#ajax-modal #alert-question-title").hasClass("hidden")) {
+                $("#ajax-modal #alert-question-title").removeClass("hidden");
+            }
+            return;
+        }
+
+        question.description = ajaxModal.find(".question-description").val();
+        question.literalText = ajaxModal.find(".question-literal_text").val();
+        question.postText = ajaxModal.find(".question-post_text").val();
+        question.preText = ajaxModal.find(".question-pre_text").val();
+        question.instructions = ajaxModal.find(".question-instructions").val();
+        question.notes = ajaxModal.find(".question-notes").val();
+        question.visualRepFormat = ajaxModal.find(".visual-rep-format-select").val();
+
+
+        switch (parseInt(question.visualRepFormat)) {
+            case 1:
+                question.valRepFormat = $('[name=visual-rep-format-numeric]').val();
+                if (question.valRepFormat == " " || parseFloat(question.valRepFormat) <= 0) {
+                    return;
+                }
+                break;
+            case 2:
+                question.valRepFormat = $('[name=visual-rep-format-text]').val();
+                if (question.valRepFormat == " " || parseFloat(question.valRepFormat) <= 0) {
+                    return;
+                }
+                break;
+            case 3:
+                question.classificationId = ajaxModal.find(".classification-id-field").val();
+
+                var tableRows = $("#ajax-modal").find(".classification-codes-table tr");
+                var classificationCodes = new Array();
+                if (tableRows.length > 1) {
+                    for (var i = 1; i < tableRows.length; i++) {
+                        if (tableRows[i].cells[2].children[0].value != null && tableRows[i].cells[2].children[0].value != "") {
+                            var classificationCode = new Object();
+                            classificationCode.id = tableRows[i].cells[0].children[0].value;
+                            classificationCode.label = tableRows[i].cells[0].textContent;
+                            classificationCode.value = tableRows[i].cells[1].textContent;
+                            classificationCode.skipValue = tableRows[i].cells[2].children[0].value;
+                            classificationCodes.push(classificationCode);
+                        }
+                    }
+                }
+                question.classificationCodes = classificationCodes;
+                break;
+        }
+        
+
+        $.ajax({            
+            url: Routing.generate('save_question'),
+            method: "POST",
+            data: {
+                _locale: locale,
+                question: JSON.stringify(question)
+            },
+            contentType: 'application/x-www-form-urlencoded',
+            success: function (data) {
+                //console.log("success");
+
+                var id = ajaxModal.find(".question-id").val();
+
+                var visualRepFormat = ajaxModal.find(".visual-rep-format-select").val();
+                var visualRepFormatText = "";
+                if (visualRepFormat == 1) {
+                    visualRepFormatText = $("#numeric-translated").val();
+                }
+                else if (visualRepFormat == 2) {
+                    visualRepFormatText = $("#text-translated").val();
+
+                } else if (visualRepFormat == 3) {
+                    visualRepFormatText = ajaxModal.find(".related-classification-name a").text();
+
+                }
+
+                if (id == null || id == "") { // adding new question into table
+                    var lastQuestionPosition = 0;
+                    var lastQuestionWeight = 0;
+                    var questionsCount = $("#questions-items tbody tr").length;
+                    if ($("#questions-items").css('display') == "none") {
+                        $("#questions-items").show();
+                    }
+                    if (questionsCount > 0) {
+                        lastQuestionPosition = $('#questions-items tr:last .edit-question').data("position");
+                        lastQuestionWeight = $('#questions-items td:last input').val();
+                    }
+
+                    var row = $("<tr data-id ='" + data + "'>");
+
+                    row.addClass("draggable");
+                    row.addClass("ui-draggable");
+                    row.addClass("ui-droppable");
+                    
+                    var row_index=Math.random();
+
+                    var cell1 = $("<td>").html("<input type='checkbox' data-id='" + data + "' class='entry-id' />");
+                    var cell2 = $("<td>").html(ajaxModal.find(".question-name").val());
+                    var cell3 = $("<td>").html(ajaxModal.find(".question-description").val());
+                    var cell4 = $("<td>").html(visualRepFormatText);
+                    var cell5 = $("<td>").html("<a href='#' data-id='" + data + "' data-position='" + ++lastQuestionPosition + "' class = 'edit-question btn btn-info'>" + $("#edit-translated").val() + "</a>");
+                    var cell6 = $("<td>").html("<a href ='#' class = 'move-related-item move-down' data-id='" + data + "' data-direction='down' title = '" +
+                    $("#move-down-translated").val() + "' > Move down </a>" +
+                    " <a href ='#' class = 'move-related-item move-up' data-id='" + data + "' data-direction='up' title = '" + $("#move-up-translated").val() + "' > Move up </a>" +
+                    "<input type='hidden' id = 'question-weight-" + data + "' value = '" + (parseInt(lastQuestionWeight) + 1) + "' class='question-weight-field weight_' />" +
+                    '<input type="hidden" name="QuestionnaireEdit[QuestionModuleRelQuestions][' + row_index + '][questionId]" value="'+ data +'"/>' +
+                    '<input type="hidden" name="QuestionnaireEdit[QuestionModuleRelQuestions][' + row_index + '][weight]" value="999" class="question-weight-field weight_"/>');
+                    
+                    row.append(cell1).append(cell2).append(cell3).append(cell4).append(cell5).append(cell6);
+
+                    $('#questions-items').find("tbody").append(row);
+
+                    $(row).droppable({
+                        drop: questionDroppable
+                    });
+                }
+                else {
+                    var tableRows = $('#questions-items tr');
+                    //console.log(window.questionPosition);
+                    tableRows[window.questionPosition].children[1].textContent = ajaxModal.find(".question-name").val();
+                    tableRows[window.questionPosition].children[2].textContent = ajaxModal.find(".question-description").val();
+                    tableRows[window.questionPosition].children[3].textContent = visualRepFormatText;
+                }
+                delete window.questionPosition;
+
+                $('#ajax-modal').data('bs.modal').isShown = true;
+                $('#ajax-modal').modal('hide');
+
+            },
+            error: function (error) {
+                $('#ajax-modal').data('bs.modal').isShown = true;
+                //console.log(error);
+            }
+        });
+    });
+
+
+    $("#ajax-modal").off("change", ".visual-rep-modifier").on("change", ".visual-rep-modifier", function () {
+        /** Handling visual rep format */
+        var visualRepFormat = parseInt($("#ajax-modal").find(".visual-rep-format-select").val());
+        switch (visualRepFormat) {
+            case 1:
+                var visualRepInfo = $("#ajax-modal").find("[name=visual-rep-format-numeric]").val();
+
+                if (visualRepInfo % 1 == 0) {
+                    visualRepInfo = Math.floor(visualRepInfo).toString();
+                }
+
+                var format = $("<div>").addClass("visual-format-numeric").append($("<ul>"));
+
+                var decimalParts = visualRepInfo.split(".");
+                $.each(decimalParts, function (itemIndex, item) {
+                    for (var index = 0; index < item; index++) {
+                        format.find("ul").append($("<li>"))
+                    }
+
+                    if (itemIndex != decimalParts.length - 1) {
+                        format.find("ul").append($("<li>").addClass("format-dot").html('.'));
+                    }
+                });
+                $("#ajax-modal").find(".visual-format-preview").html(format);
+                $("#ajax-modal").find(".visual-rep-info-field").val(visualRepInfo);
+                break;
+            case 2:
+                var visualRepInfo = parseInt($("#ajax-modal").find("[name=visual-rep-format-text]").val());
+                var format = $("<div>").addClass("visual-format-text").css("width", visualRepInfo * 26 + "px");
+                $("#ajax-modal").find(".visual-format-preview").html(format);
+                $("#ajax-modal").find(".visual-rep-info-field").val(visualRepInfo);
+                break;
+            default:
+                break;
+        }
+    });
+
+
+    function addToUpdatedQuestions(question, updatedQuestions) {
+        var index = containsObject(question, updatedQuestions);
+        if (index > -1) {
+            updatedQuestions[index].weight = question.weight;
+        }
+        else {
+            updatedQuestions.push(question);
+        }
+    }
+
+    function containsObject(needle, haystack) {
+        for (var i = 0; i < haystack.length; i++) {
+            if (haystack[i].id === needle.id) {
+                return haystack.indexOf(haystack[i]);
+            }
+        }
+        return -1;
+    }
+    
+    
+    function getFileExtension(filename) {
+        // Use a regular expression to trim everything before final dot
+        var extension = filename.replace(/^.*\./, '');
+
+        // Iff there is no dot anywhere in filename, we would have extension == filename,
+        // so we account for this possibility now
+        if (extension == filename) {
+            extension = '';
+        } else {
+            // if there is an extension, we convert to lower case
+
+            extension = extension.toLowerCase();
+        }
+        return extension;
+    }
+    
+    
+    function visualRepOnChange() {
+        $("#ajax-modal").find(".visual-format-preview").html("");
+        if (!$("#ajax-modal").find("#alert-question-visual_rep_format").hasClass("hidden")) {
+            $("#ajax-modal").find("#alert-question-visual_rep_format").addClass("hidden");
+        }
+        switch (parseInt(this.value)) {
+            case 1:
+                $("#ajax-modal").find(".classification-table").addClass("hidden");
+                $("#ajax-modal").find(".visual-rep-format-2").addClass("hidden");
+                $("#ajax-modal").find(".visual-rep-format-ajax").removeClass("hidden");
+                $("#ajax-modal").find(".visual-rep-format-1").removeClass("hidden");
+                $("#ajax-modal").find(".remove-classification").addClass("hidden");
+
+                break;
+            case 2:
+                $("#ajax-modal").find(".classification-table").addClass("hidden");
+                $("#ajax-modal").find(".visual-rep-format-1").addClass("hidden");
+                $("#ajax-modal").find(".visual-rep-format-ajax").removeClass("hidden");
+                $("#ajax-modal").find(".visual-rep-format-2").removeClass("hidden");
+                $("#ajax-modal").find(".remove-classification").addClass("hidden");
+
+                break;
+            case 3:
+                $("#ajax-modal").find(".visual-rep-format-1").addClass("hidden");
+                $("#ajax-modal").find(".visual-rep-format-2").addClass("hidden");
+                $("#ajax-modal").find(".classification-table").removeClass("hidden");
+                $("#ajax-modal").find(".add-related-items.btn.btn-info").trigger("click");
+
+                break;
+            default:
+                $("#ajax-modal").find(".visual-rep-format-1").addClass("hidden");
+                $("#ajax-modal").find(".visual-rep-format-2").addClass("hidden");
+                $("#ajax-modal").find(".classification-table").addClass("hidden");
+                break;
+        }
+    }
+
+    
+    function questionVisualRepAjax(visualRepFormat, valRepFormat) {
+        if (valRepFormat == null) {
+            valRepFormat = 0;
+        }
+        $.ajax(Routing.generate('visual_rep_info', {
+            _locale: locale,
+            visualRepFormat: visualRepFormat,
+            valRepFormat: valRepFormat
+        })).done(function (data) {
+            var ajaxModal = $("#ajax-modal");
+            ajaxModal.find(".visual-rep-format-ajax").html(data);
+        });
+    }
+
+    //TODO: not sure, if used
+    function questionDroppable(event, ui) {
+        var tableRows = $("#questions-items tr");
+        var position = tableRows.index(ui.draggable);
+        var destination = tableRows.index(this);
+
+        var start = Math.min(position, destination);
+        var end = Math.max(position, destination);
+
+        var draggedWeight = parseInt(ui.draggable.find(".question-weight-field").val());
+        var droppedWeight = parseInt($(this).find(".question-weight-field").val());
+
+        var startWeight = Math.min(draggedWeight, droppedWeight);
+        tableRows.eq(destination).after(tableRows.eq(position));
+        //ToDo: add question to array
+        tableRows = $("#questions-items tr");
+
+        for (var i = start; i <= end; i++) {
+            //console.log(startWeight);
+            //console.log(tableRows.eq(i));
+            tableRows.eq(i).find(".question-weight-field").val(startWeight);
+            var question = new Object();
+            question.id = tableRows.eq(i).data("id");
+            question.weight = startWeight;
+
+            //addToUpdatedQuestions(question, updatedQuestions);
+            var index = containsObject(question, updatedQuestions);
+            if (index > -1) {
+                updatedQuestions[index].weight = question.weight;
+            }
+            else {
+                updatedQuestions.push(question);
+            }
+            startWeight += 1;
+        }
+        //console.log(updatedQuestions);
+
+        $(c.helper).remove();
+
+        if (position != destination) {
+            $('form .saved').hide();
+            $('form .unsaved').show();
+        }
+    }
+
+</script>
+
+
+{{ form_widget(form.published, {'attr': { 'class': 'node-published' }}) }}
+
+<div class="save-actions">
+    {{ form_widget(form.save, {'label': 'forms.labels.save'|trans}) }}
+    <a class="btn btn-cancel cancel-editing" href="#">{{ 'forms.cancel'|trans }}</a>
+    <a class="btn btn-cancel preview" style="left:200px;"
+       href="{{ path("questionnaire_data", {id : form.vars.value.id}) }}">{{ 'forms.preview'|trans }}</a>
+
+    <p class="saved">{{ 'forms.saved'|trans }}</p>
+
+    <p class="unsaved">{{ 'forms.unsaved'|trans }}</p>
+
+    <div class="publish-button">
+        <button type="button" class="btn btn-success  {% if form.published.vars.value != true %}hidden{% endif %}"
+                data-id="{{ questionnaireId }}">
+            {{ 'forms.published'|trans }}
+        </button>
+        <button type="button" class="btn btn-default {% if form.published.vars.value == true %}hidden{% endif %}"
+                data-id="{{ questionnaireId }}">
+            {{ 'forms.unpublished'|trans }}
+        </button>
+    </div>
+</div>
+
+{{ form_end(form) }}
+
+    {% javascripts '@WBQbankBundle/Resources/public/js/editModal.js' %}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+<script type="text/javascript">$(document).ready(function () {
+        $("a.preview").fancybox({type: 'ajax', autoSize: false, width: 650, height: 500});
+        var closeModals = $("button:data").filter(function () {
+            return $(this).data("dismiss") == "modal" && !($(this).hasClass("save-question"));
+        });
+        $.each(closeModals, function (key, value) {
+            $(value).off("click").on("click", function () {
+                var ajaxModal = $("#ajax-modal");
+                if (ajaxModal.data('bs.modal').isShown == false) {
+                    ajaxModal.data('bs.modal').isShown = true;
+                }
+                ;
+            });
+        });
+    });
+</script>

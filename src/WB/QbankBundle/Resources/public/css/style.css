@@ -1,0 +1,17 @@
+/*
+
+IMPORTANT:
+
+All styles live in the ../scss folder. To generate CSS files, use Compass or any other SASS/SCSS compilers.
+Current Compass compiler generates a single output file bootstrap.css with all other stylesheets imported in it.
+
+The file _qbank-styles.scss includes the custom non bootstrap css code for the Qbank. You should manually generate the
+bootstrap.min.css file yourself, it is not generated automatically by Compass.
+
+scss <dir> root:
+* Bootstrap <dir>           Has all Bootstrap scss components inside (almost )
+* bootstrap.scss            Includes are defined here - also only this file gets compiled into ../css/bootstrap.min.css
+* _qbank-styles.scss        Here we placed our style.css and started making it more dynamic
+* _qbank-variables.scss     All customizable variables are here. This is the place where users will play!
+
+*/

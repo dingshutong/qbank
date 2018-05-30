@@ -1,0 +1,40 @@
+{{ render(controller('WBQbankBundle:ConceptsBack:conceptGroupBreadcrumb', {
+    'grpId': grpId,
+    'public': false
+})) }}
+
+
+{{ form_start(form, { 'attr' : { 'class' : 'edit-group edit-group-group' }}) }}
+
+<input type="hidden" name="grpId" value="{{ grpId }}" />
+
+<div class="publish-button">
+    <button type="button" class="btn btn-success {% if form.published.vars.value != true %}hidden{% endif %}">{{ 'forms.published'|trans }}</button>
+    <button type="button" class="btn btn-default {% if form.published.vars.value == true %}hidden{% endif %}">{{ 'forms.unpublished'|trans }}</button>
+</div>
+
+{{ form_row(form.name, {'label': 'forms.labels.name'|trans, 'attr': {'class': 'group-name-field', 'spellcheck': 'true'}}) }}
+
+    {{ form_row(form.description, {'label': 'forms.labels.description'|trans, 'attr': {'spellcheck': 'true'}}) }}
+
+    {{ form_widget(form.published, {'attr': { 'class': 'group-published' }}) }}
+
+<div class="save-actions">
+    {{ form_widget(form.save, {'label': 'forms.labels.save'|trans}) }}
+    <a class="btn btn-cancel cancel-editing" href="#">{{ 'forms.cancel'|trans }}</a>
+    <a class="btn btn-cancel preview" style="left:200px;" href="{{ path("concept_group_data", {id : form.vars.value.id}) }}">{{ 'forms.preview'|trans }}</a>
+
+    <p class="saved">{{ 'forms.saved'|trans }}</p>
+    <p class="unsaved">{{ 'forms.unsaved'|trans }}</p>
+
+    <div class="publish-button">
+        <button type="button" class="btn btn-success {% if form.published.vars.value != true %}hidden{% endif %}">{{ 'forms.published'|trans }}</button>
+        <button type="button" class="btn btn-default {% if form.published.vars.value == true %}hidden{% endif %}">{{ 'forms.unpublished'|trans }}</button>
+    </div>
+</div>
+
+{{ form_end(form) }}
+<script type="text/javascript">$(document).ready(function () {
+        $("a.preview").fancybox({ type: 'ajax', autoSize: false, width: 650, height: 500 });
+    });
+</script>

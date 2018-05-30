@@ -1,0 +1,13 @@
+<table class="table">
+    {% for code in codes %}
+        <tr>
+            <td style="background-color: #93cddd;">{{ code.label }}</td>
+            <td style="background-color: #93cddd;">{{ code.value }}</td>
+            <td style="background-color: #93cddd;">
+                {% if (code.skipValue) %}
+                    &gt;  {{ code.skipValue }}
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+</table>

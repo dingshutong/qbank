@@ -1,0 +1,44 @@
+{% extends 'WBQbankBundle::base.html.twig' %}
+
+{% block body %}
+
+    {{ render(controller('WBQbankBundle:Default:headerMenu', { activeButton: active_button})) }}
+
+    <div class="ui-layout-center wide-layout">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>{{ 'forms.add_resource'|trans }}</h1>
+            </div>
+        </div>
+        <div class="row forms-content">
+            <div class="col-md-12">
+       
+                {{ form_start(form) }}
+                {{ form_row(form.docType, {'label': 'forms.labels.docType'|trans, 'attr': {'spellcheck': 'true'}}) }}
+                {{ form_row(form.title, {'label': 'forms.labels.title'|trans, 'attr': {'spellcheck': 'true'}}) }}
+                {{ form_row(form.subtitle, {'label': 'forms.labels.subtitle'|trans, 'attr': {'spellcheck': 'true'}}) }}
+                {{ form_row(form.alternateTitle, {'label': 'forms.labels.alt_title'|trans, 'attr': {'spellcheck': 'true'}}) }}
+                {{ form_row(form.description, {'label': 'forms.labels.description'|trans, 'attr': {'spellcheck': 'true'}}) }}                                
+                {{ form_row(form.creator, {'label': 'forms.labels.creator'|trans, 'attr': {'spellcheck': 'true'}}) }}                
+                {{ form_row(form.publisher, {'label': 'forms.labels.publisher'|trans, 'attr': {'spellcheck': 'true'}}) }}
+                {{ form_row(form.contributor, {'label': 'forms.labels.contributor'|trans, 'attr': {'spellcheck': 'true'}}) }}
+                {{ form_row(form.pubDate, {'label': 'forms.labels.pub_date'|trans}) }}
+                {{ form_row(form.language, {'label': 'forms.labels.language'|trans}) }}
+                {{ form_row(form.intIdentifier, {'label': 'forms.labels.int_identifier'|trans, 'attr': {'spellcheck': 'true'}}) }}
+                {{ form_row(form.copyright, {'label': 'forms.labels.copyright'|trans, 'attr': {'spellcheck': 'true'}}) }}
+                {{ form_row(form.url, {'label': 'forms.labels.url'|trans, 'attr': {'spellcheck': 'true'}}) }}                
+                {{ form_row(form.filename, {'label': 'forms.labels.filename'|trans, 'attr': {'spellcheck': 'true'}}) }}
+                {{ form_widget(form.published, {'attr': { 'class': 'node-published' }}) }}
+
+                <div class="save-actions">
+                    {{ form_widget(form.save, {'label': 'forms.labels.save'|trans}) }}
+                    <a class="btn btn-cancel" href="{{ path('resources') }}">{{ 'forms.cancel'|trans }}</a>
+                    <p class="saved">{{ 'forms.saved'|trans }}</p>
+                    <p class="unsaved">{{ 'forms.unsaved'|trans }}</p>
+                </div>
+                {{ form_end(form) }}
+            
+            </div>
+        </div>
+    </div>
+{% endblock %}

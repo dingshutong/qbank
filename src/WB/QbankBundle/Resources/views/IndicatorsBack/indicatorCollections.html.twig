@@ -1,0 +1,52 @@
+{% macro recursiveCategory(category) %}
+    <li class="folder {% if not category.published %}unpublished{% endif %}" data-grp="{{ category.id }}">{{ category.name }}
+        {% if category.sub|length %}
+            <ul>
+                {% for child in category.sub %}
+                    {{ _self.recursiveCategory(child) }}
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if category.items|length %}
+            <ul>
+                {% for indicator in category.items %}
+                    <li class="file {% if not indicator.published %}unpublished{% endif %}" data-jstree='{"type":"file"}' data-node="{{ indicator.id }}">{{ indicator.name }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+    </li>
+{% endmacro %}
+<span class="hidden" id="count-groups">{{ countCollections }}</span>
+<div class="node-groups-list collections">
+    <div id="node-groups-tree">
+    {% if collections %}
+        <ul>
+            {% for collection in collections %}
+                {{ _self.recursiveCategory(collection) }}
+            {% endfor %}
+        </ul>
+    {% endif %}
+    </div>
+</div>
+{#
+<span class="hidden" id="count-groups">{{ countCollections }}</span>
+<div class="node-groups-list collections">
+    collectino items
+    <div id="node-groups-tree">
+        <ul>
+            <li id="groups-root" data-jstree='{ "opened" : true }' data-grp="0">
+                {{ 'strings.indicator_collections'|trans }}
+                {% if collections %}
+                    <ul>
+                        {% for collection in collections %}
+                            {{ _self.recursiveCategory(collection) }}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+</div>
+#}

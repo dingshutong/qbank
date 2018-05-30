@@ -1,0 +1,151 @@
+
+<div class="resources-list-collapsable">
+<table class="table table-striped">
+{% for resource in resources %}
+<tr>
+     <td><span class="glyphicon glyphicon-file" aria-hidden="true"></span></td>
+     <td>
+          <div class="resource-header">               
+          <a class="collapsed resource-title" data-toggle="collapse" href="#{{resource.id}}" aria-expanded="false" aria-controls="resource-{{resource.id}}" title="Click to view details">
+               {% if resource.subtitle %}
+                {{ resource.title }}: {{ resource.subtitle}}
+               {% else %}
+                 {{ resource.title }} 
+               {% endif %}
+          </a>
+          </div>
+     </td>
+     <td>
+          {% if resource.url %}
+               <a href="{{ resource.url }}" title="{{ 'Download'|trans }}" target="_blank">
+                    <span class="glyphicon glyphicon-download resource-download-link" aria-hidden="true"></span>
+               </a>     
+          {% elseif resource.filename %}
+               <a target="_blank" href="{{ asset(resource.filename) }}">
+                    <span class="glyphicon glyphicon-download resource-download-link" aria-hidden="true"></span>
+               </a> 
+        {% endif %}
+     </td>
+<tr/>
+<tr class="collapse resource-body" id="resource-{{resource.id}}">
+     <td colspan="3">     
+<!--<div class="collapse resource-body" id="resource-{{resource.id}}">-->
+
+     <table class="table table-hover">
+        {#
+        {% if resource.title %}
+             <tr>
+             <td class="caption">{{ 'forms.labels.title'|trans }}</td>
+             <td>
+                    {% if resource.subtitle %}
+                       {{ resource.title }}: {{ resource.subtitle}}
+                    {% else %}
+                        {{ resource.title }} 
+                    {% endif %}
+             </td>
+             </tr>
+        {% endif %}
+          #}
+          
+        {% if resource.description %}
+          <tr>
+            <td class="caption">{{ 'forms.labels.description'|trans }}</td>
+            <td>{{ resource.description|nl2br }}</td>
+          </tr>  
+        {% endif %}
+
+        {% if resource.subtitle %}
+          <tr>   
+            <td class="caption">{{ 'forms.labels.subtitle'|trans }}</td>
+            <td>{{ resource.subtitle|nl2br }}</td>
+          </tr>  
+        {% endif %}
+
+        {% if resource.creator %}
+          <tr>   
+            <td class="caption">{{ 'forms.labels.creator'|trans }}</td>
+            <td>{{ resource.creator|nl2br }}</td>
+          </tr>  
+        {% endif %}
+
+        {% if resource.alternateTitle %}
+          <tr>   
+            <td class="caption">{{ 'forms.labels.alt_title'|trans }}</td>
+            <td>{{ resource.alternateTitle|nl2br }}</td>
+          </tr>  
+        {% endif %}
+
+        {% if resource.publisher %}
+          <tr>   
+            <td class="caption">{{ 'forms.labels.publisher'|trans }}</td>
+            <td>{{ resource.publisher|nl2br }}</td>
+          </tr>  
+        {% endif %}
+
+        {% if resource.contributor %}
+          <tr>   
+            <td class="caption">{{ 'forms.labels.contributor'|trans }}</td>
+            <td>{{ resource.contributor|nl2br }}</td>
+          </tr>  
+        {% endif %}
+
+        {% if resource.pubDate %}
+          <tr>   
+            <td class="caption">{{ 'forms.labels.pub_date'|trans }}</td>
+            <td>{{ resource.pubDate|nl2br }}</td>
+          </tr>
+        {% endif %}
+
+        {% if resource.language %}
+          <tr>   
+            <td class="caption">{{ 'forms.labels.language'|trans }}</td>
+            <td>{{ resource.language|nl2br }}</td>
+          </tr>  
+        {% endif %}
+
+        {% if resource.intIdentifier %}
+          <tr>   
+            <td class="caption">{{ 'forms.labels.int_identifier'|trans }}</td>
+            <td>{{ resource.intIdentifier|nl2br }}</t>
+          </tr>  
+        {% endif %}
+
+        {% if resource.copyright %}
+          <tr>   
+            <td class="caption">{{ 'forms.labels.copyright'|trans }}</td>
+            <td>{{ resource.copyright|nl2br }}</td>
+          </tr>  
+        {% endif %}
+
+        {% if resource.url %}
+          <tr>
+            <td class="caption">{{ 'forms.labels.location'|trans }}</td>
+            <td class="caption"><a target="_blank" href="{{ resource.url }}">{{ resource.url|nl2br }}</a></td>
+          </tr>  
+        {% endif %}
+      
+      {% if resource.filename %}
+          <tr>
+            <td class="caption">{{ 'forms.labels.location'|trans }}</td>
+            <td class="caption"><a target="_blank" href="{{ asset(resource.filename) }}">{{ app.request.schemeAndHttpHost~asset(resource.filename)}}</a></td>
+          </tr>  
+        {% endif %}  
+        
+     </table>
+     <!--</div>-->
+
+     
+     </td>
+      <!--      <td>
+               {% if resource.url %}
+                    <a href="{{ resource.url }}" title="{{ 'Download'|trans }}" target="_blank">
+                         <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+                    </a>     
+               {% endif %}
+            </td>
+     -->       
+</tr>
+{% endfor %}
+</table>
+
+</div>

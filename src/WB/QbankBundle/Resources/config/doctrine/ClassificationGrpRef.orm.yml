@@ -1,0 +1,29 @@
+WB\QbankBundle\Entity\ClassificationGrpRef:
+    type: entity
+    table: classification_grp_ref
+    repositoryClass: WB\QbankBundle\Entity\ClassificationGrpRefRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        weight:
+            type: integer
+    manyToOne:
+        classificationGroupId:
+            targetEntity: ClassificationGroups
+            inversedBy: classificationGrpRef
+            joinColumn:
+                name: classification_group_id
+                referencedColumnName: id
+                onDelete: CASCADE
+        classificationId:
+            targetEntity: Classifications
+            inversedBy: classificationGrpRef
+            joinColumn:
+                name: classification_id
+                referencedColumnName: id
+                onDelete: CASCADE
+    lifecycleCallbacks: {  }

@@ -1,0 +1,15 @@
+{% if classGroups|length %}
+    <select>
+
+        {% if pid == 0 %}
+            <option value="">- {{ 'strings.select_category'|trans }} -</option>
+        {% else %}
+            <option value="">- {{ 'strings.select_sub_category'|trans }} -</option>
+        {% endif %}
+
+        {% for classGroup in classGroups %}
+            <option value="{{ classGroup.id }}">{{ classGroup.name }}</option>
+        {% endfor %}
+
+    </select>
+{% endif %}

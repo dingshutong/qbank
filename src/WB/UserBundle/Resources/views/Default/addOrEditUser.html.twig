@@ -1,0 +1,68 @@
+{% extends 'WBQbankBundle::base.html.twig' %}
+
+{% block body %}
+
+    {{ render(controller('WBQbankBundle:Default:headerMenu', { activeButton: active_button})) }}
+
+    <div class="ui-layout-center wide-layout">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>{{ title }}</h1>
+            </div>
+        </div>
+        <div class="row forms-content">
+            <div class="col-md-12">
+
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                    {{ form_errors(form) }}
+
+                    <div>
+                        {{ form_row(form.username, {'label': 'users.username'|trans}) }}
+                    </div>
+
+                    <div>
+                        {{ form_row(form.email, {'label': 'users.email'|trans}) }}
+                    </div>
+                    <div>
+                        {{ form_row(form.firstName, {'label': 'users.first_name'|trans}) }}
+                    </div>
+                    <div>
+                        {{ form_row(form.lastName, {'label': 'users.last_name'|trans}) }}
+                    </div>
+                    <div>
+                        {{ form_row(form.company, {'label': 'users.company'|trans}) }}
+                    </div>
+                    <div>
+                        {{ form_row(form.phone, {'label': 'users.phone'|trans}) }}
+                    </div>
+                    <div>
+                        {{ form_row(form.countryId, {'label': 'users.country'|trans}) }}
+                    </div>
+                    {% if isEdit %}
+                    <h4>{{ 'users.message2'|trans }}</h4>
+                    {% endif %}
+                    <div>
+                        {{ form_row(form.plain_password) }}
+                    </div>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <div class="fields-check">
+                        {{ form_row(form.enabled, {'label': 'users.enabled'|trans}) }}
+                    </div>
+                    <div class="fields-check">
+                        {{ form_row(form.roles, {'label': 'users.roles'|trans}) }}
+                    </div>
+                    {% endif %}
+                    <div class="user-save-actions">
+                        {{ form_row(form.save, {'label': 'forms.labels.save'|trans}) }}
+                        <a class="btn btn-default" role="button" href="{{ path('wb_user_homepage') }}">{{ 'forms.cancel'|trans }}</a>
+                    </div>
+
+
+                {{ form_end(form) }}
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

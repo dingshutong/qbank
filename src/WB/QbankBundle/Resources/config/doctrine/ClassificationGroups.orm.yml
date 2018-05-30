@@ -1,0 +1,37 @@
+WB\QbankBundle\Entity\ClassificationGroups:
+    type: entity
+    table: classification_groups
+    repositoryClass: WB\QbankBundle\Entity\ClassificationGroupsRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        alternateId:
+            type: string
+            length: '100'
+            nullable: TRUE
+            column: alternate_id
+        name:
+            type: string
+            length: '255'
+        description:
+            type: text
+            nullable: TRUE
+        pid:
+            type: integer
+            nullable: TRUE
+        weight:
+            type: integer
+            nullable: TRUE
+        published:
+            type: boolean
+            nullable: TRUE
+    oneToMany:
+        classificationGrpRef:
+            targetEntity: ClassificationGrpRef
+            mappedBy: classificationGroupId
+            cascade: ["persist", "remove"]
+    lifecycleCallbacks: {  }

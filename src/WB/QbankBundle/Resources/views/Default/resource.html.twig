@@ -1,0 +1,72 @@
+<h2 class="resource-name">{{ resource.name }}</h2>
+
+        {% if resource.title %}
+             <h3>{{ 'forms.labels.title'|trans }}</h3>
+             <p>{{ resource.title|nl2br }}</p>
+        {% endif %}
+
+        {% if resource.description %}
+            <h3>{{ 'forms.labels.description'|trans }}</h3>
+            <p>{{ resource.description|nl2br }}</p>
+        {% endif %}
+
+        {% if resource.subtitle %}
+            <h3>{{ 'forms.labels.subtitle'|trans }}</h3>
+            <p>{{ resource.subtitle|nl2br }}</p>
+        {% endif %}
+
+        {% if resource.creator %}
+            <h3>{{ 'forms.labels.creator'|trans }}</h3>
+            <p>{{ resource.creator|nl2br }}</p>
+        {% endif %}
+
+        {% if resource.alternateTitle %}
+            <h3>{{ 'forms.labels.alt_title'|trans }}</h3>
+            <p>{{ resource.alternateTitle|nl2br }}</p>
+        {% endif %}
+
+        {% if resource.publisher %}
+            <h3>{{ 'forms.labels.publisher'|trans }}</h3>
+            <p>{{ resource.publisher|nl2br }}</p>
+        {% endif %}
+
+        {% if resource.contributor %}
+            <h3>{{ 'forms.labels.contributor'|trans }}</h3>
+            <p>{{ resource.contributor|nl2br }}</p>
+        {% endif %}
+
+        {% if resource.pubDate %}
+            <h3>{{ 'forms.labels.pub_date'|trans }}</h3>
+            <p>{{ resource.pubDate|nl2br }}</p>
+        {% endif %}
+
+        {% if resource.language %}
+            <h3>{{ 'forms.labels.language'|trans }}</h3>
+            <p>{{ resource.language|nl2br }}</p>
+        {% endif %}
+
+        {% if resource.intIdentifier %}
+            <h3>{{ 'forms.labels.int_identifier'|trans }}</h3>
+            <p>{{ resource.intIdentifier|nl2br }}</p>
+        {% endif %}
+
+        {% if resource.copyright %}
+            <h3>{{ 'forms.labels.copyright'|trans }}</h3>
+            <p>{{ resource.copyright|nl2br }}</p>
+        {% endif %}
+
+{#        {% if resource.url %}
+            <h3>{{ 'forms.labels.location'|trans }}</h3>
+            <a href="{{ resource.url }}">{{ resource.url|nl2br }}</a>
+        {% endif %}#}
+
+        {% if lightbox %}
+            <h3>{{ 'strings.link'|trans }}</h3>
+            <p>
+                {% if resource.url|length > 80 %}
+                    <a target="_blank" href="{{ resource.url }}">{{ resource.url|slice(0, 80) }}...</a>
+                {% else %}
+                    <a target="_blank" href="{{ resource.url }}">{{ resource.url }}</a>
+                {% endif %}
+            </p>
+        {% endif %}

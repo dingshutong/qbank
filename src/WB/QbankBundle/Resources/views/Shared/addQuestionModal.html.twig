@@ -1,0 +1,62 @@
+<div class="hidden-form-elements">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">{{ 'forms.labels.add_question'|trans }}</h4>
+    </div>
+    <div class="modal-body">
+
+        <div class="modal-data">
+            {{ form_row(form.name, {'label': 'forms.labels.name'|trans, 'attr': {'class': 'new-question-name', 'spellcheck': 'true' }}) }}
+            {{ form_row(form.description, {'label': 'forms.labels.description'|trans, 'attr': {'class': 'new-question-description', 'spellcheck': 'true' }}) }}
+            {{ form_row(form.preText, {'label': 'forms.labels.pre_text'|trans}) }}
+            {{ form_row(form.literalText, {'label': 'forms.labels.literal_text'|trans}) }}
+            {{ form_row(form.postText, {'label': 'forms.labels.post_text'|trans}) }}
+            {{ form_row(form.visualRepFormat, {'label': 'forms.labels.visul_rep_format'|trans, 'attr' : {'class' : 'visual-rep-format-select' }}) }}
+            <div class="visual-rep-formats-holder">
+                <div class="visual-rep-format-1 hidden">
+                    <input type="text" class="visual-rep-modifier" name="visual-rep-format-numeric"/>
+                </div>
+                <div class="visual-rep-format-2 hidden">
+                    <input type="number" class="visual-rep-modifier" name="visual-rep-format-text"/>
+                </div>
+            </div>
+            <div class="visual-format-preview">
+
+            </div>
+            {{ form_row(form.valRepFormat, {'attr' : {'class' : 'visual-rep-info-field hidden' }}) }}
+
+            <div class="visual-rep-format-3 hidden">
+                <fieldset>
+                    <div class="form-buttons">
+                        <a class="add-related-items btn btn-info"
+                            role="button"
+                            data-toggle='modal'
+                            href="{{ path('classifications_modal',  {'entityName' : 'questions', 'propertyName' : 'questionsRelClassifications'}) }}"
+                            data-target="#secondary-modal" data-container="#classifications-items">{{ 'forms.add'|trans }}</a>
+                        <img class="ajax-loader-inline"
+                            src="{{ asset('bundles/wbqbank/images/ajax-loader.gif') }}"
+                            alt="Loading...">
+                        <a class="remove-related-items btn btn-danger" role="button">{{ 'forms.remove'|trans }}</a>
+                    </div>
+
+                    <div class="related-classification-name"></div>
+
+                    <div class="form-related-items">
+                    </div>
+                </fieldset>
+
+                {{ form_row(form.classificationId, {'attr' : {'class' : 'classification-id-field' }}) }}
+
+            </div>
+            {{ form_row(form.instructions, {'label': 'forms.labels.int_instructions'|trans}) }}
+            {{ form_row(form.notes, {'label': 'forms.labels.notes'|trans}) }}
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'forms.close'|trans }}</button>
+        <button type="button" class="save-question btn btn-info" data-id="__name__" data-index="__name__"
+                data-dismiss="modal">{{ 'forms.save'|trans }}
+        </button>
+    </div>
+</div>

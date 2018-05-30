@@ -1,0 +1,15 @@
+{% if indGroups|length %}
+    <select>
+
+        {% if pid == 0 %}
+            <option value="">- {{ 'strings.select_category'|trans }} -</option>
+        {% else %}
+            <option value="">- {{ 'strings.select_sub_category'|trans }} -</option>
+        {% endif %}
+
+        {% for indGroup in indGroups %}
+            <option value="{{ indGroup.id }}">{{ indGroup.name }}</option>
+        {% endfor %}
+
+    </select>
+{% endif %}

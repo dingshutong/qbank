@@ -1,0 +1,17 @@
+parameters:
+#    wb_qbank.example.class: WB\QbankBundle\Example
+
+services:
+#    wb_qbank.example:
+#        class: %wb_qbank.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+    lrotherfield.form.type.hidden_entity:
+            class: Lrotherfield\Component\Form\Type\HiddenEntityType
+            arguments:
+                - @doctrine.orm.entity_manager
+            tags:
+                - { name: form.type, alias: hidden_entity }
+    wb.twig.filters:
+            class: WB\QbankBundle\Twig\Filters
+            tags:
+                - { name: twig.extension }

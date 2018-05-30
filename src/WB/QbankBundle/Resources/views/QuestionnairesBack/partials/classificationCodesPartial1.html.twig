@@ -1,0 +1,26 @@
+<table class="table">
+    <tr>
+        <th>{{ 'forms.labels.label'|trans }}</th>
+        <th>{{ 'forms.label.value'|trans }}</th>
+        <th>{{ 'forms.label.skip'|trans }}</th>
+    </tr>
+    {% for code in questionCodes %}
+        <tr>
+            <td>{{ code.label }}</td>
+            <td>{{ code.value }}</td>
+            <td>
+                <div id="questionnaires_questionnaireModuleQuestions_{{ questionIndex }}_questionsRelClassifications_{{ loop.index - 1 }}">
+                    <div>
+                        <input id="questionnaires_questionnaireModuleQuestions_{{ questionIndex }}_questionsRelClassifications_{{ loop.index - 1 }}_classificationCodeId"
+                               type="hidden" value="{{ code.id }}"
+                               name="questionnaires[questionnaireModuleQuestions][{{ questionIndex }}][questionsRelClassifications][{{ loop.index - 1 }}][classificationCodeId]"/>
+
+                        <input id="questionnaires_questionnaireModuleQuestions_{{ questionIndex }}_questionsRelClassifications_{{ loop.index - 1 }}_skipValue"
+                               type="text"
+                               name="questionnaires[questionnaireModuleQuestions][{{ questionIndex }}][questionsRelClassifications][{{ loop.index - 1 }}][skipValue]"/>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+</table>

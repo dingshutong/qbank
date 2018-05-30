@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Page Not Found - QBank</title>
+        <link rel="stylesheet" href="{{ asset('bundles/wbqbank/css/bootstrap.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('bundles/wbqbank/css/style.css') }}" />
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,800,600,700' rel='stylesheet' type='text/css'>
+    </head>
+    <body>
+
+        <div id="page-wrapper">
+            <div id="page">
+                <div id="header">
+                    <div id="logo">
+                        <a href="http://www.ihsn.org/home/">
+                            <img src="{{ asset('bundles/wbqbank/images/ihsn_logo.png') }}" alt="International Household Survey Network">
+                        </a>
+                    </div>
+                    <h1>IHSN Question Bank</h1>
+                </div>
+                <div id="page-inside-wrapper">
+
+                    <div class="container error-page">
+                        <div class="content">
+                            <img class="error-image" src="{{ asset('bundles/wbqbank/images/error.png') }}" alt="error" />
+                            <div class="content-text">
+                                <h1>404</h1>
+                                <h2>Page Not Found</h2>
+                                <p>We cannot find the page you are looking for. You can go <br> to the <a href="{{ path('wb_qbank_homepage') }}">home page</a> and start over</p>
+                                <a class="go-back-button" onclick="history.go(-1);">&lsaquo; Go back</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

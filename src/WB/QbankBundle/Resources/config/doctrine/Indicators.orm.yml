@@ -1,0 +1,125 @@
+WB\QbankBundle\Entity\Indicators:
+    type: entity
+    table: indicators
+    repositoryClass: WB\QbankBundle\Entity\IndicatorsRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        alternateId:
+            type: string
+            length: '100'
+            column: alternate_id
+            nullable: TRUE
+        name:
+            type: string
+            length: '255'
+        description:
+            type: text
+            nullable: TRUE
+        dataSource:
+            type: text
+            column: data_source
+            nullable: TRUE
+        rationale:
+            type: text
+            nullable: TRUE
+        methodology:
+            type: text
+            nullable: TRUE
+        frequency:
+            type: text
+            nullable: TRUE
+        dissagregation:
+            type: text
+            nullable: TRUE
+        limitation:
+            type: text
+            nullable: TRUE
+        qualityControl:
+            type: text
+            column: quality_control
+            nullable: TRUE
+        methodImputation:
+            type: text
+            column: method_imputation
+            nullable: TRUE
+        unitMeasurement:
+            type: text
+            column: unit_measurement
+            nullable: TRUE
+        methodProjection:
+            type: text
+            column: method_projection
+            nullable: TRUE
+        version:
+            type: string
+            length: '255'
+            nullable: TRUE
+        versionDate:
+            type: string
+            length: '50'
+            column: version_date
+            nullable: TRUE
+        notes:
+            type: text
+            nullable: TRUE
+        published:
+            type: boolean
+            nullable: TRUE
+        weight:
+            type: integer
+            nullable: TRUE
+        modified:
+            type: datetime
+            nullable: TRUE
+        created:
+            type: datetime
+            nullable: TRUE
+    oneToMany:
+        indicatorAlias:
+            targetEntity: IndicatorAliases
+            mappedBy: indId
+            cascade: ["persist", "remove"]
+        indicatorGrpRef:
+            targetEntity: IndGrpRef
+            mappedBy: indId
+            cascade: ["persist", "remove"]
+        indicatorCollRef:
+            targetEntity: IndCollectionRef
+            mappedBy: indId
+            cascade: ["persist", "remove"]
+        indicatorRelTerms:
+            orderBy: { 'weight': 'ASC' }
+            targetEntity: IndicatorRelTerms
+            mappedBy: indId
+            cascade: ["persist", "remove"]
+        indicatorRelResources:
+            orderBy: { 'weight': 'ASC' }
+            targetEntity: IndicatorRelResources
+            mappedBy: indId
+            cascade: ["persist", "remove"]
+        indicatorRelSources:
+            orderBy: { 'weight': 'ASC' }
+            targetEntity: IndicatorRelSources
+            mappedBy: indId
+            cascade: ["persist", "remove"]    
+        indicatorRelModules:
+            orderBy: { 'weight': 'ASC' }
+            targetEntity: IndicatorRelModules
+            mappedBy: indId
+            cascade: ["persist", "remove"]
+        indicatorRelClassifications:
+            orderBy: { 'weight': 'ASC' }
+            targetEntity: IndicatorRelClassifications
+            mappedBy: indId
+            cascade: ["persist", "remove"]
+        indicatorRelCustodians:
+            orderBy: { 'weight': 'ASC' }
+            targetEntity: IndicatorRelCustodians
+            mappedBy: indId
+            cascade: ["persist", "remove"]
+    lifecycleCallbacks: {  }

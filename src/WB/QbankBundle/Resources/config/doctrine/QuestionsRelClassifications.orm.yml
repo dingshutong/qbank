@@ -1,0 +1,37 @@
+WB\QbankBundle\Entity\QuestionsRelClassifications:
+    type: entity
+    table: questions_rel_classifications
+    repositoryClass: WB\QbankBundle\Entity\QuestionsRelClassificationsRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        skipValue:
+            type: text
+            column: skip_value
+            nullable: TRUE
+    manyToOne:
+        questionId:
+            type: integer
+            column: question_id
+            nullable: TRUE
+            targetEntity: QuestionnaireModuleQuestions
+            inversedBy: questionsRelClassifications
+            joinColumn:
+                name: question_id
+                referencedColumnName: id
+                onDelete: CASCADE
+        classificationCodeId:
+            type: integer
+            column: classification_code_id
+            nullable: TRUE
+            targetEntity: ClassificationCodes
+            inversedBy: questionsRelClassifications
+            joinColumn:
+                name: classification_code_id
+                referencedColumnName: id
+                onDelete: CASCADE
+    lifecycleCallbacks: {  }

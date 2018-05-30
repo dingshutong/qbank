@@ -1,0 +1,14 @@
+api_demos:
+    type: rest
+    resource: "@WBQbankBundle/Controller/Api/DemosController.php"
+    name_prefix: api_demo_
+
+api_indicators:
+    type: rest
+    resource: "@WBQbankBundle/Controller/Api/IndicatorsController.php"
+    name_prefix: api_indicators_
+
+api_questionnaires:
+    type: rest
+    resource: "@WBQbankBundle/Controller/Api/QuestionnairesController.php"
+    name_prefix: api_questionnaires_

@@ -1,0 +1,18 @@
+<table>
+    <thead>
+        <tr>
+            <th>{{ 'forms.labels.label'|trans }}</th>
+            <th>{{ 'forms.label.value'|trans }}</th>
+            <th>{{ 'forms.label.skip_value'|trans }}</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for code in form.skipValue %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td>{{ form_widget(form.skipValue) }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

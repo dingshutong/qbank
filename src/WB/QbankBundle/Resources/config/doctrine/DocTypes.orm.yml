@@ -1,0 +1,18 @@
+WB\QbankBundle\Entity\DocTypes:
+    type: entity
+    table: doctypes
+    repositoryClass: WB\QbankBundle\Entity\DocTypesRepository
+    id:
+        id:
+            type: integer
+            id: true
+    fields:
+        title:
+            type: string
+            length: 255
+    oneToMany:
+        resources:
+            targetEntity: WB\QbankBundle\Entity\Resources
+            mappedBy: docType
+            cascade: ["persist"]
+    lifecycleCallbacks: {  }

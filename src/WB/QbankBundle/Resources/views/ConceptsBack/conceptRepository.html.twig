@@ -1,0 +1,12 @@
+<span class="hidden" id="count-nodes">{{ countConcepts }}</span>
+<div id="node-repository-tree">
+            <ul id="repo-root" data-jstree='{ "opened" : true, "selected" : true }'>
+                {% for concept in concepts %}
+                    {% if concept.termGrpRef|length %}
+                        <li class="file {% if not concept.published %}unpublished{% endif %}" data-jstree='{"type":"file"}' data-node="{{ concept.id }}" data-refgrp="{% for ref in concept.termGrpRef %},{{ ref.termGroupId.id }}{% endfor %}">{{ concept.name }}</li>
+                    {% else %}
+                        <li class="file unclassified {% if not concept.published %}unpublished{% endif %}" data-jstree='{"type":"file"}' data-node="{{ concept.id }}">{{ concept.name }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+</div>

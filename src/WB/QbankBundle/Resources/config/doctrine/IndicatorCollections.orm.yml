@@ -1,0 +1,38 @@
+WB\QbankBundle\Entity\IndicatorCollections:
+    type: entity
+    table: indicator_collections
+    repositoryClass: WB\QbankBundle\Entity\IndicatorCollectionsRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        alternateId:
+            type: string
+            length: '100'
+            nullable: TRUE
+        name:
+            type: string
+            length: '255'
+        description:
+            type: text
+            nullable: TRUE
+        pid:
+            type: integer
+            nullable: TRUE
+        weight:
+            type: integer
+            nullable: TRUE
+        published:
+            type: boolean
+            nullable: TRUE
+
+    oneToMany:
+        indicatorCollRef:
+            targetEntity: IndCollectionRef
+            mappedBy: indCollId
+            cascade: ["persist", "remove"]
+
+    lifecycleCallbacks: {  }

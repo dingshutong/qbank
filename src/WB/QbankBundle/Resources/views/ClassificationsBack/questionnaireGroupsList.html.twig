@@ -1,0 +1,13 @@
+{% if questGroups|length %}
+    <select>
+
+        {% if pid != 0 %}
+            <option value="">---</option>
+        {% endif %}
+
+        {% for questGroup in questGroups %}
+            <option value="{{ questGroup.id }}">{{ questGroup.name }}</option>
+        {% endfor %}
+
+    </select>
+{% endif %}

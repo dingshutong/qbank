@@ -1,0 +1,34 @@
+WB\QbankBundle\Entity\QuestionnaireGroupRelModules:
+    type: entity
+    table: questionnaire_group_rel_modules
+    repositoryClass: WB\QbankBundle\Entity\QuestionnaireGroupRelModulesRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        weight:
+            type: integer
+            nullable: TRUE
+    manyToOne:
+        questGroupId:
+            type: integer
+            column: quest_group_id
+            targetEntity: QuestionnaireGroups
+            inversedBy: questionnaireGroupRelModules
+            joinColumn:
+                name: quest_group_id
+                referencedColumnName: id
+                onDelete: CASCADE
+        questModuleId:
+            type: integer
+            column: quest_module_id
+            targetEntity: QuestionnaireModules
+            inversedBy: questionnaireGroupRelModules
+            joinColumn:
+                name: quest_module_id
+                referenceColumnName: id
+                onDelete: CASCADE
+    lifecycleCallbacks: {  }

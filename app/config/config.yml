@@ -1,0 +1,166 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+
+framework:
+    #esi:             ~
+    #translator: ~
+    translator:     { fallback: en }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enabled: true, enable_annotations: true }
+    templating:
+        engines: ['twig']
+        #assets_version: SomeVersionScheme
+    #default_locale:  "%locale%"
+    default_locale:  en
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        # handler_id set to null will use default session handler from php.ini
+        handler_id:  ~
+    fragments:       ~
+    http_method_override: true
+    serializer:
+        enabled: true
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    globals:
+        ga_tracking: "%ga_tracking%"
+        resources_upload_path: %resources_upload_path%
+
+# Assetic Configuration
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller: false
+    bundles:        [ ]
+    #java: /usr/bin/java
+    filters:
+        cssrewrite: ~
+        #closure:
+        #    jar: "%kernel.root_dir%/Resources/java/compiler.jar"
+        #yui_css:
+        #    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   "%database_driver%"
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+        # if using pdo_sqlite as your database driver, add the path in parameters.yml
+        # e.g. database_path: "%kernel.root_dir%/data/data.db3"
+        # path:     "%database_path%"
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        auto_mapping: true
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    spool:     { type: memory }
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: WB\UserBundle\Entity\User
+
+services:
+    helpers:
+        class: WB\QbankBundle\Helper\Helpers
+        arguments:
+            entityManager: "@doctrine.orm.entity_manager"
+    wb_locale.locale_listener:
+        class: WB\QbankBundle\EventListener\LocaleListener
+        arguments: ["%kernel.default_locale%"]
+        tags:
+            - { name: kernel.event_subscriber }    
+    
+    qbank.pdf_handler:
+        class: WB\QbankBundle\View\PDFViewHandler
+            
+    qbank.view_handler:
+        parent: fos_rest.view_handler.default
+        calls:
+            - ['registerHandler',['pdf',[@qbank.pdf_handler,'createResponse']]]
+
+jms_i18n_routing:
+    default_locale: en
+    locales: [fr, en]
+    strategy: prefix_except_default
+
+#Resources Configuration
+parameters:
+    resources-upload-path: "uploads/resources/"    
+    
+
+dizda_cloud_backup:
+    cloud_storages:
+        gaufrette:
+            service_name: foo_filesystem
+
+    # cloud_storages:
+    #     dropbox:
+    #         user:        %dizda_cloud_dropbox_user%
+    #         password:    %dizda_cloud_dropbox_password%
+    #         remote_path: %dizda_cloud_dropbox_remote_path%
+
+    databases:
+        # mongodb:
+        #     all_databases: false
+        #     database: %dizda_cloud_mongodb_user%
+        #     db_user:  %dizda_cloud_mongodb_user%
+        #     db_pass:  %dizda_cloud_mongodb_password%
+
+        mysql:
+            # When no parameters is specified under mysql, the bundle taking those from parameters.yml
+
+        # postgresql:
+            # When no parameters is specified under postgresql, the bundle taking those from parameters.yml
+
+
+knp_gaufrette:
+    adapters:
+        foo:
+            local:
+                directory: "%kernel.root_dir%/../web/uploads"
+                create: true
+    filesystems:
+        bar:
+            adapter:    foo
+            alias:      foo_filesystem
+            
+fos_rest:
+    view:
+        view_response_listener: 'force'
+        formats:
+            json: true
+            xml: true
+            pdf: true
+        mime_types: {'pdf': ['application/pdf']}
+    format_listener:
+            enabled: true
+            rules:
+                - {path: ^/api.*\.pdf$, priorities: [pdf], fallback_format: json, prefer_extension: false}
+                - {path: ^/api.*\.json$, priorities: [json], fallback_format: json, prefer_extension: true}
+                - {path: ^/api.*\.xml$, priorities: [xml], fallback_format: json, prefer_extension: true}
+                - {path: ^/api, priorities: [json,xml], fallback_format: json, prefer_extension: true}
+                - { path: '^/', stop: true } #disable the rules for rest of the application
+    service:
+        view_handler: qbank.view_handler
+            

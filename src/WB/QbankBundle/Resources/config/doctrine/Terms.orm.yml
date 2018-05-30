@@ -1,0 +1,68 @@
+WB\QbankBundle\Entity\Terms:
+    type: entity
+    table: terms
+    repositoryClass: WB\QbankBundle\Entity\TermsRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        alternateId:
+            type: string
+            length: '100'
+            column: alternate_id
+            nullable: TRUE
+        name:
+            type: string
+            length: '255'
+        description:
+            type: text
+            nullable: TRUE
+        notes:
+            type: text
+            nullable: TRUE
+        weight:
+            type: integer
+            nullable: TRUE
+        published:
+            type: boolean
+            nullable: TRUE
+        created:
+            type: datetime
+            nullable: TRUE
+        changed:
+            type: datetime
+            nullable: TRUE
+    oneToMany:
+        termGrpRef:
+            targetEntity: TermGrpRef
+            mappedBy: termId
+            cascade: ["persist", "remove"]
+        indicatorRelTerms:
+            orderBy: { 'weight': 'ASC' }
+            targetEntity: IndicatorRelTerms
+            mappedBy: termId
+            cascade: ["persist", "remove"]
+        termRelResources:
+            orderBy: { 'weight': 'ASC' }
+            targetEntity: TermRelResources
+            mappedBy: termId
+            cascade: ["persist", "remove"]
+        termRelSources:
+            orderBy: { 'weight': 'ASC' }
+            targetEntity: TermRelSources
+            mappedBy: termId
+            cascade: ["persist", "remove"]    
+        termRelCustodians:
+            orderBy: { 'weight': 'ASC' }
+            targetEntity: TermRelCustodians
+            mappedBy: termId
+            cascade: ["persist", "remove"]
+        classificationRelTerms:
+            orderBy: { 'weight': 'ASC' }
+            targetEntity: ClassificationRelTerms
+            mappedBy: termId
+            cascade: ["persist", "remove"]
+    lifecycleCallbacks: {  }

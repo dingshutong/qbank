@@ -1,0 +1,74 @@
+{% if public %}
+
+    <ul class="groups-breadcrumb bc-groups-public">
+        <li><a href="{{ path('wb_qbank_homepage') }}">{{ 'strings.home'|trans }}</a> /</li>
+        <li><a href="{{ path('concepts') }}">{{ 'strings.concepts'|trans }}</a> /</li>
+        <li class="bc-item-last">{{ concName }}</li>
+    </ul>
+
+{% else %}
+
+    <div id="breadcrumbs-modal-wrapper">
+        <div id="breadcrumbs-modal-content" class="hidden">
+            {% set counter = 0 %}
+
+            {% if parentGroups|length %}
+                <h3>{{ 'strings.concept_groups'|trans }}:</h3>
+                {% for groups in parentGroups %}
+
+                    {% set counter = counter + 1 %}
+                    <ul class="bc-single bc-groups">
+                        <li class="icon-button home-button"><a href="{{ path('wb_qbank_backend') }}">{{ 'strings.home'|trans }}</a></li>
+                        <li><a href="{{ path('concepts_back') }}">{{ 'strings.concepts'|trans }}</a></li>
+
+                        {% for gp in groups.parents %}
+                            <li class="bc-item" data-grp="{{ gp.grpId }}"> | <a href="#">{{ gp.grpName }}</a></li>
+                        {% endfor %}
+
+                        <li class="bc-item" data-grp="{{ groups.id }}">| <a href="#">{{ groups.name }}</a></li>
+                        <li class="bc-item-last" data-node="{{ concId }}">| {{ concName }}
+                            <a class="icon-button edit-button" href="#">{{ 'forms.edit'|trans }}</a>
+                            <a class="icon-button btn btn-danger save-changes-button" href="#">{{ 'forms.save_changes'|trans }}</a>
+                            <a class="icon-button delete-button" href="#"
+                                data-content="<a href='#' role='button' class='btn btn-default cancel'>{{ 'forms.cancel'|trans }}</a>
+                                              <a href='#' role='button' class='btn btn-danger yes'>{{ 'forms.yes'|trans }}</a>"
+                                data-original-title="{{ 'forms.delete'|trans }}?"
+                                data-html="true">{{ 'forms.delete'|trans }}</a>
+                        </li>
+                    </ul>
+                {% endfor %}
+            {% endif %}
+
+            <h3>{{ 'strings.create_new_taxonomy'|trans }}</h3>
+            <ul class="bc-single-new">
+                <li class="icon-button home-button">
+                    <a href="{{ path('wb_qbank_backend') }}">{{ 'strings.home'|trans }}</a>
+                </li>
+                <li>
+                    <a href="{{ path('concepts_back') }}">{{ 'strings.concepts'|trans }}</a>
+                    <span>&rsaquo;</span>
+                </li>
+                <li class="bc-item-new bc-root-category">
+                    {{ render(controller('WBQbankBundle:ConceptsBack:conceptGroupsList', {
+                        'pid': 0
+                    })) }}
+                    <span>&rsaquo;</span>
+                </li>
+                <li class="bc-item-new-last" data-node="{{ concId }}">
+                    {{ concName }}
+                    <button type="button" class="btn btn-info" disabled="disabled">{{ 'forms.apply'|trans }}</button>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="breadcrumb-header">
+        <ul>
+            <li class="bc-root">{{ 'strings.home'|trans }}</li>
+            <li class="bc-categories"><a href="#">{{ 'strings.assigned'|trans }} <span id="categories-counter">{{ counter }}</span> {{ 'strings.categories'|trans }}</a></li>
+            <li class="bc-node">{{ concName }}</li>
+        </ul>
+    </div>
+
+{% endif %}

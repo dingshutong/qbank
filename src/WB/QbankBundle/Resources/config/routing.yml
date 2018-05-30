@@ -1,0 +1,837 @@
+wb_qbank_homepage:
+    pattern:  /
+    defaults: { _controller: WBQbankBundle:Default:index }
+
+wb_qbank_backend:
+    pattern:  /admin/backend
+    defaults: { _controller: WBQbankBundle:Default:indexBackend }
+
+# Indicators back #
+
+publish_unpublish_indicator:
+    pattern:  /admin/publish_indicator/{id}/{publish}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:publishUnpublish, id:null,publish:null}
+    options:
+        expose: true
+
+publish_unpublish_indicator_group:
+    pattern:  /admin/publish_indicator_group/{id}/{publish}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:publishUnpublishGroup, id:null,publish:null}
+    options:
+        expose: true
+
+publish_unpublish_indicator_collection:
+    pattern:  /admin/publish_indicator_collection/{id}/{publish}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:publishUnpublishCollection, id:null,publish:null}
+    options:
+        expose: true
+
+# Indicators front #
+
+indicators:
+    pattern:  /indicators
+    defaults: { _controller: WBQbankBundle:Default:indicators }
+
+indicator_group_data:
+    pattern:  /indicator-group-data/{id}
+    defaults: { _controller: WBQbankBundle:Default:indicatorGroupData }
+    options:
+        expose: true
+
+indicator_collection_data:
+    pattern:  /indicator-collection-data/{id}
+    defaults: { _controller: WBQbankBundle:Default:indicatorCollectionData }
+    options:
+        expose: true
+
+indicator_data:
+    pattern:  /indicator-data/{id}
+    defaults: { _controller: WBQbankBundle:Default:indicatorData }
+    options:
+        expose: true
+
+# Concepts back #
+
+publish_unpublish_concept:
+    pattern:  /admin/publish_concept/{id}/{publish}
+    defaults: { _controller: WBQbankBundle:ConceptsBack:publishUnpublish, id:null,publish:null}
+    options:
+        expose: true
+
+publish_unpublish_concept_group:
+    pattern:  /admin/publish_concept_group/{id}/{publish}
+    defaults: { _controller: WBQbankBundle:ConceptsBack:publishUnpublishGroup, id:null,publish:null}
+    options:
+        expose: true
+
+# Concepts front #
+
+concepts:
+    pattern:  /concepts
+    defaults: { _controller: WBQbankBundle:Default:concepts }
+
+concept_group_data:
+    pattern:  /concept-group-data/{id}
+    defaults: { _controller: WBQbankBundle:Default:conceptGroupData }
+    options:
+        expose: true
+
+concept_data:
+    pattern:  /concept-data/{id}/{lightbox}
+    defaults: { _controller: WBQbankBundle:Default:conceptData, lightbox: false }
+    options:
+        expose: true
+
+
+# Classifications back #
+publish_unpublish_classification:
+    pattern:  /admin/publish_classification/{id}/{publish}
+    defaults: { _controller: WBQbankBundle:ClassificationsBack:publishUnpublish, id:null,publish:null}
+    options:
+        expose: true
+
+publish_unpublish_classification_group:
+    pattern:  /admin/publish_classification_group/{id}/{publish}
+    defaults: { _controller: WBQbankBundle:ClassificationsBack:publishUnpublishGroup, id:null,publish:null}
+    options:
+        expose: true
+
+# Classifications front #
+
+classifications:
+    pattern:  /classifications
+    defaults: { _controller: WBQbankBundle:Default:classifications }
+
+classification_group_data:
+    pattern:  /classification-group-data/{id}
+    defaults: { _controller: WBQbankBundle:Default:classificationGroupData }
+    options:
+        expose: true
+
+classification_data:
+    pattern:  /classification-data/{id}/{lightbox}
+    defaults: { _controller: WBQbankBundle:Default:classificationData, lightbox: false }
+    options:
+        expose: true
+
+
+# Questionnaires front #
+
+questionnaires:
+    pattern:  /questionnaires
+    defaults: { _controller: WBQbankBundle:Default:questionnaires }
+
+questionnaire_group_data:
+    pattern:  /questionnaire-group-data/{id}/{lightbox}
+    defaults: { _controller: WBQbankBundle:Default:questionnaireGroupData, lightbox: false }
+    options:
+        expose: true
+
+questionnaire_data:
+    pattern:  /questionnaire-data/{id}/{questionId}/{lightbox}
+    defaults: { _controller: WBQbankBundle:Default:questionnaireData, questionId: false, lightbox: false }
+    options:
+        expose: true
+
+question_data:
+    pattern:  /question-data/{id}/{lightbox}
+    defaults: { _controller: WBQbankBundle:Default:questionData, lightbox: false }
+    options:
+        expose: true
+
+visual_rep_format:
+    pattern: visual-rep-format/{visualRepFormat}/{valRepFormat}/{isFront}/{questionId}/{classification}
+    defaults: {_controller: WBQbankBundle:Default:visualRepFormat, isFront:false,classification:false}
+    options:
+        expose: true
+
+# Resources back #
+publish_unpublish_resource:
+    pattern:  /admin/publish_resource/{id}/{publish}
+    defaults: { _controller: WBQbankBundle:Resources:publishUnpublish, id:null,publish:null}
+    options:
+        expose: true
+
+# Resources front #
+
+resource:
+    pattern:  /resource-data/{id}/{lightbox}
+    defaults: { _controller: WBQbankBundle:Default:resource, lightbox: false }
+
+
+# Organizations front #
+
+publish_unpublish_organization:
+    pattern:  /admin/publish_organization/{id}/{publish}
+    defaults: { _controller: WBQbankBundle:Organizations:publishUnpublish, id:null,publish:null}
+    options:
+        expose: true
+
+organization:
+    pattern:  /organization-data/{id}/{lightbox}
+    defaults: { _controller: WBQbankBundle:Default:organization, lightbox: false }
+
+
+# Indicators routing
+
+indicators_back:
+    pattern:  /admin/indicators
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:indicators }
+
+indicator_groups:
+    pattern:  /indicator-groups/{publishedOnly}/{search}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:indicatorGroups, publishedOnly: false, search: false }
+    options:
+        expose: true
+
+indicator_repository:
+    pattern:  /indicator-repository/{filterAssigned}/{filterPublished}/{sort}/{search}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:indicatorRepository, filterAssigned: 'all', filterPublished: 'yes', sort: 'ASC', search: false }
+    options:
+        expose: true
+
+add_indicator_group:
+    pattern:  /admin/add-indicator-group
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:addIndicatorGroup }
+    options:
+        expose: true
+
+edit_indicator_group:
+    pattern:  /admin/edit-indicator-group/{id}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:editIndicatorGroup }
+    options:
+        expose: true
+
+delete_indicator_group:
+    pattern:  /admin/delete-indicator-group/{id}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:deleteIndicatorGroup }
+    options:
+        expose: true
+
+attach_indicator_to_group:
+    pattern:  /admin/attach-indicator-to-group/{grpId}/{nodeId}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:attachIndicatorToGroup }
+    options:
+        expose: true
+
+delete_indicator_from_groups:
+    pattern:  /admin/delete-indicator-from-groups/{grpId}/{nodeId}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:deleteIndicatorFromGroups }
+    options:
+        expose: true
+
+move_indicator_to_group:
+    pattern:  /admin/move-indicator-to-group/{grpId}/{grpOldId}/{nodeId}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:moveIndicatorToGroup }
+    options:
+        expose: true
+
+update_indicator_group_pid:
+    pattern:  /admin/update-indicator-group-pid/{id}/{pid}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:updateGroupPid }
+    options:
+        expose: true
+
+add_indicator:
+    pattern:  /admin/add-indicator
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:addIndicator }
+    options:
+        expose: true
+
+edit_indicator:
+    pattern:  /admin/edit-indicator/{id}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:editIndicator }
+    options:
+        expose: true
+
+delete_indicator:
+    pattern:  /admin/delete-indicator/{id}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:deleteIndicator }
+    options:
+        expose: true
+
+update_indicator_grp_weights:
+    pattern:  /admin/change-indicator-grp-weight/{pid}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:updateGrpWeight }
+    options:
+        expose: true
+
+update_indicator_weights:
+    pattern:  /admin/change-indicator-grp-ref-weight/{groupId}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:updateGrpRefWeight }
+    options:
+        expose: true
+
+ind_breadcrumbs:
+    pattern:  /indicator-breadcrumbs/{indId}/{public}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:indicatorBreadcrumbs }
+
+collectionind_breadcrumbs:
+    pattern:  /collectionindicator-breadcrumbs/{indId}/{public}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:collectionIndicatorBreadcrumbs }
+
+ind_group_breadcrumb:
+    pattern:  /indicator-group-breadcrumb/{grpId}/{public}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:indicatorGroupBreadcrumb }
+
+collection_breadcrumb:
+    pattern:  /collection-breadcrumb/{collId}/{public}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:collectionBreadcrumb }
+
+indicator_groups_list:
+    pattern:  /admin/indicator-groups-list/{pid}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:indicatorGroupsList }
+    options:
+        expose: true
+
+
+#Indicators for collections routing
+
+indicator_collections:
+    pattern:  /indicator-collections/{publishedOnly}/{search}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:indicatorCollections, publishedOnly: false, search: false }
+    options:
+        expose: true
+
+collection_indicator_repository:
+    pattern:  /collectionindicator-repository/{filterAssigned}/{filterPublished}/{sort}/{search}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:collectionIndicatorRepository, filterAssigned: 'all', filterPublished: 'yes', sort: 'ASC', search: false }
+    options:
+        expose: true
+
+add_indicator_collection:
+    pattern:  /admin/add-indicator-collection
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:addIndicatorCollection }
+    options:
+        expose: true
+
+edit_indicator_collection:
+    pattern:  /admin/edit-indicator-collection/{id}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:editIndicatorCollection }
+    options:
+        expose: true
+
+delete_indicator_collection:
+    pattern:  /admin/delete-indicator-collection/{id}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:deleteIndicatorCollection }
+    options:
+        expose: true
+
+attach_indicator_to_collection:
+    pattern:  /admin/attach-indicator-to-collection/{collId}/{nodeId}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:attachIndicatorToCollection }
+    options:
+        expose: true
+
+delete_indicator_from_collections:
+    pattern:  /admin/delete-indicator-from-collections/{collId}/{nodeId}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:deleteIndicatorFromCollections }
+    options:
+        expose: true
+
+move_indicator_to_collection:
+    pattern:  /admin/move-indicator-to-collection/{collId}/{collOldId}/{nodeId}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:moveIndicatorToCollection }
+    options:
+        expose: true
+
+update_collection_pid:
+    pattern:  /admin/update-collection-pid/{id}/{pid}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:updateCollectionPid }
+    options:
+        expose: true
+
+add_collections_indicator:
+    pattern:  /admin/add-collectionsindicator
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:addCollectionsIndicator }
+    options:
+        expose: true
+
+update_collection_ind_weights:
+    pattern:  /admin/change-indicator-coll-ref-weight/{groupId}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:updateCollRefWeight }
+    options:
+        expose: true
+
+update_collection_weights:
+    pattern:  /admin/change-indicator-coll-weight/{pid}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:updateCollWeight }
+    options:
+        expose: true
+
+indicator_collections_list:
+    pattern:  /admin/indicator-collections-list/{pid}
+    defaults: { _controller: WBQbankBundle:IndicatorsBack:indicatorCollectionsList }
+    options:
+        expose: true
+
+# Concepts routing
+
+concepts_back:
+    pattern: /admin/concepts
+    defaults: { _controller: WBQbankBundle:ConceptsBack:concepts }
+
+concept_groups:
+    pattern:  /concept-groups/{publishedOnly}/{search}
+    defaults: { _controller: WBQbankBundle:ConceptsBack:conceptGroups, publishedOnly: false, search: false }
+    options:
+        expose: true
+
+add_concept:
+    pattern: /admin/add-concept
+    defaults: { _controller: WBQbankBundle:ConceptsBack:addConcept }
+    options:
+        expose: true
+
+add_concept_group:
+    pattern:  /admin/add-concept-group
+    defaults: { _controller: WBQbankBundle:ConceptsBack:addConceptGroup }
+    options:
+        expose: true
+
+edit_concept_group:
+    pattern:  /admin/edit-concept-group/{id}
+    defaults: { _controller: WBQbankBundle:ConceptsBack:editConceptGroup }
+    options:
+        expose: true
+
+update_concept_group_pid:
+    pattern:  /admin/update-concept-group-pid/{id}/{pid}
+    defaults: { _controller: WBQbankBundle:ConceptsBack:updateGroupPid }
+    options:
+        expose: true
+
+edit_concept:
+    pattern:  /admin/edit-concept/{id}
+    defaults: { _controller: WBQbankBundle:ConceptsBack:editConcept}
+    options:
+        expose: true
+
+concept_repository:
+    pattern:  /concept-repository/{filterAssigned}/{filterPublished}/{sort}/{search}
+    defaults: { _controller: WBQbankBundle:ConceptsBack:conceptRepository, filterAssigned: 'all', filterPublished: 'yes', sort: 'ASC', search: false }
+    options:
+        expose: true
+
+attach_concept_to_group:
+    pattern:  /admin/attach-concept-to-group/{grpId}/{nodeId}
+    defaults: { _controller: WBQbankBundle:ConceptsBack:attachConceptToGroup }
+    options:
+        expose: true
+
+delete_concept_from_groups:
+    pattern:  /admin/delete-concept-from-groups/{grpId}/{nodeId}
+    defaults: { _controller: WBQbankBundle:ConceptsBack:deleteConceptFromGroups }
+    options:
+        expose: true
+
+move_concept_to_group:
+    pattern:  /admin/move-concept-to-group/{grpId}/{grpOldId}/{nodeId}
+    defaults: { _controller: WBQbankBundle:ConceptsBack:moveConceptToGroup }
+    options:
+        expose: true
+
+delete_concept:
+    pattern:  /admin/delete-concept/{id}
+    defaults: { _controller: WBQbankBundle:ConceptsBack:deleteConcept }
+    options:
+        expose: true
+
+delete_concept_group:
+    pattern:  /admin/delete-concept-group/{id}
+    defaults: { _controller: WBQbankBundle:ConceptsBack:deleteConceptGroup }
+    options:
+        expose: true
+
+update_concept_weights:
+    pattern:  /admin/change-concept-grp-ref-weight/{groupId}
+    defaults: { _controller: WBQbankBundle:ConceptsBack:updateGrpRefWeight }
+    options:
+        expose: true
+
+update_concept_grp_weights:
+    pattern:  /admin/change-concept-grp-weight/{pid}
+    defaults: { _controller: WBQbankBundle:ConceptsBack:updateGrpWeight }
+    options:
+        expose: true
+
+conc_breadcrumbs:
+    pattern:  /concept-breadcrumbs/{concId}/{public}
+    defaults: { _controller: WBQbankBundle:ConceptsBack:conceptBreadcrumbs }
+
+conc_group_breadcrumb:
+    pattern:  /concept-group-breadcrumb/{grpId}/{public}
+    defaults: { _controller: WBQbankBundle:ConceptsBack:conceptGroupBreadcrumb }
+concept_groups_list:
+    pattern:  /admin/concept-groups-list/{pid}
+    defaults: { _controller: WBQbankBundle:ConceptsBack:conceptGroupsList }
+    options:
+        expose: true
+
+#Classification routing
+
+classifications_back:
+    pattern: /admin/classifications
+    defaults: { _controller: WBQbankBundle:ClassificationsBack:classifications }
+    options:
+        expose: true
+
+classification_groups:
+    pattern:  /classification-groups/{publishedOnly}/{search}
+    defaults: { _controller: WBQbankBundle:ClassificationsBack:classificationGroups, publishedOnly: false, search: false }
+    options:
+        expose: true
+
+add_classification:
+    pattern: /admin/add-classification/{idForCloning}
+    defaults: { _controller: WBQbankBundle:ClassificationsBack:addClassification, idForCloning: false }
+    options:
+        expose: true
+
+add_classification_group:
+    pattern:  /admin/add-classification-group
+    defaults: { _controller: WBQbankBundle:ClassificationsBack:addClassificationGroup }
+    options:
+        expose: true
+
+edit_classification_group:
+    pattern:  /admin/edit-classification-group/{id}
+    defaults: { _controller: WBQbankBundle:ClassificationsBack:editClassificationGroup }
+    options:
+        expose: true
+
+update_classification_group_pid:
+    pattern:  /admin/update-classification-group-pid/{id}/{pid}
+    defaults: { _controller: WBQbankBundle:ClassificationsBack:updateGroupPid }
+    options:
+        expose: true
+
+edit_classification:
+    pattern:  /admin/edit-classification/{id}
+    defaults: { _controller: WBQbankBundle:ClassificationsBack:editClassification}
+    options:
+        expose: true
+
+classification_repository:
+    pattern:  /classification-repository/{filterAssigned}/{filterPublished}/{sort}/{search}
+    defaults: { _controller: WBQbankBundle:ClassificationsBack:classificationRepository, filterAssigned: 'all', filterPublished: 'yes', sort: 'ASC', search: false }
+    options:
+        expose: true
+
+attach_classification_to_group:
+    pattern:  /admin/attach-classification-to-group/{grpId}/{nodeId}
+    defaults: { _controller: WBQbankBundle:ClassificationsBack:attachClassificationToGroup }
+    options:
+        expose: true
+
+delete_classification_from_groups:
+    pattern:  /admin/delete-classification-from-groups/{grpId}/{nodeId}
+    defaults: { _controller: WBQbankBundle:ClassificationsBack:deleteClassificationFromGroups }
+    options:
+        expose: true
+
+move_classification_to_group:
+    pattern:  /admin/move-classification-to-group/{grpId}/{grpOldId}/{nodeId}
+    defaults: { _controller: WBQbankBundle:ClassificationsBack:moveClassificationToGroup }
+    options:
+        expose: true
+
+delete_classification:
+    pattern:  /admin/delete-classification/{id}
+    defaults: { _controller: WBQbankBundle:ClassificationsBack:deleteClassification }
+    options:
+        expose: true
+
+delete_classification_group:
+    pattern:  /admin/delete-classification-group/{id}
+    defaults: { _controller: WBQbankBundle:ClassificationsBack:deleteClassificationGroup }
+    options:
+        expose: true
+
+update_classification_weights:
+    pattern:  /admin/change-classification-grp-ref-weight/{groupId}
+    defaults: { _controller: WBQbankBundle:ClassificationsBack:updateGrpRefWeight }
+    options:
+        expose: true
+
+
+update_classification_grp_weights:
+    pattern:  /admin/change-classification-grp-weight/{pid}
+    defaults: { _controller: WBQbankBundle:ClassificationsBack:updateGrpWeight }
+    options:
+        expose: true
+
+
+classification_breadcrumbs:
+    pattern:  /classification-breadcrumbs/{classId}/{public}
+    defaults: { _controller: WBQbankBundle:ClassificationsBack:classificationBreadcrumbs }
+
+classification_group_breadcrumb:
+    pattern:  /classification-group-breadcrumb/{grpId}/{public}
+    defaults: { _controller: WBQbankBundle:ClassificationsBack:classificationGroupBreadcrumb }
+
+classification_groups_list:
+    pattern:  /admin/classification-groups-list/{pid}
+    defaults: { _controller: WBQbankBundle:ClassificationsBack:classificationGroupsList }
+    options:
+        expose: true
+
+#Questionnaire routing
+
+questionnaires_back:
+    pattern: /admin/questionnaires
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:questionnaires }
+
+questionnaire_groups:
+    pattern:  /questionnaire-groups/{publishedOnly}/{search}
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:questionnaireGroups, publishedOnly: false, search: false }
+    options:
+        expose: true
+
+add_questionnaire:
+    pattern: /admin/add-questionnaire/{idForCloning}
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:addQuestionnaire, idForCloning: false }
+    options:
+        expose: true
+
+add_questionnaire_group:
+    pattern:  /admin/add-questionnaire-group/{idForCloning}
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:addQuestionnaireGroup, idForCloning: false }
+    options:
+        expose: true
+
+edit_questionnaire_group:
+    pattern:  /admin/edit-questionnaire-group/{id}
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:editQuestionnaireGroup }
+    options:
+        expose: true
+
+update_questionnaire_group_pid:
+    pattern:  /admin/update-questionnaire-group-pid/{id}/{pid}
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:updateGroupPid }
+    options:
+        expose: true
+
+edit_questionnaire:
+    pattern:  /admin/edit-questionnaire/{id}/{classificationId}
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:editQuestionnaire, classificationId: false}
+    options:
+        expose: true
+
+questionnaire_repository:
+    pattern:  /questionnaire-repository/{filterAssigned}/{filterPublished}/{search}
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:questionnaireRepository, filterAssigned: 'all', filterPublished: 'yes', search: false }
+    options:
+        expose: true
+
+attach_questionnaire_to_group:
+    pattern:  /admin/attach-questionnaire-to-group/{grpId}/{nodeId}
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:attachQuestionnaireToGroup }
+    options:
+        expose: true
+
+delete_questionnaire_from_groups:
+    pattern:  /admin/delete-questionnaire-from-groups/{grpId}/{nodeId}
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:deleteQuestionnaireFromGroups }
+    options:
+        expose: true
+
+move_questionnaire_to_group:
+    pattern:  /admin/move-questionnaire-to-group/{grpId}/{grpOldId}/{nodeId}
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:moveQuestionnaireToGroup }
+    options:
+        expose: true
+
+delete_questionnaire:
+    pattern:  /admin/delete-questionnaire/{id}
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:deleteQuestionnaire }
+    options:
+        expose: true
+
+delete_questionnaire_group:
+    pattern:  /admin/delete-questionnaire-group/{id}
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:deleteQuestionnaireGroup }
+    options:
+        expose: true
+
+questionnaire_breadcrumbs:
+    pattern:  /questionnaire-breadcrumbs/{questId}/{public}
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:questionnaireBreadcrumbs }
+
+questionnaire_group_breadcrumb:
+    pattern:  /questionnaire-group-breadcrumb/{questId}/{public}
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:questionnaireGroupBreadcrumb }
+
+update_questionnaire_weights:
+    pattern:  /admin/change-questionnaire-grp-ref-weight/{groupId}
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:updateGrpRefWeight }
+    options:
+        expose: true
+
+update_questionnaire_grp_weights:
+    pattern:  /admin/change-questionnaire-grp-weight/{pid}
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:updateGrpWeight }
+    options:
+        expose: true
+
+questionnaire_groups_list:
+    pattern:  /admin/questionnaire-groups-list/{pid}
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:questionnaireGroupsList }
+    options:
+        expose: true
+
+get_classification_codes:
+    pattern:  /admin/get-classification-codes/{questionIndex}/{classificationId}
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:getClassificationCodes }
+    options:
+        expose: true
+
+get_classification_codes_dto:
+    pattern:  /admin/get-classification-codes_dto/{classificationId}
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:getClassificationCodesDTO }
+    options:
+        expose: true
+
+add_classification_code:
+    pattern:  /admin/add-classification-code/{classificationId}/{questionId}
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:addClassificationCode }
+    options:
+        expose: true
+
+visual_rep_info:
+    pattern:  /admin/visual-rep-info/{visualRepFormat}/{valRepFormat}
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:visualRepInfo,visualRepFormat:null,valRepFormat:null }
+    options:
+        expose: true
+
+get_question_model:
+    pattern:  /admin/get_question_model/{questionId}
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:getQuestionModel }
+    options:
+        expose: true
+
+publish_unpublish_questionnaire:
+    pattern:  /admin/publish_questionnaire/{id}/{publish}
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:publishUnpublish, id:null,publish:null}
+    options:
+        expose: true
+
+publish_unpublish_questionnaire_group:
+    pattern:  /admin/publish_questionnaire_group/{id}/{publish}
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:publishUnpublishGroup, id:null,publish:null}
+    options:
+        expose: true
+
+save_question:
+    pattern:  /admin/save-question/
+    defaults: { _controller: WBQbankBundle:QuestionnairesBack:saveQuestionModel, question: null }
+    options:
+        expose: true
+
+save_questionnaire:
+    pattern: /admin/save-questionnaire/{questionnaire}/{updatedQuestions}/{deletedQuestions}/{updatedResources}/{deletedResources}
+    defaults: {_controller: WBQbankBundle:QuestionnairesBack:saveQuestionnaire, questionnaire : null, updatedQuestions: null, deletedQuestions:null, updatedResources:null, deletedResources:null }
+    options:
+        expose: true
+
+upload_resource_files:
+    pattern: /admin/upload-resource-files/
+    defaults: {_controller: WBQbankBundle:QuestionnairesBack:uploadResourceFiles }
+    options:
+        expose: true
+
+
+# Resources
+resources:
+    pattern: /admin/resources/{publishedOnly}/{search}
+    defaults: { _controller: WBQbankBundle:Resources:resources, publishedOnly: false, search: false }
+
+add_resource:
+    pattern: /admin/add-resource
+    defaults: { _controller: WBQbankBundle:Resources:addResource }
+
+edit_resource:
+    pattern: /admin/edit-resource/{id}
+    defaults: { _controller: WBQbankBundle:Resources:editResource }
+
+delete_resource:
+    pattern: /admin/delete-resource/{id}
+    defaults: { _controller: WBQbankBundle:Resources:deleteResource }
+
+batch_delete_resources:
+    pattern: /admin/batch-delete-resources
+    defaults: { _controller: WBQbankBundle:Resources:batchDeleteResources }
+
+# Organizations
+organizations:
+    pattern: /admin/organizations/{publishedOnly}/{search}
+    defaults: { _controller: WBQbankBundle:Organizations:organizations, publishedOnly: false, search: false }
+
+add_organization:
+    pattern: /admin/add-organization
+    defaults: { _controller: WBQbankBundle:Organizations:addOrganization }
+
+edit_organization:
+    pattern: /admin/edit-organization/{id}
+    defaults: { _controller: WBQbankBundle:Organizations:editOrganization }
+
+delete_organization:
+    pattern: /admin/delete-organization/{id}
+    defaults: { _controller: WBQbankBundle:Organizations:deleteOrganization }
+
+batch_delete_organizations:
+    pattern: /admin/batch-delete-organizations
+    defaults: { _controller: WBQbankBundle:Organizations:batchDeleteOrganizations }
+
+
+# Modal dialogs
+organizations_modal:
+    pattern:  /admin/organizations-modal/{entityName}/{propertyName}/{search}
+    defaults: { _controller: WBQbankBundle:Default:organizationsModal, entityName: false, propertyName: false, search: false }
+    options:
+        expose: true
+
+resources_modal:
+    pattern:  /admin/resources-modal/{entityName}/{propertyName}/{search}
+    defaults: { _controller: WBQbankBundle:Default:resourcesModal, entityName: false, propertyName: false, search: false }
+    options:
+        expose: true
+
+sources_modal:
+    pattern:  /admin/sources-modal/{entityName}/{propertyName}/{search}
+    defaults: { _controller: WBQbankBundle:Default:sourcesModal, entityName: false, propertyName: false, search: false }
+    options:
+        expose: true
+
+
+classifications_modal:
+    pattern:  /admin/classifications-modal/{entityName}/{propertyName}/{search}
+    defaults: { _controller: WBQbankBundle:Default:classificationsModal, entityName: false, propertyName: false, search: false }
+    options:
+        expose: true
+
+concepts_modal:
+    pattern:  /admin/concepts-modal/{entityName}/{propertyName}/{search}
+    defaults: { _controller: WBQbankBundle:Default:conceptsModal, entityName: false, propertyName: false, search: false }
+    options:
+        expose: true
+
+questionnaires_modal:
+    pattern:  /admin/questionnaires-modal/{entityName}/{propertyName}/{search}
+    defaults: { _controller: WBQbankBundle:Default:questionnairesModal, entityName: false, propertyName: false, search: false }
+    options:
+        expose: true
+
+add_question_modal:
+    pattern: /admin/add-question-modal
+    defaults: { _controller: WBQbankBundle:Default:addQuestionModal }
+    options:
+        expose: true
+
+
+#file uploads
+file_uploads:
+    pattern:  /admin/upload/
+    defaults: { _controller: WBQbankBundle:File:uploadFile }
+    options:
+        expose: true

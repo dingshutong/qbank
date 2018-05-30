@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}QBank{% endblock %}</title>
+        {% block stylesheets %}
+            {% stylesheets
+                'bundles/wbqbank/css/ui-lightness/jquery-ui.min.css' filter='cssrewrite'
+                'bundles/wbqbank/css/ui-layout.css' filter='cssrewrite'
+                'bundles/wbqbank/css/jstree.min.css' filter='cssrewrite'
+                'bundles/wbqbank/css/jquery.fancybox.css' filter='cssrewrite'
+                'bundles/wbqbank/css/bootstrap.css' filter='cssrewrite' %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,800,600,700' rel='stylesheet' type='text/css'>
+
+        <!-- user defined js parameters -->
+        <script>
+            var ga_tracking='{{ga_tracking}}';
+        </script>
+        
+        <!-- Ajax routing -->
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+    </head>
+    <body>
+        <input type="hidden" id="locale" value="{{ app.request.locale }}">
+        <div id="top">
+            <ul>
+                {% if app.user %}
+                    <li><span>{{ app.user.username }}</span></li>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                <li class="first"><a href="{{ path('wb_qbank_backend') }}">{{ 'admin_links.administration'|trans }}</a></li>
+                {% endif %}
+                {% if app.user %}
+                    <li class="last"><a href="{{ path('fos_user_security_logout') }}">{{ 'admin_links.logout'|trans }}</a></li>
+                {% else %}
+                    <li><a href="{{ path('fos_user_security_login') }}">{{ 'admin_links.login'|trans }}</a></li>
+                    <li class="last"><a href="{{ path('register_user') }}">{{ 'admin_links.register'|trans }}</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <div id="page-wrapper">
+            <div id="page">
+                <div id="header">
+                    <div id="logo">
+                        <a href="http://www.ihsn.org/home/">
+                            <img src="{{ asset('bundles/wbqbank/images/ihsn_logo.png') }}" alt="International Household Survey Network">
+                        </a>
+                    </div>
+                    <h1>{{ 'site_title'|trans }}</h1>
+                </div>
+                <div id="page-inside-wrapper">
+
+                    {% block body %}{% endblock %}
+
+                </div>
+            </div>
+        </div>
+
+        {% block javascripts %}
+            {% javascripts
+                '@jquery_and_bootstrap'
+                '@WBQbankBundle/Resources/public/js/script.js'
+                '@WBQbankBundle/Resources/public/js/jquery.fancybox.js'
+                '@WBQbankBundle/Resources/public/js/hash.js'
+                '@WBQbankBundle/Resources/public/js/highlight_regex.js'
+            %}
+                <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}
+    </body>
+</html>

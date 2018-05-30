@@ -1,0 +1,55 @@
+WB\QbankBundle\Entity\QuestionnaireGroups:
+    type: entity
+    table: questionnaire_groups
+    repositoryClass: WB\QbankBundle\Entity\QuestionnaireGroupsRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        alternateId:
+            type: string
+            length: '100'
+            nullable: TRUE
+        pid:
+            type: integer
+            nullable: TRUE
+        name:
+            type: string
+            length: '255'
+        description:
+            type: text
+            nullable: TRUE
+        notes:
+            type: text
+            nullable: TRUE
+        published:
+            type: boolean
+            nullable: TRUE
+        weight:
+            type: integer
+            nullable: TRUE
+
+    oneToMany:
+        questionnaireGroupRelModules:
+            targetEntity: QuestionnaireGroupRelModules
+            mappedBy: questGroupId
+            cascade: ["persist", "remove"]
+        questionnaireGroupRelResources:
+            orderBy: { 'weight': 'ASC' }
+            targetEntity: QuestionnaireGroupRelResources
+            mappedBy: questGroupId
+            cascade: ["persist", "remove"]
+        questionnaireGroupRelSources:
+            orderBy: { 'weight': 'ASC' }
+            targetEntity: QuestionnaireGroupRelSources
+            mappedBy: questGroupId
+            cascade: ["persist", "remove"]    
+        questionnaireGroupRelCustodians:
+            orderBy: { 'weight': 'ASC' }
+            targetEntity: QuestionnaireGroupRelCustodians
+            mappedBy: questGroupId
+            cascade: ["persist", "remove"]
+    lifecycleCallbacks: {  }

@@ -1,0 +1,85 @@
+WB\QbankBundle\Entity\Organizations:
+    type: entity
+    table: organizations
+    repositoryClass: WB\QbankBundle\Entity\OrganizationsRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        alternateId:
+            type: string
+            length: '100'
+            column: alternate_id
+            nullable: TRUE
+        name:
+            type: string
+            length: '255'
+        description:
+            type: text
+            nullable: TRUE
+        nickName:
+            type: text
+            column: nick_name
+            nullable: TRUE
+        address:
+            type: text
+            nullable: TRUE
+        areaCode:
+            type: string
+            length: '100'
+            column: area_code
+            nullable: TRUE
+        country:
+            type: string
+            length: '100'
+            nullable: TRUE
+        telephone:
+            type: text
+            nullable: TRUE
+        fax:
+            type: text
+            nullable: TRUE
+        email:
+            type: text
+            nullable: TRUE
+        url:
+            type: text
+            nullable: TRUE
+        notes:
+            type: string
+            length: '200'
+            nullable: TRUE
+        published:
+            type: boolean
+            nullable: TRUE
+        created:
+            type: datetime
+            nullable: TRUE
+        changed:
+            type: datetime
+            nullable: TRUE
+    oneToMany:
+        indicatorRelCustodians:
+            targetEntity: IndicatorRelCustodians
+            mappedBy: organizationId
+            cascade: ["persist", "remove"]
+        termRelCustodians:
+            targetEntity: TermRelCustodians
+            mappedBy: organizationId
+            cascade: ["persist", "remove"]
+        classificationRelCustodians:
+            targetEntity: ClassificationRelCustodians
+            mappedBy: organizationId
+            cascade: ["persist", "remove"]
+        termRelCustodians:
+            targetEntity: ClassificationRelCustodians
+            mappedBy: organizationId
+            cascade: ["persist", "remove"]
+        questionnaireGroupRelCustodians:
+            targetEntity: QuestionnaireGroupRelCustodians
+            mappedBy: organizationId
+            cascade: ["persist", "remove"]
+    lifecycleCallbacks: {  }

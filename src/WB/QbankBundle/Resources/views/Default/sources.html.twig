@@ -1,0 +1,41 @@
+{% if sources|length %}
+<div class="footnotes" style="margin-top:100px;">
+    {#
+    format: Last, F. M. (Year, Month Date Published). Article title. Retrieved from URL
+    #}
+<hr>
+    <h4>Sources:</h4>
+<ul>
+        {% for resource in sources %}
+                <li>
+                    {% if resource.creator %}
+                        {{resource.creator}},
+                    {% endif %}                
+                    {% if resource.pubDate %}
+                        ({{resource.pubDate}}).
+                    {% endif %}
+                    {#{dump(resource)}#}
+                    
+                    <a href="{{ asset(resource.url) }}" target="_blank" style="font-style: italic">
+                     {% if resource.subtitle %}
+                       {{ resource.title }}: {{ resource.subtitle}}.
+                    {% else %}
+                        {{ resource.title }}.
+                    {% endif %}    
+                    </a>
+                    {% if resource.publisher %}
+                        {{resource.publisher}}.
+                    {% endif %}
+                    {% if resource.intIdentifier %}
+                        {{resource.intIdentifier}}.
+                    {% endif %}
+                    
+                    {% if resource.dateAccessed %} {{ 'strings.retrieved'|trans }} {{ resource.dateAccessed|date('d/m/Y') }} {% endif %}
+                </li>
+                {#
+                <li>{{ resource.name }} {% if resource.dateAccessed %} {{ 'strings.retrieved'|trans }} {{ resource.dateAccessed|date('d/m/Y') }} {% endif %}</li>
+                #}
+        {% endfor %}
+</ul>
+</div>
+{% endif %}

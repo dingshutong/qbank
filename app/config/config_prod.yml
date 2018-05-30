@@ -1,0 +1,42 @@
+imports:
+    - { resource: config.yml }
+
+#framework:
+#    validation:
+#        cache: apc
+
+#doctrine:
+#    orm:
+#        metadata_cache_driver: apc
+#        result_cache_driver: apc
+#        query_cache_driver: apc
+
+monolog:
+    handlers:
+        main:
+            type:         fingers_crossed
+            action_level: error
+            handler:      nested
+        nested:
+            type:  stream
+            path:  "%kernel.logs_dir%/%kernel.environment%.log"
+            level: debug
+        console:
+            type:  console
+
+assetic:
+    use_controller: true
+    bundles:
+        - WBQbankBundle
+        - FOSUserBundle
+        - WBUserBundle
+    assets:
+        jquery_and_bootstrap:
+            inputs:
+                - '@WBQbankBundle/Resources/public/js/jquery.min.js'
+                - '@WBQbankBundle/Resources/public/js/jquery-ui.min.js'
+                - '@WBQbankBundle/Resources/public/js/jquery.dataTables.js'
+                - '@WBQbankBundle/Resources/public/js/autosize.js'
+                - '@WBQbankBundle/Resources/public/js/bootstrap.min.js'
+                - '@WBQbankBundle/Resources/public/js/ui-layout.js'
+                - '@WBQbankBundle/Resources/public/js/jstree.min.js'

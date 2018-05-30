@@ -1,0 +1,45 @@
+{% macro recursiveCategory(category) %}
+    <li class="folder {% if not category.published %}unpublished{% endif %}" data-grp="{{ category.id }}">{{ category.name }}
+        {% if category.sub|length %}
+            <ul>
+                {% for child in category.sub %}
+                    {{ _self.recursiveCategory(child) }}
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if category.items|length %}
+            <ul>
+                {% for questionnaire in category.items %}
+                    <li class="file {% if not questionnaire.published %}unpublished{% endif %}" data-jstree='{"type":"file"}' data-node="{{ questionnaire.id }}">
+                        <label class="item-label-holder">
+                            <input name="questionnaire" type="checkbox" value="{{ questionnaire.id }}"/>
+                            {{ questionnaire.name }}
+                        </label>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+    </li>
+{% endmacro %}
+
+<div id="questionnaires-modal-tree" class="modal-tree">
+    <ul>
+        <li id="groups-root" data-jstree='{ "opened" : true }' data-grp="0">
+            {{ 'strings.questionnaires_groups'|trans }}
+            {% if tree %}
+                <ul>
+                    {% for group in tree.sub %}
+                        {{ _self.recursiveCategory(group) }}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </li>
+    </ul>
+</div>
+
+
+<script type="text/javascript">
+    initializeModalTree('#questionnaires-modal-tree');
+</script>

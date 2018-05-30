@@ -1,0 +1,25 @@
+{% if public %}
+
+    <ul class="groups-breadcrumb bc-collections-public">
+        <li><a href="{{ path('wb_qbank_homepage') }}">{{ 'strings.home'|trans }}</a> /</li>
+        <li><a href="{{ path('indicators') }}">{{ 'strings.indicators'|trans }}</a> /</li>
+        <li class="bc-item-last">{{ collection.name }}</li>
+    </ul>
+
+{% else %}
+
+    <div class="breadcrumb-header">
+        <ul>
+            <li class="bc-home"><a href="{{ path('wb_qbank_backend') }}">{{ 'strings.home'|trans }}</a></li>
+            <li class="bc-item"><a href="{{ path('indicators_back') }}">{{ 'strings.indicators'|trans }}</a></li>
+
+            {% for coll in parentCollections %}
+                <li class="bc-item" data-grp="{{ coll.collId }}"><a href="#">{{ coll.collName }}</a></li>
+            {% endfor %}
+
+            <li class="bc-node">{{ collection.name }}</li>
+        </ul>
+    </div>
+
+{% endif %}
+

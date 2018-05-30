@@ -1,0 +1,33 @@
+{% macro recursiveCategory(category) %}
+    <li class="folder {% if not category.published %}unpublished{% endif %}" data-grp="{{ category.id }}">{{ category.name }}
+        {% if category.sub|length %}
+            <ul>
+                {% for child in category.sub %}
+                    {{ _self.recursiveCategory(child) }}
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if category.items|length %}
+            <ul>
+                {% for concept in category.items %}
+                    <li class="file {% if not concept.published %}unpublished{% endif %}" data-jstree='{"type":"file"}' data-node="{{ concept.id }}">{{ concept.name }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+    </li>
+{% endmacro %}
+
+<span class="hidden" id="count-groups">{{ countGroups }}</span>
+<div class="node-groups-list groups">
+    <div id="node-groups-tree" >
+        <ul id="groups-root" data-jstree='{ "opened" : true }' data-grp="0">
+        {% if groups %}            
+                {% for group in groups %}
+                    {{ _self.recursiveCategory(group) }}
+                {% endfor %}            
+        {% endif %}
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+{% if indCollections|length %}
+    <select>
+
+        {% if pid == 0 %}
+            <option value="">- Select Category -</option>
+        {% else %}
+            <option value="">- Select Sub-Category -</option>
+        {% endif %}
+
+        {% for indCollection in indCollections %}
+            <option value="{{ indCollection.id }}">{{ indCollection.name }}</option>
+        {% endfor %}
+
+    </select>
+{% endif %}

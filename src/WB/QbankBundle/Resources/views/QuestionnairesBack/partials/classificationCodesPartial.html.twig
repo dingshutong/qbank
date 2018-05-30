@@ -1,0 +1,14 @@
+<table class="table">
+    <tr>
+        <th>{{ 'forms.labels.label'|trans }}</th>
+        <th>{{ 'forms.label.value'|trans }}</th>
+        <th>{{ 'forms.label.skip'|trans }}</th>
+    </tr>
+    {% for rel in question.questionsRelClassifications %}
+        <tr>
+            <td>{{ rel.vars.value.classificationCodeId.label }}</td>
+            <td>{{ rel.vars.value.classificationCodeId.value }}</td>
+            <td>{{ form_widget(rel) }}</td>
+        </tr>
+    {% endfor %}
+</table>

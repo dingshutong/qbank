@@ -1,0 +1,255 @@
+site_title: IHSN Question Bank
+admin_links:
+    administration: Site Administration
+    login: Login
+    logout: Logout
+    register: Register
+
+strings:
+    resources: Resources
+    sources: Sources
+    classifications: Classifications
+    collections: Collections
+    concepts: Concepts
+    groups: Groups
+    home: Home
+    indicators: Indicators
+    organizations: Organizations
+    questionnaires: Questionnaires
+    users: Users
+    related_indicators: Related Indicators
+    related_concepts: Related Concepts
+    retrieved: Retrieved
+
+    resource: Resource
+    classification: Classification
+    collection: Collection
+    concept: Concept
+    group: Group
+    list: List
+    indicator: Indicator
+    organization: Organization
+    questionnaire: Questionnaire
+    questions: Questions
+    user: User
+
+    assigned: Assigned to
+    categories: Categories
+    classifications_groups: Classification Groups
+    codes: Codes
+    concept_groups: Concept Groups
+    create_new_taxonomy: Create New Taxonomy
+    create_new_user: Create new user account
+    indicator_collections: Indicator Collections
+    indicator_groups: Indicator Groups
+    layout: Layout
+    message: Message
+    overview: Overview
+    link: Link
+    permalink: Permalink
+    please_select: Please Select
+    questionnaires_groups: Questionnaire Groups
+    questions_and_instructions: Questions and Instructions
+    select_category: Select Category
+    select_sub_category: Select SubCategory
+    switch_to_collection: Switch the tree to Collection
+    switch_to_group: Switch the tree to Group
+    visit_website: visit website
+
+questions:
+    visual_rep_format_numeric: numeric
+    visual_rep_format_text: textual
+    visual_rep_format_classification: classification
+
+messages:
+    message1: Delete an Indicator from an Indicator repository
+    message2: Delete a Concept from a Concept repository
+    message3: Delete a classification from an Classification repository
+    message4: This classification is used by
+    message5: Delete a questionnaire from a Questionnaires repository
+    message6: Do You really wish to delete resource?
+    message7: Do You really wish to delete resources?
+    message8: Do You really wish to delete organization?
+    message9: Do You really wish to delete organizations?
+    message10: Enter valid question name
+    message11: Value must be greater then 0
+    layout_file_type: Layout file must be PDF
+
+actions:
+    add: Add
+    collapse: Collapse the tree
+    expand: Expand tre Tree
+    expand_filter: Expand Filter
+    move_down: Move Down
+    move_up: Move Up
+    open: Open
+    remove: Remove
+    sort_by: Sort by
+
+    indicators:
+        add_group: Add an Indicator Group
+        add_node: Add an Indicator
+        add_to_group: Add an indicator to Indicator Groups
+        delete: Delete an indicator or an Indicator Group
+        delete_node: Delete an Indicator
+    concepts:
+        add_group: Add a Concept Group
+        add_node: Add a Concept
+        add_to_group: Add a Concept to Concept Groups
+        delete: Delete a Concept or a Concept Group
+        delete_node: Delete a Concept
+    classifications:
+        add_group: Add a Classification Group
+        add_node: Add a Classification
+        add_to_group: Add a Classification to Classification Groups
+        copy_node: Copy a Classification
+        delete: Delete a Classification or a Classification Group
+        delete_node: Delete a Classification
+    questionnaires:
+        add_group: Add a Questionnaire Group
+        add_node: Add a Questionnaire
+        add_to_group: Add a Questionnaire to Questionnaire Groups
+        copy_node: Copy a Questionnaire or a Questionnaire Group
+        delete: Delete a Questionnaire or a Questionnaire Group
+        delete_node: Delete a Questionnaire
+
+forms:
+    add: Add
+    add_resource: Add New Resource
+    add_info: To add content, click on the "Add" button.
+    add_organization: Add New Organization
+    all: All
+    apply: Apply
+    assigned: Assigned
+    assigned_to_groups: Assigned to Groups
+    cancel: Cancel
+    close: Close
+    delete: Delete
+    edit_resource: Edit Resource
+    edit: Edit
+    edit_organization: Edit Organization
+    published: Published
+    remove: Remove
+    reset: Reset
+    save_changes: Save Changes
+    saved: Your data is currently saved
+    save: Save
+    search: Search
+    unassigned: Unassigned
+    unpublished: Unpublished
+    unsaved: Save your data
+    view: View
+    yes: Yes
+    preview: Preview
+
+    labels:
+        doctype: Document Type
+        date_created: Created
+        actions: Actions
+        add_question: Add Question
+        add_resource: Add Resource
+        address: Address
+        aliases: Aliases
+        alt_title: Alternate Title
+        area_code: Area Code
+        attach_file: Attach file
+        batch_actions: Batch actions
+        resources: Resources
+        classifications: Classifications
+        concepts: Concepts
+        contributor: Contributor
+        copyright: Copyright
+        country: Country
+        creator: Creator
+        data_source: Source of Data
+        date: Date
+        delete_resource: Delete Resource
+        delete_resources: Delete Resources
+        delete_organization: Delete Organization
+        delete_organizations: Delete Organizations
+        description: Description
+        dissagregation: Dissagregation
+        docType: Document Type
+        edit_question: Edit Question
+        email: Email
+        fax: Fax
+        frequency: Frequency
+        filename: File
+        int_identifier: International Identifier
+        int_instructions: Interviewer's instructions
+        label: Label
+        language: Language
+        layout: Layout
+        limitation: Limitation
+        literal_text: Literal Text
+        location: Location
+        methodology: Methodology
+        module: Module
+        name: Name
+        nickname: Nickname
+        notes: Notes
+        organizations: Organizations
+        post_text: Post Text
+        pre_text: Pre Text
+        pub_date: Publication date
+        publisher: Publisher
+        questionnaires: Questionnaires
+        question: Question
+        rationale: Rationale
+        related_classifications: Related Classifications
+        related_concepts: Related Concepts
+        related_survey_modules: Related survey modules
+        other_resources: Other Resources
+        save: Save
+        skip: Skip
+        skip_value: Skip Value
+        subtitle: Subtitle
+        telephone: Telephone
+        title: Title
+        unit_measurement: Unit of Measurement
+        url: Url
+        value: Value
+        visul_rep_format: Visual Representation Format
+        questionnaire_related_modules: Modules in this section of the questionnaire
+        questionnaires_and_modules: Questionnaires and modules
+        sources: Sources
+
+users:
+    actions: Actions
+    company: Company
+    country: Country
+    delete_user: Delete User
+    email: Email Address
+    enabled: Enabled
+    first_name: First Name
+    last_login: Last login
+    last_name: Last Name
+    message1: Do You really wish to delete user?
+    message2: Leave the password fields blank to keep the current password
+    phone: Phone
+    roles: Roles
+    role: User Role
+    status: Status
+    username: Username
+
+
+text:
+    title_main: IHSN Question Bank
+    text_main: Censuses, sample surveys and administrative data collection systems often aim to measure and monitor the same variable or statistic. However, differences in the formulation of questions, interviewer instructions or concept definitions can result in noncomparability of data across sources and time. The IHSN Question Bank (QBank), maintained by a network of international agencies, aims to address this by providing a central repository of international questionnaires, interviewer instructions, classifications, concepts and indicators. The QBank application provides comprehensive and readily usable metadata that can be easily exported for the design of data collection instruments.
+
+    text_ind: Browse key indicators by thematic groups and conventions such as the MDGs. View detailed indicator descriptions, references and link to relevant questionnaire modules
+    text_ind2: Browse key indicators by thematic groups and conventions such as the MDGs. View detailed indicator descriptions, references and link to relevant questionnaire modules.
+    text_ind3: Please use the left sidebar to navigate through the list of indicators provided.
+
+    text_conc: Learn more about the concepts behind key indicators and measurement approaches
+    text_conc2: Browse key concepts by thematic groups and conventions such as the MDGs. View detailed concept descriptions, references and link to relevant questionnaire modules.
+    text_conc3: Please use the left sidebar to navigate through the list of concepts provided.
+
+    text_clas: Peruse key international classifications for various survey data variables
+    text_clas2: Browse key classifications by thematic groups and conventions such as the MDGs. View detailed classification descriptions, references and link to relevant questionnaire modules.
+    text_clas3: Please use the left sidebar to navigate through the list of classifications provided.
+
+    text_ques: Explore various template survey questionnaire modules by thematic groups. Browse specific questions, interviewer instructions and preview questionnaire layouts
+    text_ques2: Browse key classifications by thematic groups and conventions such as the MDGs. View detailed classification descriptions, references and link to relevant questionnaire modules.
+    text_ques3: Please use the left sidebar to navigate through the list of classifications provided.
+

@@ -1,0 +1,22 @@
+{% if organizations|length %}
+    <table class="organizations-table">
+        {% for organization in organizations %}
+            <tr>
+                <td><input id="organization-checkbox-{{ organization.id }}" type="checkbox"
+                           value="{{ organization.id }}"/></td>
+                <td>
+                    <label for="organization-checkbox-{{ organization.id }}">
+                        {% if organization.name %}
+                            <span class="organization-name">{{ organization.name }}</span><br>
+                        {% endif %}
+                        {% if organization.nickname %}
+                            <span class="organization-creator">{{ organization.nickname }}</span>
+                        {% endif %}
+                    </label>
+                </td>
+                <td class="view-link"><a class="btn btn-info btn-xs" href="{{ path('edit_organization', {id: organization.id}) }}" target="_blank">{{ 'forms.view'|trans }}</a></label>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}

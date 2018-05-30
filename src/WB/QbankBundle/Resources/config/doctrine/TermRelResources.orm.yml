@@ -1,0 +1,34 @@
+WB\QbankBundle\Entity\TermRelResources:
+    type: entity
+    table: term_rel_resources
+    repositoryClass: WB\QbankBundle\Entity\TermRelResourcesRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        weight:
+            type: integer
+            nullable: TRUE
+    manyToOne:
+        resourceId:
+            type: integer
+            column: resource_id
+            targetEntity: Resources
+            inversedBy: termRelResources
+            joinColumn:
+                name: resource_id
+                referencedColumnName: id
+                onDelete: CASCADE
+        termId:
+            type: integer
+            column: term_id
+            targetEntity: Terms
+            inversedBy: termRelResources
+            joinColumn:
+                name: term_id
+                referencedColumnName: id
+                onDelete: CASCADE
+    lifecycleCallbacks: {  }

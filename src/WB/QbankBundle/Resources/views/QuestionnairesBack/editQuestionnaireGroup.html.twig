@@ -1,0 +1,205 @@
+{{ render(controller('WBQbankBundle:QuestionnairesBack:questionnaireGroupBreadcrumb', {
+    'grpId': grpId,
+    'public': false
+})) }}
+
+
+{{ form_start(form, { 'attr' : { 'class' : 'edit-group edit-group-group' }}) }}
+
+<input type="hidden" name="grpId" value="{{ grpId }}"/>
+
+<div class="publish-button">
+    <button type="button" class="btn btn-success {% if form.published.vars.value != true %}hidden{% endif %}">
+        {{ 'forms.published'|trans }}
+    </button>
+    <button type="button" class="btn btn-default {% if form.published.vars.value == true %}hidden{% endif %}">
+        {{ 'forms.unpublished'|trans }}
+    </button>
+</div>
+
+{{ form_row(form.name, {'label': 'forms.labels.name'|trans, 'attr': {'class': 'group-name-field', 'spellcheck': 'true'}}) }}
+
+    {{ form_row(form.description, {'label': 'forms.labels.description'|trans, 'attr': {'spellcheck': 'true'}}) }}
+    {{ form_row(form.notes, {'label': 'forms.labels.notes'|trans, 'attr': {'spellcheck': 'true'}}) }}
+
+<fieldset>
+    <div class="related-items-header">
+        {% if form.questionnaireGroupRelCustodians|length %}
+            {{ form_label(form.questionnaireGroupRelCustodians, 'forms.labels.organizations'|trans) }}
+        {% else %}
+            {{ form_row(form.questionnaireGroupRelCustodians, {'label': 'forms.labels.organizations'|trans}) }}
+        {% endif %}
+
+        <div class="form-buttons">
+            <a class="add-related-items btn btn-info"
+               role="button"
+               data-url="{{ path('organizations_modal',  {'entityName' : 'questionnaireGroupsEdit', 'propertyName' : 'questionnaireGroupRelCustodians'}) }}"
+               data-target="#ajax-modal" data-container="#organizations-items">{{ 'forms.add'|trans }}</a>
+            <img class="ajax-loader-inline" src="{{ asset('bundles/wbqbank/images/ajax-loader.gif') }}" alt="Loading...">
+            <a class="remove-related-items btn btn-danger" role="button">{{ 'forms.remove'|trans }}</a>
+        </div>
+    </div>
+    <div class="form-related-items">
+        <div class="related-items-info">{{ 'forms.add_info'|trans }}</div>
+        <table class="table table-bordered" id="organizations-items">
+            <thead>
+            <tr>
+                <th class="check"></th>
+                <th>{{ 'forms.labels.name'|trans }}</th>
+                <th>{{ 'forms.labels.nickname'|trans }}</th>
+                <th class="reorder"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for custodian in form.questionnaireGroupRelCustodians %}
+                <tr>
+                    <td><input type="checkbox" value="{{ custodian.vars.value.organizationId.id }}"/></td>
+                    <td>{{ custodian.vars.value.organizationId.name }}</td>
+                    <td>{{ custodian.vars.value.organizationId.nickname }}</td>
+                    <td>
+                        <a href="#" class="move-related-item move-down" data-direction="down"
+                           title="{{ 'actions.move_down'|trans }}">Move down</a>
+                        <a href="#" class="move-related-item move-up" data-direction="up"
+                           title="{{ 'actions.move_up'|trans }}">Move up</a>
+                        {{ form_row(custodian.weight, {'attr': {'class': 'relation-weight' }}) }}
+                        {{ form_row(custodian.organizationId, { 'attr': {'class': 'hidden'} }) }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</fieldset>
+
+<fieldset>
+    <div class="related-items-header">
+        {% if form.questionnaireGroupRelResources|length %}
+            {{ form_label(form.questionnaireGroupRelResources, 'forms.labels.resources'|trans) }}
+        {% else %}
+            {{ form_row(form.questionnaireGroupRelResources, {'label': 'forms.labels.resources'|trans}) }}
+        {% endif %}
+
+        <div class="form-buttons">
+            <a class="add-related-items btn btn-info"
+               role="button"
+               data-url="{{ path('resources_modal', {'entityName' : 'questionnaireGroupsEdit', 'propertyName' : 'questionnaireGroupRelResources'}) }}"
+               data-target="#ajax-modal" data-container="#resources-items">{{ 'forms.add'|trans }}</a>
+            <img class="ajax-loader-inline" src="{{ asset('bundles/wbqbank/images/ajax-loader.gif') }}" alt="Loading...">
+            <a class="remove-related-items btn btn-danger" role="button">{{ 'forms.remove'|trans }}</a>
+        </div>
+    </div>
+    <div class="form-related-items">
+        <div class="related-items-info">{{ 'forms.add_info'|trans }}</div>
+        <table class="table table-bordered" id="resources-items">
+            <thead>
+            <tr>
+                <th class="check"></th>
+                <th>{{ 'forms.labels.name'|trans }}</th>
+                <th class="reorder"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for resource in form.questionnaireGroupRelResources %}
+                <tr>
+                    <td><input type="checkbox" value="{{ resource.vars.value.resourceId.id }}"/></td>
+                    <td><a href="{{ path('edit_resource', {id: resource.vars.value.resourceId.id}) }}" target="_blank">{{ resource.vars.value.resourceId.name }}</a>
+                        <p>{{ resource.vars.value.resourceId.creator }},
+                            {{ resource.vars.value.resourceId.pubDate }}</p></td>
+                    <td>
+                        <a href="#" class="move-related-item move-down" data-direction="down"
+                           title="{{ 'actions.move_down'|trans }}">Move down</a>
+                        <a href="#" class="move-related-item move-up" data-direction="up"
+                           title="{{ 'actions.move_up'|trans }}">Move up</a>
+                        {{ form_row(resource.weight, {'attr': {'class': 'relation-weight' }}) }}
+                        {{ form_row(resource.resourceId, { 'attr': {'class': 'hidden'} }) }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</fieldset>
+
+
+
+{#sources#}
+<fieldset>
+    <div class="related-items-header">
+        {% if form.questionnaireGroupRelSources|length %}
+            {{ form_label(form.questionnaireGroupRelSources, 'forms.labels.sources'|trans) }}
+        {% else %}
+            {{ form_row(form.questionnaireGroupRelSources, {'label': 'forms.labels.sources'|trans}) }}
+        {% endif %}
+        <div class="form-buttons">
+            <a class="add-related-items btn btn-info"
+               role="button"
+               data-url="{{ path('sources_modal', {'entityName' : 'questionnaireGroupsEdit', 'propertyName' : 'questionnaireGroupRelSources'}) }}"
+               data-target="#ajax-modal" data-container="#sources-items">{{ 'forms.add'|trans }}</a>
+            <img class="ajax-loader-inline" src="{{ asset('bundles/wbqbank/images/ajax-loader.gif') }}" alt="Loading...">
+            <a class="remove-related-items btn btn-danger" role="button">{{ 'forms.remove'|trans }}</a>
+        </div>
+    </div>
+    <div class="form-related-items">
+        <div class="related-items-info">{{ 'forms.add_info'|trans }}</div>
+        <table class="table table-bordered" id="sources-items">
+            <thead>
+            <tr>
+                <th class="check"></th>
+                <th>{{ 'forms.labels.name'|trans }}</th>
+                <th class="reorder"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for resource in form.questionnaireGroupRelSources %}
+                <tr>
+                    <td><input type="checkbox" value="{{ resource.vars.value.resourceId.id }}"/></td>
+                    <td><a href="{{ path('edit_resource', {id: resource.vars.value.resourceId.id}) }}" target="_blank">{{ resource.vars.value.resourceId.name }}</a>
+                        <p>{{ resource.vars.value.resourceId.creator }},
+                            {{ resource.vars.value.resourceId.pubDate }}</p></td>
+                    <td>
+                        <a href="#" class="move-related-item move-down" data-direction="down"
+                           title="{{ 'actions.move_down'|trans }}">Move down</a>
+                        <a href="#" class="move-related-item move-up" data-direction="up"
+                           title="{{ 'actions.move_up'|trans }}">Move up</a>
+                        {{ form_row(resource.weight, {'attr': {'class': 'relation-weight' }}) }}
+                        {{ form_row(resource.resourceId, { 'attr': {'class': 'hidden'} }) }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</fieldset>
+
+
+
+{{ form_widget(form.published, {'attr': { 'class': 'group-published' }}) }}
+
+<div class="save-actions">
+    {{ form_widget(form.save, {'label': 'forms.labels.save'|trans}) }}
+    <a class="btn btn-cancel cancel-editing" href="#">{{ 'forms.cancel'|trans }}</a>
+    <a class="btn btn-cancel preview" style="left:200px;" href="{{ path("questionnaire_group_data", {id : form.vars.value.id}) }}">{{ 'forms.preview'|trans }}</a>
+
+    <p class="saved">{{ 'forms.saved'|trans }}</p>
+    <p class="unsaved">{{ 'forms.unsaved'|trans }}</p>
+
+    <div class="publish-button">
+        <button type="button" class="btn btn-success {% if form.published.vars.value != true %}hidden{% endif %}">
+            {{ 'forms.published'|trans }}
+        </button>
+        <button type="button" class="btn btn-default {% if form.published.vars.value == true %}hidden{% endif %}">
+            {{ 'forms.unpublished'|trans }}
+        </button>
+    </div>
+</div>
+
+{{ form_end(form) }}
+
+
+{% javascripts '@WBQbankBundle/Resources/public/js/editModal.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+<script type="text/javascript">$(document).ready(function () {
+        $("a.preview").fancybox({ type: 'ajax', autoSize: false, width: 650, height: 500 });
+    });
+</script>

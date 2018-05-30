@@ -1,0 +1,6 @@
+WB\QbankBundle\Entity\IndGrpRef:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [indGroupId, indId]
+            errorPath: indGroupId
+            message: 'Duplicate Entry'

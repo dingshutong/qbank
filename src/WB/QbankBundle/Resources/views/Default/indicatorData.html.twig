@@ -1,0 +1,122 @@
+{{ render(controller('WBQbankBundle:IndicatorsBack:indicatorBreadcrumbs', {
+'indId': indicator.id,
+'public': true
+})) }}
+
+<h2>{{ indicator.name }}</h2>
+
+{% if indicator.description %}
+    <h3>{{ 'forms.labels.description'|trans }}</h3>
+    <p>{{ indicator.description|nl2br }}</p>
+{% endif %}
+
+{% if indicator.indicatorAlias|length %}
+    <h3>{{ 'forms.labels.aliases'|trans }}</h3>
+    <ul>
+        {% for alias in indicator.indicatorAlias %}
+            <li>{{ alias.name }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% if indicator.unitMeasurement %}
+    <h3>{{ 'forms.labels.unit_measurement'|trans }}</h3>
+    <p>{{ indicator.unitMeasurement|nl2br }}</p>
+{% endif %}
+
+{% if indicator.rationale %}
+    <h3>{{ 'forms.labels.rationale'|trans }}</h3>
+    <p>{{ indicator.rationale|nl2br }}</p>
+{% endif %}
+
+{% if indicator.limitation %}
+    <h3>{{ 'forms.labels.limitation'|trans }}</h3>
+    <p>{{ indicator.limitation|nl2br }}</p>
+{% endif %}
+
+{% if indicator.dataSource %}
+    <h3>{{ 'forms.labels.data_source'|trans }}</h3>
+    <p>{{ indicator.dataSource|nl2br }}</p>
+{% endif %}
+
+{% if indicator.methodology %}
+    <h3>{{ 'forms.labels.methodology'|trans }}</h3>
+    <p>{{ indicator.methodology|nl2br }}</p>
+{% endif %}
+
+{% if indicator.frequency %}
+    <h3>{{ 'forms.labels.frequency'|trans }}</h3>
+    <p>{{ indicator.frequency|nl2br }}</p>
+{% endif %}
+
+{% if indicator.dissagregation %}
+    <h3>{{ 'forms.labels.dissagregation'|trans }}</h3>
+    <p>{{ indicator.dissagregation|nl2br }}</p>
+{% endif %}
+
+{% if indicator.notes %}
+    <h3>{{ 'forms.labels.notes'|trans }}</h3>
+    <p>{{ indicator.notes|nl2br }}</p>
+{% endif %}
+
+{% if questionnaires|length %}
+    <h3>{{ 'forms.labels.related_survey_modules'|trans }}:</h3>
+    <ul>
+        {% for questionnaire in questionnaires %}
+            <li><a class="related-item" href="{{ path('questionnaire_data', {id: questionnaire.id, questionId: "false",lightbox: true}) }}">{{ questionnaire.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% if concepts|length %}
+    <h3>{{ 'forms.labels.related_concepts'|trans }}:</h3>
+    <ul>
+        {% for concept in concepts %}
+            <li><a class="related-item" href="{{ path('concept_data', {id: concept.id, lightbox: true}) }}">{{ concept.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% if classifications|length %}
+    <h3>{{ 'forms.labels.related_classifications'|trans }}:</h3>
+    <ul>
+        {% for classification in classifications %}
+            <li><a class="related-item" href="{{ path('classification_data', {id: classification.id, lightbox: true}) }}">{{ classification.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+{% if organizations|length %}
+    <h3>{{ 'forms.labels.organizations'|trans }}:</h3>
+    <ul>
+        {% for organization in organizations %}
+            <li><a class="related-item" href="{{ path('organization', {id: organization.id, lightbox: true}) }}">{{ organization.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+{% if resources|length %}
+    <h3>{{ 'forms.labels.resources'|trans }}:</h3>
+    
+    {% for key,resource_type in resources %}
+       <fieldset class="resources-list">
+        <legend>{{key}}</legend>
+        {% include 'WBQbankBundle:Default:resources-list.html.twig' with {'resources': resource_type} only %}
+        </fieldset>
+    {% endfor %}
+    
+{% endif %}
+
+
+{#related sources list#}
+{% if sources|length %}
+    {% include 'WBQbankBundle:Default:sources.html.twig' with {'sources': sources} only %}
+{% endif %}
+
+
+<script type="text/javascript">$(document).ready(function () {
+        $("a.related-item").fancybox({ type: 'ajax', autoSize: false, width: 650, height: 500 });
+    });
+</script>

@@ -1,0 +1,62 @@
+        <h2 class="organization-name">{{ organization.name }}</h2>
+
+        {% if organization.description %}
+            <h3>{{ 'forms.labels.description'|trans }}</h3>
+            <p>{{ organization.description|nl2br }}</p>
+        {% endif %}
+
+        {% if organization.nickName %}
+            <h3>{{ 'forms.labels.nickname'|trans }}</h3>
+            <p>{{ organization.nickName|nl2br }}</p>
+        {% endif %}
+
+        {% if organization.address %}
+            <h3>{{ 'forms.labels.address'|trans }}</h3>
+            <p>{{ organization.address|nl2br }}</p>
+        {% endif %}
+
+        {% if organization.areaCode %}
+            <h3>{{ 'forms.labels.area_code'|trans }}</h3>
+            <p>{{ organization.areaCode|nl2br }}</p>
+        {% endif %}
+
+        {% if organization.country %}
+            <h3>{{ 'forms.labels.country'|trans }}</h3>
+            <p>{{ organization.country|nl2br }}</p>
+        {% endif %}
+
+        {% if organization.telephone %}
+            <h3>{{ 'forms.labels.telephone'|trans }}</h3>
+            <p>{{ organization.telephone|nl2br }}</p>
+        {% endif %}
+
+        {% if organization.fax %}
+            <h3>{{ 'forms.labels.fax'|trans }}</h3>
+            <p>{{ organization.fax|nl2br }}</p>
+        {% endif %}
+
+        {% if organization.email %}
+            <h3>{{ 'forms.labels.email'|trans }}</h3>
+            <p>{{ organization.email|nl2br }}</p>
+        {% endif %}
+
+{#        {% if organization.url %}
+            <h3>{{ 'forms.labels.location'|trans }}</h3>
+            <a href="{{ organization.url }}">{{ organization.url|nl2br }}</a>
+        {% endif %}#}
+
+        {% if organization.notes %}
+            <h3>{{ 'forms.labels.notes'|trans }}</h3>
+            <p>{{ organization.notes|nl2br }}</p>
+        {% endif %}
+
+        {% if lightbox %}
+            <h3>{{ 'strings.link'|trans }}</h3>
+            <p>
+                {% if organization.url|length > 80 %}
+                    <a target="_blank" href="{{ organization.url }}">{{ organization.url|slice(0, 80) }}...</a>
+                {% else %}
+                    <a target="_blank" href="{{ organization.url }}">{{ organization.url }}</a>
+                {% endif %}
+            </p>
+        {% endif %}

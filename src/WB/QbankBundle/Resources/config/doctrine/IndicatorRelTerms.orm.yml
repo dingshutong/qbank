@@ -1,0 +1,33 @@
+WB\QbankBundle\Entity\IndicatorRelTerms:
+    type: entity
+    table: indicator_rel_terms
+    repositoryClass: WB\QbankBundle\Entity\IndicatorRelTermsRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        weight:
+            type: integer
+            nullable: TRUE
+    manyToOne:
+        indId:
+            type: integer
+            targetEntity: Indicators
+            inversedBy: indicatorRelTerms
+            joinColumn:
+                name: ind_id
+                referencedColumnName: id
+                onDelete: CASCADE
+        termId:
+            type: integer
+            targetEntity: Terms
+            inversedBy: indicatorRelTerms
+            joinColumn:
+                name: term_id
+                referencedColumnName: id
+                onDelete: CASCADE
+
+    lifecycleCallbacks: {  }

@@ -1,0 +1,145 @@
+{% extends 'WBQbankBundle::base.html.twig' %}
+
+{% block body %}
+
+    <span id="node-type" class="hidden">questionnaire</span>
+
+    {{ render(controller('WBQbankBundle:Default:headerMenu', { activeButton: active_button})) }}
+
+    <div class="ui-layout-west">
+        <div class="ui-layout-center">
+            <div class="controls-container header">
+                <ul class="controls back-controls">
+                    <li>
+                        <a class="expand-tree" href="#" title="{{ 'actions.expand'|trans }}">Expand</a>
+                    </li>
+                    <li>
+                        <a class="collapse-tree" href="#" title="{{ 'actions.collapse'|trans }}">Collapse</a>
+                    </li>
+                    <li>
+                        <a class="add-node-grp" data-target="#add-group-modal" href="#" title="{{ 'actions.questionnaires.add_group'|trans }}">Add Group</a>
+                    </li>
+                    <li>
+                        <a class="add-node-to-grp" href="#" title="{{ 'actions.questionnaires.add_to_group'|trans }}">Add to Group</a>
+                    </li>
+                    <li>
+                        <a class="copy-node" href="#" title="{{ 'actions.questionnaires.copy_node'|trans }}">Copy</a>
+                    </li>
+                    <li>
+                        <a class="del-node-grp" data-target="#del-group-modal" href="#" title="{{ 'actions.questionnaires.delete'|trans }}">Delete</a>
+                    </li>
+                    <li>
+                        <a class="tree-move-button move-dn" href="#" title="{{ 'actions.move_down'|trans }}" data-direction="down">Move Down</a>
+                    </li>
+                    <li>
+                        <a class="tree-move-button move-up" href="#" title="{{ 'actions.move_up'|trans }}" data-direction="up">Move Up</a>
+                    </li>
+                </ul>
+                <div class="groups-controls-footer">
+                    <form class="search-form" action="">
+                        <div>
+                            <input type="text" />
+                            <button type="button" class="btn btn-primary btn-sm">{{ 'forms.search'|trans }}</button>
+                            <a href="#">{{ 'forms.reset'|trans }}</a>
+                        </div>
+                    </form>
+                    <div class="count-groups">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="data">
+                <div class="node-groups-container">
+                    <img class="ajax-loader" src="{{ asset('bundles/wbqbank/images/ajax-loader-2.gif') }}" alt="Loading...">
+                    <div class="node-groups">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="ui-layout-center">
+        <div class="center-content">
+            <div class="forms-container">
+                <img class="ajax-loader" src="{{ asset('bundles/wbqbank/images/ajax-loader-2.gif') }}" alt="Loading...">
+                <div class="forms-content">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="modal fade" id="messages-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{ 'strings.message'|trans }}</h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="del-group-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <input type="hidden" id="id-to-del" value=""/>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'forms.cancel'|trans }}</button>
+                    <button type="button" class="btn btn-primary save-changes">{{ 'forms.yes'|trans }}</button>
+                    <img class="ajax-loader" src="{{ asset('bundles/wbqbank/images/ajax-loader.gif') }}"
+                         alt="Loading...">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="del-node-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{ 'messages.message1'|trans }}</h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <input type="hidden" id="node-to-del" value=""/>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'forms.cancel'|trans }}</button>
+                    <button type="button" class="btn btn-primary save-changes">{{ 'forms.yes'|trans }}</button>
+                    <img class="ajax-loader" src="{{ asset('bundles/wbqbank/images/ajax-loader.gif') }}"
+                         alt="Loading...">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="breadcrumb-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <span>{{ 'strings.questionnaire'|trans }}: </span>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body"></div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

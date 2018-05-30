@@ -1,0 +1,25 @@
+{% if resources|length %}
+    <table class="resources-table">
+        {% for resource in resources %}
+            <tr>
+                <td><input id="resource-checkbox-{{ resource.id }}" type="checkbox"
+                           value="{{ resource.id }}"/></td>
+                <td>
+                    <label for="resource-checkbox-{{ resource.id }}">
+                        {% if resource.title %}
+                            <span class="resource-name">{{ resource.title }}</span><br>
+                        {% endif %}
+                        {% if resource.creator %}
+                            <span class="resource-creator">{{ resource.creator }}</span>
+                        {% endif %}
+                        {% if resource.pubDate %}
+                            , <span class="resource-date">{{ resource.pubDate }}</span>
+                        {% endif %}
+                    </label>
+                </td>
+                <td class="view-link"><a class="btn btn-info btn-xs" href="{{ path('edit_resource', {id: resource.id}) }}" target="_blank">{{ 'forms.view'|trans }}</a></label>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}

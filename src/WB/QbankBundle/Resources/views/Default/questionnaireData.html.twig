@@ -1,0 +1,129 @@
+{{ render(controller('WBQbankBundle:QuestionnairesBack:questionnaireBreadcrumbs', {
+    'questId': questionnaire.id,
+    'public': true
+})) }}
+
+<input type="hidden" id="questionIdHolder" value="{{ questionId }}"/>
+
+<h2 class="questionnaire-name">{{ questionnaire.name }}
+    {% if lightbox %}
+        <a class="btn btn-info"
+           href="{{ url('questionnaires') }}#questionnaire/{{ questionnaire.id }}">{{ 'actions.open'|trans }}</a>
+    {% endif %}
+</h2>
+
+<ul class="nav nav-tabs" style="display: block;">
+    <li class="active"><a href="#overview" data-toggle="tab">{{ 'strings.overview'|trans }}</a></li>
+    {% if questionnaire.questionnaireModuleQuestions|length %}
+        <li><a href="#questions" id="questionsTab"
+               data-toggle="tab">{{ 'strings.questions_and_instructions'|trans }}</a></li>
+    {% endif %}
+    {% if layout %}
+        <li><a href="#layout" data-toggle="tab">{{ 'strings.layout'|trans }}</a></li>
+    {% endif %}
+</ul>
+
+
+<div class="tab-content">
+    <div class="tab-pane fade in active" id="overview">
+        {% if questionnaire.description %}
+            <h3>{{ 'forms.labels.description'|trans }}</h3>
+            <p>{{ questionnaire.description|nl2br }}</p>
+        {% endif %}
+
+        {% if questionnaire.notes %}
+            <h3>{{ 'forms.labels.notes'|trans }}</h3>
+            <p>{{ questionnaire.notes|nl2br }}</p>
+        {% endif %}
+        {% if layout or resources|length %}
+        {% endif %}
+
+    </div>
+
+    {% if questionnaire.questionnaireModuleQuestions|length %}
+        <div class="tab-pane fade questionnaire-questions-table" id="questions">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>{{ 'forms.labels.name'|trans }}</th>
+                    <th>{{ 'forms.labels.description'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if questionnaire.questionnaireModuleQuestions|length %}
+                    {% for question in questionnaire.questionnaireModuleQuestions %}
+                        <tr data-id="{{ question.id }}" class="question-row">
+                            <td>
+                                <a href="#questionnaire/{{ question.questModuleId.id }}/{{ question.id }}">{{ question.name }}</a>
+                            </td>
+                            <td class="question-desc-cell">
+                                <a href="#questionnaire/{{ question.questModuleId.id }}/{{ question.id }}">
+                                    {{ question.description }}
+                                    <img class="ajax-loader-sm"
+                                         src="{{ asset('bundles/wbqbank/images/ajax-loader-blue.gif') }}"
+                                         alt="Loading...">
+                                </a>
+                            </td>
+                        </tr>
+                        <tr class="question-data-row hidden"></tr>
+                    {% endfor %}
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+    
+    {#layout tab#}
+    {% if layout is defined %}
+        <div class="tab-pane fade" id="layout">
+            {% set layout_url=''%}
+            {% if layout.filename|length > 5 %}
+                {% set layout_url=asset(layout.filename) %}
+            {% elseif layout.url|length >5 %}
+                {% set layout_url=layout.url %}
+            {% endif %}
+            
+            {% if '.pdf' in layout_url  %}
+                <iframe id="viewer"
+                        src="{{ asset('bundles/wbqbank/ViewerJS/index.html') }}#{{ layout_url }}"
+                        width='100%' height='800px' allowfullscreen webkitallowfullscreen>                    
+                </iframe>                
+            {% endif %}
+            <p>Layout file: <a href="{{ layout_url }}" target="_blank">{{layout_url}}</a></p>
+
+        </div>
+    {% endif %}
+
+</div>
+
+
+{% if resources|length %}
+    <h3>{{ 'forms.labels.resources'|trans }}:</h3>
+    
+    {% for key,resource_type in resources %}
+       <fieldset class="resources-list">
+        <legend>{{key}}</legend>
+        {% include 'WBQbankBundle:Default:resources-list.html.twig' with {'resources': resource_type} only %}
+        </fieldset>
+    {% endfor %}
+    
+{% endif %}
+
+
+
+{#related sources list#}
+{% if sources is defined and sources|length %}
+    {% include 'WBQbankBundle:Default:sources.html.twig' with {'sources': sources} only %}
+{% endif %}
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var questionId = $("body").find("#questionIdHolder").val();
+        if (questionId != "") {
+            // $('#questionsTab').tab('show');
+            $(".question-row[data-id=" + questionId + "]").trigger("click");
+        }
+    });
+</script>

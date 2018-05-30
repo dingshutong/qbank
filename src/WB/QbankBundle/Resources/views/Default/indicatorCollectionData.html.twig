@@ -1,0 +1,38 @@
+{{ render(controller('WBQbankBundle:IndicatorsBack:collectionBreadcrumb', {
+    'collId': collection.id,
+    'public': true
+})) }}
+
+<h2>{{ collection.name }}</h2>
+<p>{{ collection.description|nl2br }}</p>
+
+{% if indicators %}
+    <ul class="nodes-for-group">
+        {% for indicator in indicators %}
+            <li data-node="{{ indicator.id }}"><a href="#">{{ indicator.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+{% if childCollectionsTree %}
+    {% for childCollection in childCollectionsTree %}
+        {% if (childCollection.published) and (childCollection.inds | length > 0 ) %}
+            <h3><span class="glyphicon glyphicon-folder-open"></span>  {{ childCollection.name }}</h3>
+            <p>{{ childCollection.desc|nl2br }}</p>
+
+            {% if childCollection.inds %}
+                <h4>{{ 'strings.related_indicators' | trans }}</h4>
+
+                <ul class="nodes-for-group">
+                    {% for ind in childCollection.inds %}
+                        <li data-node="{{ ind.indId }}"><a href="#">{{ ind.indName }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endif %}
+
+
+    {% endfor %}
+{% endif %}
+

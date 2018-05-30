@@ -1,0 +1,16 @@
+<span class="hidden" id="count-nodes">{{ countQuestionnaires }}</span>
+<div id="node-repository-tree">
+    <ul>
+        <li id="repo-root" data-jstree='{ "opened" : true, "selected" : true }'>
+            <ul>
+                {% for questionnaire in questionnaires %}
+                    {% if questionnaire.questionnaireGroupRelModules|length %}
+                        <li class="file {% if not questionnaire.published %}unpublished{% endif %}" data-jstree='{"type":"file"}' data-node="{{ questionnaire.id }}" data-refgrp="{% for ref in questionnaire.questionnaireGroupRelModules %},{{ ref.questGroupId.id }}{% endfor %}">{{ questionnaire.name }}</li>
+                    {% else %}
+                        <li class="file unclassified" data-jstree='{"type":"file"}' data-node="{{ questionnaire.id }}">{{ questionnaire.name }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </li>
+    </ul>
+</div>

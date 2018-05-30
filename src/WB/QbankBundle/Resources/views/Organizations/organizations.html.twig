@@ -1,0 +1,109 @@
+{% extends 'WBQbankBundle::base.html.twig' %}
+{% block body %}
+
+<span id="node-type" class="hidden">organization</span>
+
+{{ render(controller('WBQbankBundle:Default:headerMenu', { activeButton: active_button})) }}
+
+<div class="ui-layout-center wide-layout">
+    <div class="row">
+        <div class="col-md-12">
+
+            <a href="{{ path('add_organization') }}" class="btn btn-primary pull-right" role="button">
+                <span class="glyphicon glyphicon-plus-sign"></span>
+                {{ 'forms.add_organization'|trans }}
+            </a>
+
+            <h1>{{ 'strings.organizations'|trans }}</h1>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+            <div id="search" class="table-search">
+                <form id="search-form" action="{{ path('organizations') }}">
+                    <input type="search" name="search"/>
+                    <button>{{ 'forms.search'|trans }}</button>
+                </form>
+            </div>
+            <select id="batch-actions">
+                <option value="0">{{ 'forms.labels.batch_actions'|trans }}</option>
+                <option value="{{ path('batch_delete_organizations') }}">{{ 'forms.delete'|trans }}</option>
+            </select>
+            <button id="batch-action">{{ 'forms.apply'|trans }}</button>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table id="organization-table" class="table">
+                <thead>
+                    <tr>
+                        <th><input id="selectAll" type="checkbox"/></th>
+                        <th>{{ 'forms.labels.name'|trans }}</th>
+                        <th>{{ 'forms.labels.nickname'|trans }}</th>
+                        <th>{{ 'forms.labels.actions'|trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for organization in organizations %}
+                        <tr id="organization-row-{{ organization.id }}">
+                            <td><input type="checkbox" data-id="{{ organization.id }}"></td>
+                            <td>
+                                <a href="{{ path('edit_organization', {'id':organization.id}) }}">{{ organization.name }}</a>
+                            </td>
+                            <td>{{ organization.nickName }}</td>
+                            <td>
+                                <a href="{{ path('edit_organization', {'id':organization.id}) }}">{{ 'forms.edit'|trans }}</a> |
+                                <a class="organization-delete">{{ 'forms.delete'|trans }}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="delete-organization-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{ 'forms.labels.delete_organization'|trans }}</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{ 'messages.message8'|trans }}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="delete-organization" class="btn btn-danger" data-dismiss="modal">{{ 'forms.delete'|trans }}
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'forms.cancel'|trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="batch-delete-organization-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{ 'forms.labels.delete_organization'|trans }}</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{ 'messages.message9'|trans }}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="batch-delete-organization" class="btn btn-danger" data-dismiss="modal">
+                    {{ 'forms.delete'|trans }}
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'forms.cancel'|trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    {% endblock %}

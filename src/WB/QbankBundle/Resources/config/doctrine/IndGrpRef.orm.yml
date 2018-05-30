@@ -1,0 +1,33 @@
+WB\QbankBundle\Entity\IndGrpRef:
+    type: entity
+    table: ind_grp_ref
+    repositoryClass: WB\QbankBundle\Entity\IndGrpRefRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        weight:
+            type: integer
+            column: weight
+            nullable: TRUE
+    manyToOne:
+        indGroupId:
+            orderBy: { 'weight': 'ASC' }
+            targetEntity: IndicatorGroups
+            inversedBy: indicatorGrpRef
+            joinColumn:
+                name: ind_group_id
+                referencedColumnName: id
+                onDelete: CASCADE
+        indId:
+            orderBy: { 'weight': 'ASC' }
+            targetEntity: Indicators
+            inversedBy: indicatorGrpRef
+            joinColumn:
+                name: ind_id
+                referencedColumnName: id
+                onDelete: CASCADE
+    lifecycleCallbacks: {  }

@@ -1,0 +1,17 @@
+<div class="visual-format-numeric">
+    
+    <ul>
+    {% for part in info.numeric %}
+        
+        {% if (not loop.first) and (part>0)  %}
+            <li class="format-dot">.</li>
+            {% endif %}
+        
+        {% if part>0 %}
+            {% for i in 0..(part-1) %}
+                <li> {{ i }}</li>
+            {% endfor %}
+        {% endif %}    
+    {% endfor %}    
+    </ul>
+</div>

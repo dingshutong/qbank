@@ -1,0 +1,20 @@
+wb_user_homepage:
+    pattern:  /admin/users/{search}
+    defaults: { _controller: WBUserBundle:Default:index, search: false }
+
+add_user:
+    pattern:  /admin/add-user/
+    defaults: { _controller: WBUserBundle:Default:addUser }
+
+
+edit_user:
+    pattern:  /admin/edit-user/{userId}
+    defaults: { _controller: WBUserBundle:Default:editUser }
+
+delete_user:
+    pattern: /admin/delete-user/{userId}
+    defaults: { _controller: WBUserBundle:Default:deleteUser }
+
+register_user:
+    pattern: /register-user
+    defaults: { _controller: WBUserBundle:Default:registerUser }

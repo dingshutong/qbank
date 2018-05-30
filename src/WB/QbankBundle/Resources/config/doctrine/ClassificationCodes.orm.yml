@@ -1,0 +1,46 @@
+WB\QbankBundle\Entity\ClassificationCodes:
+    type: entity
+    table: classification_codes
+    repositoryClass: WB\QbankBundle\Entity\ClassificationCodesRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        label:
+            type: string
+            length: '255'
+            column: classification_label
+        description:
+            type: text
+            nullable: TRUE
+        value:
+            type: string
+            length: '100'
+            nullable: TRUE
+        isMissing:
+            type: boolean
+            column: is_missing
+            nullable: TRUE
+        weight:
+            type: integer
+            nullable: TRUE
+        attachments:
+            type: text
+            nullable: TRUE    
+    oneToMany:
+        questionsRelClassifications:
+            targetEntity: QuestionsRelClassifications
+            mappedBy: classificationCodeId
+            cascade: ["persist", "remove"]
+    manyToOne:
+        classificationId:
+            targetEntity: Classifications
+            inversedBy: classificationCodes
+            joinColumn:
+                name: classification_id
+                referencedColumnName: id
+                onDelete: CASCADE
+    lifecycleCallbacks: {  }

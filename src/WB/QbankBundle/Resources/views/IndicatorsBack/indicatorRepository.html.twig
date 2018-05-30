@@ -1,0 +1,26 @@
+<span class="hidden" id="count-nodes">{{ countIndicators }}</span>
+<div id="node-repository-tree">
+    {#<ul>
+        <li id="repo-root" data-jstree='{ "opened" : true, "selected" : true }'>
+            <ul>
+            {% for indicator in indicators %}
+                {% if indicator.indicatorGrpRef|length %}
+                    <li class="file {% if not indicator.published %}unpublished{% endif %}" data-jstree='{"type":"file"}' data-node="{{ indicator.id }}" data-refgrp="{% for ref in indicator.indicatorGrpRef %},{{ ref.indGroupId.id }}{% endfor %}">{{ indicator.name }}</li>
+                {% else %}
+                    <li class="file unclassified {% if not indicator.published %}unpublished{% endif %}" data-jstree='{"type":"file"}' data-node="{{ indicator.id }}">{{ indicator.name }}</li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        </li>
+    </ul>#}
+    
+    <ul id="repo-root" data-jstree='{ "opened" : true, "selected" : true }'>
+            {% for indicator in indicators %}
+                {% if indicator.indicatorGrpRef|length %}
+                    <li class="file {% if not indicator.published %}unpublished{% endif %}" data-jstree='{"type":"file"}' data-node="{{ indicator.id }}" data-refgrp="{% for ref in indicator.indicatorGrpRef %},{{ ref.indGroupId.id }}{% endfor %}">{{ indicator.name }}</li>
+                {% else %}
+                    <li class="file unclassified {% if not indicator.published %}unpublished{% endif %}" data-jstree='{"type":"file"}' data-node="{{ indicator.id }}">{{ indicator.name }}</li>
+                {% endif %}
+            {% endfor %}
+    </ul>
+</div>

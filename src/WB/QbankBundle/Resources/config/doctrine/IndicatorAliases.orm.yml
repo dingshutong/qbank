@@ -1,0 +1,23 @@
+WB\QbankBundle\Entity\IndicatorAliases:
+    type: entity
+    table: indicator_aliases
+    repositoryClass: WB\QbankBundle\Entity\IndicatorAliasesRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: '255'
+    manyToOne:
+        indId:
+            targetEntity: Indicators
+            inversedBy: indicatorAlias
+            joinColumn:
+                name: ind_id
+                referencedColumnName: id
+                onDelete: CASCADE
+    lifecycleCallbacks: {  }

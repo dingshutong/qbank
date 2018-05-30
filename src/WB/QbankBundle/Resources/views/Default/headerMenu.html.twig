@@ -1,0 +1,15 @@
+{% block headerMenu %}
+    <div class="ui-layout-north">
+        <a class="qbank-link" href="{{ path('wb_qbank_homepage') }}">QBank <span>/ {{ 'strings.visit_website'|trans }}</span></a>
+        <ul class="nav nav-tabs pull-right">
+            <li {% if active_button == constant('AdminIndex', buttons) %}class="active"{% endif %}><a href="{{ path('wb_qbank_backend') }}">{{ 'strings.home'|trans }}</a></li>
+            <li {% if active_button == constant('AdminIndicators', buttons) %}class="active"{% endif %}><a href="{{ path('indicators_back') }}">{{ 'strings.indicators'|trans }}</a></li>
+            <li {% if active_button == constant('AdminConcepts', buttons) %}class="active"{% endif %}><a href="{{ path('concepts_back') }}">{{ 'strings.concepts'|trans }}</a></li>
+            <li {% if active_button == constant('AdminClassifications', buttons) %}class="active"{% endif %}><a href="{{ path('classifications_back') }}">{{ 'strings.classifications'|trans }}</a></li>
+            <li {% if active_button == constant('AdminQuestionnaires', buttons) %}class="active"{% endif %}><a href="{{ path('questionnaires_back') }}">{{ 'strings.questionnaires'|trans }}</a></li>
+            <li {% if active_button == constant('AdminResources', buttons) %}class="active"{% endif %}><a href="{{ path('resources') }}">{{ 'strings.resources'|trans }}</a></li>
+            <li {% if active_button == constant('AdminOrganizations', buttons) %}class="active"{% endif %}><a href="{{ path('organizations') }}">{{'strings.organizations'|trans }}</a></li>
+            <li {% if active_button == constant('AdminUsers', buttons) %}class="active"{% endif %}><a href="{{ path('wb_user_homepage') }}">{{ 'strings.users'|trans }}</a></li>
+        </ul>
+    </div>
+{% endblock %}

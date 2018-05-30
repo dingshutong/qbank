@@ -1,0 +1,236 @@
+site_title:
+admin_links:
+    administration:
+    login:
+    logout:
+    register:
+
+strings:
+    resources:
+    classifications:
+    collections:
+    concepts:
+    groups:
+    home:
+    indicators:
+    organizations:
+    questionnaires:
+    users:
+
+    resource:
+    classification:
+    collection:
+    concept:
+    group:
+    list:
+    indicator:
+    organization:
+    questionnaire:
+    questions:
+    user:
+
+    assigned:
+    categories:
+    classifications_groups:
+    codes:
+    concept_groups:
+    create_new_taxonomy:
+    create_new_user:
+    indicator_collections:
+    indicator_groups:
+    layout:
+    message:
+    overview:
+    link:
+    permalink:
+    please_select:
+    questionnaires_groups:
+    questions_and_instructions:
+    select_category:
+    select_sub_category:
+    switch_to_collection:
+    switch_to_group:
+    visit_website:
+
+messages:
+    message1:
+    message2:
+    message3:
+    message4:
+    message5:
+    message6:
+    message7:
+    message8:
+    message9:
+
+actions:
+    add:
+    collapse:
+    expand:
+    expand_filter:
+    move_down:
+    move_up:
+    open:
+    remove:
+    sort_by:
+
+    indicators:
+        add_group:
+        add_node:
+        add_to_group:
+        delete:
+        delete_node:
+    concepts:
+        add_group:
+        add_node:
+        add_to_group:
+        delete:
+        delete_node:
+    classifications:
+        add_group:
+        add_node:
+        add_to_group:
+        copy_node:
+        delete:
+        delete_node:
+    questionnaires:
+        add_group:
+        add_node:
+        add_to_group:
+        copy_node:
+        delete:
+        delete_node:
+
+forms:
+    add:
+    add_resource:
+    add_info:
+    add_organization:
+    all:
+    apply:
+    assigned:
+    assigned_to_groups:
+    cancel:
+    close:
+    delete:
+    edit_resource:
+    edit:
+    edit_organization:
+    published:
+    remove:
+    reset:
+    save_changes:
+    saved:
+    save:
+    search:
+    unassigned:
+    unpublished:
+    unsaved:
+    view:
+    yes:
+    preview:
+
+    labels:
+        actions:
+        add_question:
+        add_resource:
+        address:
+        aliases:
+        alt_title:
+        area_code:
+        attach_file:
+        batch_actions:
+        resources:
+        classifications:
+        concepts:
+        contributor:
+        copyright:
+        country:
+        creator:
+        data_source:
+        date:
+        delete_resource:
+        delete_resources:
+        delete_organization:
+        delete_organizations:
+        description:
+        dissagregation:
+        edit_question:
+        email:
+        fax:
+        frequency:
+        int_identifier:
+        int_instructions:
+        label:
+        language:
+        layout:
+        limitation:
+        literal_text:
+        location:
+        methodology:
+        module:
+        name:
+        nickname:
+        notes:
+        organizations:
+        post_text:
+        pre_text:
+        pub_date:
+        publisher:
+        questionnaires:
+        question:
+        rationale:
+        related_classifications:
+        related_concepts:
+        related_survey_modules:
+        resources:
+        save:
+        skip:
+        skip_value:
+        subtitle:
+        telephone:
+        title:
+        unit_measurement:
+        url:
+        value:
+        visul_rep_format:
+
+users:
+    actions:
+    company:
+    country:
+    delete_user:
+    email:
+    enabled:
+    first_name:
+    last_login:
+    last_name:
+    message1:
+    message2:
+    phone:
+    roles:
+    role:
+    status:
+    username:
+
+
+text:
+    title_main:
+    text_main:
+
+    text_ind:
+    text_ind2:
+    text_ind3:
+
+    text_conc:
+    text_conc2:
+    text_conc3:
+
+    text_clas:
+    text_clas2:
+    text_clas3:
+
+    text_ques:
+    text_ques2:
+    text_ques3:
+

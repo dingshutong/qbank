@@ -1,0 +1,29 @@
+{% if public %}
+
+    <ul class="groups-breadcrumb bc-groups-public">
+        <li><a href="{{ path('wb_qbank_homepage') }}">{{ 'strings.home'|trans }}</a> /</li>
+        <li><a href="{{ path('questionnaires') }}">{{ 'strings.questionnaires'|trans }}</a> /</li>
+        
+        {% for grp in parentGroups %}
+            <li class="bc-item" data-grp="{{ grp.grpId }}"><a href="#">{{ grp.grpName }}</a> /</li>
+        {% endfor %}
+
+        <li class="bc-item-last">{{ group.name }}</li>
+    </ul>
+
+{% else %}
+
+    <div class="breadcrumb-header group-bc-header">
+        <ul>
+            <li class="bc-home"><a href="{{ path('wb_qbank_backend') }}">{{ 'strings.home'|trans }}</a></li>
+            <li class="bc-item"><a href="{{ path('questionnaires_back') }}">{{ 'strings.questionnaires'|trans }}</a></li>
+
+            {% for grp in parentGroups %}
+                <li class="bc-item" data-grp="{{ grp.grpId }}"><a href="#">{{ grp.grpName }}</a></li>
+            {% endfor %}
+
+            <li class="bc-node">{{ group.name }}</li>
+        </ul>
+    </div>
+
+{% endif %}

@@ -1,0 +1,60 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">{{ 'strings.concepts'|trans }}</h4>
+</div>
+<div class="modal-body">
+
+    <div id="search">
+        <form id="search-form-modal" action="{{ path('concepts_modal') }}" data-entityName="{{ entity_name }}">
+            <input type="search" name="search"/>
+            <button type="submit" class="btn btn-primary btn-sm">{{ 'forms.search'|trans }}</button>
+            <button type="reset" class="btn btn-primary btn-sm">{{ 'forms.reset'|trans }}</button>
+        </form>
+    </div>
+
+    <div class="modal-data">
+        {{ include('WBQbankBundle:Shared/partials:conceptsModalPartial.html.twig') }}
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'forms.close'|trans }}</button>
+    <button type="button" id="add-concepts" class="btn btn-info" data-dismiss="modal">{{ 'forms.add'|trans }}</button>
+</div>
+
+
+<script type="text/javascript">
+    $("#add-concepts").on("click", function () {
+        var checked = $("#ajax-modal").find(":checked");
+        if (checked.length) {
+            var container = $("#concepts-items").find("tbody");
+            checked.each(function () {
+                //var index = new Date().getTime();
+                var objectId = $(this).val();
+                var index=objectId;
+                var row = $("<tr>");
+                var cell0 = $("<td><input type='checkbox' value='" + objectId + "' />");
+                var cell1 = $("<td>").html($(this).parents("tr").first().find("label").first().text());
+                var cell2 = $("<td>").html('<a href="#" class="move-related-item move-down" data-direction="down" title="Move down">Move down</a> <a href="#" class="move-related-item move-up" data-direction="up" title="Move up">Move up</a>');
+                var hiddenInput = $("<input type='hidden' name='{{ entity_name }}[{{ property_name }}][" + index + "][weight]' value='' class='relation-weight'/>");
+                var hiddenInput1 = $("<input type='hidden' name='{{ entity_name }}[{{ property_name }}][" + index + "][termId]' value='" + objectId + "' />");
+                row.append(cell0).append(cell1).append(cell2).append(hiddenInput).append(hiddenInput1);
+                container.append(row);
+            });
+            var weight = 1;
+            container.find('.relation-weight').each(function () {
+                $(this).val(weight++);
+            });
+
+            $('form .saved').hide();
+            $('form .unsaved').show();
+            $("#concepts-items").show();
+            $("#concepts-items").prev('.related-items-info').hide();
+        }
+    });
+    $("#search-form-modal button[type=reset]").on("click", function(){
+        $(this).siblings('[type=search]').val('');
+        $(this).closest('form').submit();
+    });
+
+</script>

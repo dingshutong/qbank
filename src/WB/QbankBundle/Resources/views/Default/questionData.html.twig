@@ -1,0 +1,26 @@
+<td colspan="2" class="question-data">
+    <div class="question-box">
+        <p class="pre-text">{{ question.preText|nl2br }}</p>
+
+        <p class="literal-text">{{ question.literalText|nl2br }}</p>
+
+        <div class="visual-format-preview">
+        {{ render(controller('WBQbankBundle:Default:visualRepFormat', { 'visualRepFormat' : question.visualRepFormat, 'valRepFormat' : question.valRepFormat, 'isFront' : true, 'questionId' : question.id, 'classification' : question.classificationId })) }}
+        </div>
+
+        <p class="post-text">{{ question.postText|nl2br }}</p>
+    </div>
+
+    {% if question.instructions|length or question.notes|length %}
+        <div class="question-box-info">
+            {% if question.instructions|length %}
+                <label>Interviewer's instructions:</label>
+                <p>{{ question.instructions|nl2br }}</p>
+            {% endif %}
+            {% if question.notes|length %}
+                <label>Notes:</label>
+                <p>{{ question.notes|nl2br }}</p>
+            {% endif %}
+        </div>
+    {% endif %}
+</td>

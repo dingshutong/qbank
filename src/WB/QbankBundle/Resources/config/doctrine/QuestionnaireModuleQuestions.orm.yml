@@ -1,0 +1,95 @@
+WB\QbankBundle\Entity\QuestionnaireModuleQuestions:
+    type: entity
+    table: questionnaire_module_questions
+    repositoryClass: WB\QbankBundle\Entity\QuestionnaireModuleQuestionsRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        alternateId:
+            type: string
+            length: '100'
+            column: alternate_id
+            nullable: TRUE
+        name:
+            type: string
+            length: '100'
+            nullable: TRUE
+        description:
+            type: text
+            nullable: TRUE
+        preText:
+            type: text
+            column: pre_text
+            nullable: TRUE
+        literalText:
+            type: text
+            column: literal_text
+            nullable: TRUE
+        postText:
+            type: text
+            column: post_text
+            nullable: TRUE
+        valRepFormat:
+            type: text
+            column: val_rep_format
+            nullable: TRUE
+        valPostText:
+            type: text
+            column: val_post_text
+            nullable: TRUE
+        visualRepFormat:
+            type: integer
+            column: visual_rep_format
+            nullable: TRUE
+        notes:
+            type: text
+            nullable: TRUE
+        instructions:
+            type: text
+            nullable: TRUE
+        universe:
+            type: text
+            nullable: TRUE
+        weight:
+            type: integer
+            nullable: TRUE
+        published:
+            type: boolean
+            nullable: TRUE
+        created:
+            type: datetime
+            nullable: TRUE
+        changed:
+            type: datetime
+            nullable: TRUE
+    oneToMany:
+        questionsRelClassifications:
+            targetEntity: QuestionsRelClassifications
+            mappedBy: questionId
+            cascade: ["persist", "remove"]
+    manyToOne:
+        questModuleId:
+            type: integer
+            column: quest_module_id
+            nullable: TRUE
+            targetEntity: QuestionnaireModules
+            inversedBy: questionnaireModuleQuestions
+            joinColumn:
+                name: quest_module_id
+                referencedColumnName: id
+                onDelete: CASCADE
+        classificationId:
+            type: integer
+            column: classification_id
+            nullable: TRUE
+            targetEntity: Classifications
+            inversedBy: questionClassifications
+            joinColumn:
+                name: classification_id
+                referencedColumnName: id
+                onDelete: CASCADE
+    lifecycleCallbacks: {  }

@@ -1,0 +1,65 @@
+{% extends 'WBQbankBundle::base.html.twig' %}
+
+{% block body %}
+
+    <span id="node-type" class="hidden">organization</span>
+
+    {{ render(controller('WBQbankBundle:Default:headerMenu', { activeButton: active_button})) }}
+
+    <div class="ui-layout-center wide-layout">
+        <div class="row">
+            <div class="col-md-12">
+               <h1>{{ 'forms.edit_organization'|trans }}</h1>
+            </div>
+        </div>
+        <div class="row forms-content">
+            <div class="col-md-12">
+
+                {{ form_start(form, { 'attr' : { 'class' : 'edit-node-form' }})}}
+
+                <input type="hidden" name="nodeId" value="{{ organizationId }}"/>
+
+                <div class="publish-button">
+                    <button type="button" class="btn btn-success {% if form.published.vars.value != true %}hidden{% endif %}">
+                        {{ 'forms.published'|trans }}
+                    </button>
+                    <button type="button" class="btn btn-default {% if form.published.vars.value == true %}hidden{% endif %}">
+                        {{ 'forms.unpublished'|trans }}
+                    </button>
+                </div>
+
+                {{ form_row(form.name, {'label': 'forms.labels.name'|trans, 'attr': {'spellcheck': 'true'}}) }}
+                {{ form_row(form.description, {'label': 'forms.labels.description'|trans, 'attr': {'spellcheck': 'true'}}) }}
+                {{ form_row(form.nickName, {'label': 'forms.labels.nickname'|trans, 'attr': {'spellcheck': 'true'}}) }}
+                {{ form_row(form.address, {'label': 'forms.labels.address'|trans, 'attr': {'spellcheck': 'true'}}) }}
+                {#{ form_row(form.areaCode, {'label': 'forms.labels.area_code'|trans}) }#}
+                {{ form_row(form.country, {'label': 'forms.labels.country'|trans, 'attr': {'spellcheck': 'true'}}) }}
+                {{ form_row(form.telephone, {'label': 'forms.labels.telephone'|trans}) }}
+                {{ form_row(form.fax, {'label': 'forms.labels.fax'|trans}) }}
+                {{ form_row(form.email, {'label': 'forms.labels.email'|trans}) }}
+                {{ form_row(form.url, {'label': 'forms.labels.url'|trans}) }}
+                {{ form_row(form.notes, {'label': 'forms.labels.notes'|trans, 'attr': {'spellcheck': 'true'}}) }}
+
+                {{ form_widget(form.published, {'attr': { 'class': 'node-published' }}) }}
+
+                <div class="save-actions">
+                    {{ form_widget(form.save, {'label': 'forms.labels.save'|trans}) }}
+                    <a class="btn btn-cancel" href="{{ path('organizations') }}">{{ 'forms.cancel'|trans }}</a>
+                    <p class="saved">{{ 'forms.saved'|trans }}</p>
+
+                    <p class="unsaved">{{ 'forms.unsaved'|trans }}</p>
+
+                    <div class="publish-button">
+                        <button type="button" class="btn btn-success {% if form.published.vars.value != true %}hidden{% endif %}">
+                            {{ 'forms.published'|trans }}
+                        </button>
+                        <button type="button" class="btn btn-default {% if form.published.vars.value == true %}hidden{% endif %}">
+                            {{ 'forms.unpublished'|trans }}
+                        </button>
+                    </div>
+                {{ form_end(form) }}
+            
+            </div>
+        </div>
+    </div>
+{% endblock %}

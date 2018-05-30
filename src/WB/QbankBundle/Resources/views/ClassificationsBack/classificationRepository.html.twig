@@ -1,0 +1,12 @@
+<span class="hidden" id="count-nodes">{{ countClassifications }}</span>
+<div id="node-repository-tree">
+        <ul id="repo-root" data-jstree='{ "opened" : true, "selected" : true }'>
+            {% for classification in classifications %}
+                {% if classification.classificationGrpRef|length %}
+                    <li class="file {% if not classification.published %}unpublished{% endif %}" data-jstree='{"type":"file"}' data-node="{{ classification.id }}" data-refgrp="{% for ref in classification.classificationGrpRef %},{{ ref.classificationGroupId.id }}{% endfor %}">{{ classification.name }}</li>
+                {% else %}
+                    <li class="file unclassified" data-jstree='{"type":"file"}' data-node="{{ classification.id }}">{{ classification.name }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+</div>

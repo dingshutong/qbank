@@ -1,0 +1,24 @@
+WB\QbankBundle\Entity\Countries:
+    type: entity
+    table: countries
+    repositoryClass: WB\QbankBundle\Entity\CountriesRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: '65'
+        iso3:
+            type: string
+            length: '3'
+
+    oneToMany:
+        users:
+            targetEntity: WB\UserBundle\Entity\User
+            mappedBy: countryId
+            cascade: ["persist"]
+    lifecycleCallbacks: {  }

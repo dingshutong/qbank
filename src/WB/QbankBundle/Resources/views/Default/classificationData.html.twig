@@ -1,0 +1,151 @@
+{{ render(controller('WBQbankBundle:ClassificationsBack:classificationBreadcrumbs', {
+'classId': classification.id,
+'public': true
+})) }}
+
+<h2>{{ classification.name }}
+    {% if lightbox %}
+        <a class="btn btn-info" href="{{ url('classifications') }}#classification/{{ classification.id }}">{{ 'actions.open'|trans }}</a>
+    {% endif %}
+</h2>
+
+{% if classification.description %}
+    <h3>{{ 'forms.labels.description'|trans }}</h3>
+    <p>{{ classification.description|nl2br }}</p>
+{% endif %}
+
+{% if classification.notes %}
+    <h3>{{ 'forms.labels.notes'|trans }}</h3>
+    <p>{{ classification.notes|nl2br }}</p>
+{% endif %}
+
+{% if classification.classificationCodes|length %}
+    <table class="table classification-codes">
+        <tr>
+            <th>{{ 'forms.labels.value'|trans }}</th>
+            <th>{{ 'forms.labels.label'|trans }}</th>
+            <th></th>
+        </tr>
+        {% for classificationCode in classification.classificationCodes %}            
+            {% if classificationCode.attachments or classificationCode.description %}
+            <tr class="collapsible-row" id="code-{{loop.index}}" data-id="{{loop.index}}">
+                <td>{{ classificationCode.value }}</td>
+                <td class="code-label">{{ classificationCode.label }}</td>
+                <td title="View description"><span class="glyphicon glyphicon-align-justify pull-right" aria-hidden="true"></span></td>
+            </tr>
+            <tr class="collapsible-row-data collapse-row" data-parent="code-{{loop.index}}" id="child-{{loop.index}}">
+                <td colspan="3">
+                    <div class="description">{{ classificationCode.description }}</div>
+                    <div class="file-attachment">
+                        {% if classificationCode.attachments %}
+                            <img class="code-attachment" src="{{ asset('uploads/resources/') }}{{classificationCode.attachments}}" />
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            {%else%}
+            <tr class="non-collapsible-row" id="code-{{loop.index}}" data-id="{{loop.index}}">
+                <td>{{ classificationCode.value }}</td>
+                <td class="code-label">{{ classificationCode.label }}</td>
+                <td></td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+{% endif %}
+
+{% if lightbox == false %}
+{% if classification.questionClassifications|length %}
+    <p>This classification is used by {{ classification.questionClassifications|length }} question(s)</p>
+
+    <table class="table">
+        <tr>
+            <th>{{ 'forms.labels.module'|trans }}</th>
+            <th>{{ 'forms.labels.question'|trans }}</th>
+            <th></th>
+        </tr>
+        {% for question in classification.questionClassifications %}
+            <tr>
+                <td><a class="related-item"
+                       href="{{ path('questionnaire_data', {id: question.questModuleId.id,questionId:question.id, lightbox:true }) }}"> {{ question.questModuleId.name }}</a>
+                </td>
+                <td><a class="related-item"
+                       href="{{ path('question_data', {id: question.id, lightbox: true}) }}">{{ question.name }}</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
+{% if concepts|length %}
+    <h3>{{ 'forms.labels.related_concepts'|trans }}:</h3>
+    <ul>
+        {% for concept in concepts %}
+            <li><a class="related-item"
+                   href="{{ path('concept_data', {id: concept.id, lightbox: true}) }}">{{ concept.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endif %}
+
+
+
+{% if organizations|length %}
+    <h3>{{ 'forms.labels.organizations'|trans }}:</h3>
+    <ul>
+        {% for organization in organizations %}
+            <li><a class="related-item"
+                   href="{{ path('organization', {id: organization.id, lightbox: true}) }}">{{ organization.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+{% if resources|length %}
+    <h3>{{ 'forms.labels.resources'|trans }}:</h3>
+    
+    {% for key,resource_type in resources %}
+       <fieldset class="resources-list">
+        <legend>{{key}}</legend>
+        {% include 'WBQbankBundle:Default:resources-list.html.twig' with {'resources': resource_type} only %}
+        </fieldset>
+    {% endfor %}
+    
+{% endif %}
+
+
+{#related sources list#}
+{% if sources is defined and sources|length %}
+    {% include 'WBQbankBundle:Default:sources.html.twig' with {'sources': sources} only %}
+{% endif %}
+
+
+<script type="text/javascript">$(document).ready(function () {
+        $("a.related-item").fancybox({type: 'ajax', autoSize: false, width: 650, height: 500});
+    });
+</script>
+
+
+
+<script  type="text/javascript">
+    jQuery(document).ready(function ($) {
+        
+        //row collapse/expand
+        $( ".classification-codes .collapsible-row" ).on( "click", function() {
+            console.log("loading..");
+            var id=$(this).attr("data-id");
+            
+            console.log(id);
+            
+            window.this_=$(this);
+            
+            //toggle body
+            $("#child-"+id).toggle();
+            $(this).toggleClass("row-active");
+        });
+    
+    });        
+</script>
+
+

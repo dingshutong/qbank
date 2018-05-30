@@ -1,0 +1,31 @@
+{% extends "WBUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+    <form action="{{ path("fos_user_security_check") }}" method="post" class="form-signin" role="form">
+
+        <h2 class="form-signin-heading">QBank Login</h2>
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+
+        <input type="text" id="username" name="_username" value="{{ last_username }}" required="required"
+               class="form-control" placeholder="Username">
+
+        <input type="password" id="password" name="_password" required="required" class="form-control"
+               placeholder="Password">
+
+        <label class="checkbox">
+            <input type="checkbox" id="remember_me" name="_remember_me"
+                   value="on"> {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
+        </label>
+
+        <input class="btn btn-lg btn-primary" type="submit" id="_submit" name="_submit"
+               value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}">
+
+        <div>
+            <a href="{{ path("fos_user_resetting_request") }}">Forgot password?</a>
+        </div>
+        {% if error %}
+            <div class="alert alert-danger">{{ error|trans({}, 'FOSUserBundle') }}</div>
+        {% endif %}
+    </form>
+{% endblock fos_user_content %}

@@ -1,0 +1,33 @@
+WB\QbankBundle\Entity\ClassificationRelSources:
+    type: entity
+    table: classification_rel_sources
+    repositoryClass: WB\QbankBundle\Entity\ClassificationRelSourcesRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        weight:
+            type: integer
+    manyToOne:
+        resourceId:
+            type: integer
+            column: resource_id
+            targetEntity: Resources
+            inversedBy: classificationRelResources
+            joinColumn:
+                name: resource_id
+                referencedColumnName: id
+                onDelete: CASCADE
+        classificationId:
+            type: integer
+            column: classification_id
+            targetEntity: Classifications
+            inversedBy: classificationRelResources
+            joinColumn:
+                name: classification_id
+                referencedColumnName: id
+                onDelete: CASCADE
+    lifecycleCallbacks: {  }

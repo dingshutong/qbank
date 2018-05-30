@@ -1,0 +1,10 @@
+<div class="visual-rep-format-1 {% if visualRepFormat != 1 %}hidden{% endif %}">
+    <input type="text" class="visual-rep-modifier"
+           value="{% if visualRepFormat == 1 and info %}{{ info.val_rep_format }}{% endif %}"
+           name="visual-rep-format-numeric"/>
+</div>
+<div class="visual-rep-format-2 {% if visualRepFormat != 2 %}hidden{% endif %}">
+    <input type="number" class="visual-rep-modifier"
+           value="{% if visualRepFormat == 2 and info %}{{ info }}{% endif %}"
+           name="visual-rep-format-text" min = "0" />
+</div>

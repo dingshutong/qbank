@@ -1,0 +1,215 @@
+//
+// Variables
+// --------------------------------------------------
+
+//== Colors
+
+$body-bg:                           #fff;
+$page-wrapper-bg:                   #f0f0f0;
+$page-wrapper-gradient:             #dddddd 0%, #ffffff 50%, #f0f0f0 100%;
+$text-color:                        #5a5a5a;
+$title-color:                       #838383;
+$section-title-color:               #fff;
+$link-color:                        #428bca;
+$link-hover-color:                  #2a6496;
+
+$container-bg:                      #fff;
+$container-shadow:                  0 1px 5px #959595;
+
+$top-menu-separator:                #dcdcdc;
+
+//main navigation
+$navigation-bg:                     #e3e3e3;
+$navigation-link-bg:                #383838;
+$navigation-link-color:             #fff;
+$navigation-link-active-bg:         $navigation-link-color;
+$navigation-link-active-color:      $navigation-link-bg;
+
+//tables
+$table-bg:                          #f6f6f6;
+$table-head-bg:                     #e5e5e5;
+$table-datatable-head-bg:           #fff;
+$table-editable-cell-bg:            #fff;
+$table-border:                      #ccc;
+$table-organization-border:         #e5e5e5;
+$table-organization-link-bg:        #84b4dc;
+$table-organization-link-active-bg: #2aabd2;
+$question-box-border:               #d7d7d7;
+$question-box-table-head-bg:        #ebebeb;
+$question-table-head-bg:            #d7d7d7;
+$question-table-row-bg:             #1489ca;
+$question-table-row-active-bg:      $question-table-row-bg;
+$question-table-row-color:          #fff;
+$question-table-data-row-bg:        #fff;
+$question-table-head-border:        #b7b7b7;
+$question-table-border:             #ddd;
+$table-row-highliht:                #5ae8e8;
+
+//search
+$front-search-border:               #e2e2e2;
+$front-search-bg:                   #f6f6f6;
+$front-search-divider:              $front-search-border;
+$search-border:                     #a9a9a9;
+
+$groups-listing-border:             $front-search-border;
+$groups-listing-bg:                 $front-search-bg;
+
+//popups - modals
+$modal-header-bg:                   #9ddeff;
+$modal-title-color:                 #000;
+$modal-title-small-color:           $modal-title-color;
+$modal-default-btn-color:           #e0e0e0;
+$modal-default-btn-active-color:    #fff;
+$modal-default-btn-border:          $modal-default-btn-color;
+$modal-tree-color:                  #000;
+$modal-data-selected-bg:            #fff;
+
+//login page
+$login-page-bg:                     #eee;
+$login-title-color:                 #444;
+
+//frontend tree
+$toolbar-tabs-border:               #d3d3d3;
+$toolbar-tabs-bg:                   $toolbar-tabs-border;
+$toolbar-tabs-active-border:        #e2e2e2;
+$toolbar-tabs-active-bg:            #f6f6f6;
+$toolbar-tabs-active-link-color:    #5a5a5a;
+
+//visual formats
+$visual-format-numeric-bg:          #ffffff;
+$visual-format-text-bg:             $visual-format-numeric-bg;
+
+//related items
+$related-items-bg:                  #e5e5e5;
+$resources-input-bg:                #eee;
+$attached-file-link-bg:             #e5e5e5;
+
+//administration sidebar and tree
+$admin-center-content:              #333;
+$admin-groups-color:                #000;
+$admin-groups-hightlight-bg:        #f5e79e;
+
+$admin-glyphicons-color:            #535353;
+$admin-glyphicons-unpub-color:      #ccc;
+$admin-button-unpub-color:          #ccc;
+$admin-glyphicons-unclass-color:    #d9534f;
+
+$admin-toolbar-bg:                  #ddd;
+$admin-toolbar-tabs-bg:             #f6f6f6;
+$admin-toolbar-tabs-active-bg:      #ddd;
+$admin-toolbar-tabs-active-color:   #333;
+$admin-toolbar-border:              #cdcdcd;
+
+$admin-search-border:               #e1e1e1;
+$admin-filters-top-border:          #fff;
+$admin-filters-bottom-border:       #c7c7c7;
+$admin-filters-bg:                  #e6e5e5;
+$admin-groups-footer-bg:            #c7c7c7;
+$admin-filters-footer-bg:           $admin-groups-footer-bg;
+$admin-filters-footer-color:        #000;
+$admin-filters-title-color:         #000;
+$admin-filters-label-color:         $admin-filters-title-color;
+
+$admin-number-of-groups-color:      #000;
+
+//administration breadcrumb
+$breadcrumb-header-bg:              #9ddeff;
+$breadcrumb-separator-color:        #c5ebff;
+$breadcrumb-link-color:             #0088cc;
+$breadcrumb-link-bg:                #f1f1f1;
+$breadcrumb-link-hover-bg:          #fff;
+$breadcrumb-endnode-color:          #000;
+$breadcrumb-modal-title-color:      #000;
+$breadcrumb-save-btn-bg:            #d9534f;
+$breadcrumb-save-btn-active-bg:     #c12e2a;
+
+//administration ui
+$ui-logo-color:                     #fff;
+$ui-logo-active-color:              $ui-logo-color;
+$ui-logo-description-color:         #848484;
+$ui-logo-description-active-color:  $ui-logo-description-color;
+$ui-layout-center-bg:               #f0f0f0;
+$ui-layout-center-border:           #fff;
+$ui-layout-resizer-bg:              #fff;
+$ui-layout-north-bg:                #373737;
+$ui-layout-west-north-bg:           #f0f0f0;
+$ui-layout-west-south-bg:           $ui-layout-west-north-bg;
+$ui-view-switch-bg:                 #fff;
+
+$ui-mainnav-link-color:             #fff;
+$ui-mainnav-link-active-color:      #555;
+$ui-mainnav-link-active-bg:         $ui-mainnav-link-color;
+
+//wide layout
+$wide-layout-color:                 #000;
+$wide-layout-title-color:           #000;
+
+//buttons and states
+$admin-save-btn-color:              #0088cc;
+$admin-save-btn-bg:                 #fff;
+$admin-save-btn-active-bg:          #ebebeb;
+$admin-cancel-btn-bg:               #e6e6e6;
+$admin-cancel-btn-active-bg:        #d9d9d9;
+$admin-saved-bg:                    #5cb85c;
+$admin-saved-color:                 #fff;
+$admin-unsaved-bg:                  #d9534f;
+$admin-publish-btn-bg:              #d9d9d9;
+$admin-publish-btn-color:           #0088cc;
+$admin-publish-btn-active-bg:       #fff;
+$row-top-btn-active-bg:             #428bca;
+$user-save-actions-btn-bg:          #28a4c9;
+$user-save-actions-btn-active-bg:   #2aabd2;
+$user-save-actions-btn-border:      $user-save-actions-btn-bg;
+$user-save-actions-link-bg:         #e0e0e0;
+$user-save-actions-link-active-bg:  #fff;
+$user-save-actions-link-border:     $user-save-actions-link-bg;
+
+//errors
+$error-color:                       #b94a48;
+$error-go-back-btn-bg:              #08c;
+$error-go-back-btn-active-bg:       #2a6496;
+$error-go-back-btn-color:           #fff;
+$form-error-border:                 #a94442;
+
+
+//== Typography
+
+$font-family-qbank:       "Open Sans", sans-serif;
+$font-family-base:        $font-family-qbank;
+
+$font-size-base:          14px;
+$font-size-large:         ceil(($font-size-base * 1.25)); // ~18px
+$font-size-small:         ceil(($font-size-base * 0.85)); // ~12px
+
+$font-size-h1:            floor(($font-size-base * 2.6));  // ~36px
+$font-size-h2:            floor(($font-size-base * 2.15)); // ~30px
+$font-size-h3:            floor(($font-size-base * 1.45)); // ~20px
+$font-size-h4:            ceil(($font-size-base * 1.25));  // ~18px
+
+//== Mixins
+
+@mixin vertical-linear-gradient($linear-gradient) {
+  background-image: -webkit-linear-gradient(top, $linear-gradient);
+  background-image:    -moz-linear-gradient(top, $linear-gradient);
+  background-image:     -ms-linear-gradient(top, $linear-gradient);
+  background-image:      -o-linear-gradient(top, $linear-gradient);
+  background-image:         linear-gradient(to bottom, $linear-gradient);
+}
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+@mixin box-shadow($shadow) {
+  -webkit-box-shadow: $shadow;
+     -moz-box-shadow: $shadow;
+          box-shadow: $shadow;
+}
+@mixin box-sizing($sizing) {
+  -webkit-box-sizing: $sizing;
+     -moz-box-sizing: $sizing;
+          box-sizing: $sizing;
+}

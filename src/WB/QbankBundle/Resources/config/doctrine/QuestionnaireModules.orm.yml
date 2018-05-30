@@ -1,0 +1,68 @@
+WB\QbankBundle\Entity\QuestionnaireModules:
+    type: entity
+    table: questionnaire_modules
+    repositoryClass: WB\QbankBundle\Entity\QuestionnaireModulesRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        alternateId:
+            type: string
+            length: '100'
+            column: alternate_id
+            nullable: TRUE
+        name:
+            type: string
+            length: '255'
+        description:
+            type: text
+            nullable: TRUE
+        qualityControl:
+            type: text
+            column: quality_control
+            nullable: TRUE
+        notes:
+            type: text
+            nullable: TRUE
+        published:
+            type: boolean
+            nullable: TRUE
+        weight:
+            type: integer
+            nullable: TRUE
+        created:
+            type: datetime
+            nullable: TRUE
+        changed:
+            type: datetime
+            nullable: TRUE
+    oneToMany:
+        indicatorRelModules:
+            targetEntity: IndicatorRelModules
+            mappedBy: moduleId
+            cascade: ["persist", "remove"]
+        questionnaireGroupRelModules:
+            targetEntity: QuestionnaireGroupRelModules
+            mappedBy: questModuleId
+            cascade: ["persist", "remove"]
+        resourcesRelModules:
+            targetEntity: QuestionnaireModulesRelResources
+            mappedBy: questModuleId
+            cascade: ["persist", "remove"]
+        questionnaireModuleQuestions:
+            orderBy: { 'weight': 'ASC' }
+            targetEntity: QuestionnaireModuleQuestions
+            mappedBy: questModuleId
+            cascade: ["persist", "remove"]
+        questionnaireModuleResources:
+            targetEntity: QuestionnaireModuleResources
+            mappedBy: questModuleId
+            cascade: ["persist", "remove"]
+        sourcesRelModules:
+            targetEntity: QuestionnaireModulesRelSources
+            mappedBy: questModuleId
+            cascade: ["persist", "remove"]
+    lifecycleCallbacks: {  }

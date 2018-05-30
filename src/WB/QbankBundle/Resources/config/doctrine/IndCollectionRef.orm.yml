@@ -1,0 +1,32 @@
+WB\QbankBundle\Entity\IndCollectionRef:
+    type: entity
+    table: ind_collection_ref
+    repositoryClass: WB\QbankBundle\Entity\IndCollectionRefRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        weight:
+            type: integer
+            nullable: TRUE
+    manyToOne:
+        indCollId:
+            type: integer
+            targetEntity: IndicatorCollections
+            inversedBy: indicatorCollRef
+            joinColumn:
+                name: ind_coll_id
+                referencedColumnName: id
+                onDelete: CASCADE
+        indId:
+            type: integer
+            targetEntity: Indicators
+            inversedBy: indicatorCollRef
+            joinColumn:
+                name: ind_id
+                referencedColumnName: id
+                onDelete: CASCADE
+    lifecycleCallbacks: {  }

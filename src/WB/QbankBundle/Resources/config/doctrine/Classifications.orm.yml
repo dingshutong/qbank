@@ -1,0 +1,85 @@
+WB\QbankBundle\Entity\Classifications:
+    type: entity
+    table: classifications
+    repositoryClass: WB\QbankBundle\Entity\ClassificationsRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        alternateId:
+            type: string
+            length: '100'
+            column: alternate_id
+            nullable: TRUE
+        name:
+            type: string
+            length: '255'
+        description:
+            type: text
+            nullable: TRUE
+        valRepFormat:
+            type: text
+            column: val_rep_format
+            nullable: TRUE
+        vrfSyntax:
+            type: text
+            column: vrf_syntax
+            nullable: TRUE
+        notes:
+            type: text
+            nullable: TRUE
+        published:
+            type: boolean
+            nullable: TRUE
+        weight:
+            type: integer
+            nullable: TRUE
+        created:
+            type: datetime
+            nullable: TRUE
+        changed:
+            type: datetime
+            nullable: TRUE
+    oneToMany:
+        classificationCodes:
+            orderBy: { 'weight': 'ASC' }
+            targetEntity: ClassificationCodes
+            mappedBy: classificationId
+            cascade: ["persist", "remove"]
+        classificationGrpRef:
+            targetEntity: ClassificationGrpRef
+            mappedBy: classificationId
+            cascade: ["persist", "remove"]
+        indicatorRelClassifications:
+            orderBy: { 'weight': 'ASC' }
+            targetEntity: IndicatorRelClassifications
+            mappedBy: classificationId
+            cascade: ["persist", "remove"]
+        classificationRelResources:
+            orderBy: { 'weight': 'ASC' }
+            targetEntity: ClassificationRelResources
+            mappedBy: classificationId
+            cascade: ["persist", "remove"]
+        classificationRelSources:
+            orderBy: { 'weight': 'ASC' }
+            targetEntity: ClassificationRelSources
+            mappedBy: classificationId
+            cascade: ["persist", "remove"]    
+        classificationRelCustodians:
+            orderBy: { 'weight': 'ASC' }
+            targetEntity: ClassificationRelCustodians
+            mappedBy: classificationId
+            cascade: ["persist", "remove"]
+        classificationRelTerms:
+            orderBy: { 'weight': 'ASC' }
+            targetEntity: ClassificationRelTerms
+            mappedBy: classificationId
+            cascade: ["persist", "remove"]
+        questionClassifications:
+            targetEntity: QuestionnaireModuleQuestions
+            mappedBy: classificationId
+            cascade: ["persist", "remove"]
+    lifecycleCallbacks: {  }

@@ -1,0 +1,11 @@
+{% block frontHeaderMenu %}
+
+    <ul class="navigation">
+        <li class="first{% if active_button == constant('FrontIndex', buttons) %} active{% endif %}"><a href="{{ path('wb_qbank_homepage') }}">{{ 'strings.home'|trans }}</a></li>
+        <li {% if active_button == constant('FrontIndicators', buttons) %}class="active"{% endif %}><a class="section" href="{{ path('indicators') }}">{{ 'strings.indicators'|trans }}</a></li>
+        <li {% if active_button == constant('FrontConcepts', buttons) %}class="active"{% endif %}><a class="section"  href="{{ path('concepts') }}">{{ 'strings.concepts'|trans }}</a></li>
+        <li {% if active_button == constant('FrontClassifications', buttons) %}class="active"{% endif %}><a class="section"  href="{{ path('classifications') }}">{{ 'strings.classifications'|trans }}</a></li>
+        <li {% if active_button == constant('FrontQuestionnaires', buttons) %}class="active"{% endif %}><a class="section"  href="{{ path('questionnaires') }}">{{ 'strings.questionnaires'|trans }}</a></li>
+    </ul>
+
+{% endblock %}

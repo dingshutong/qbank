@@ -1,0 +1,38 @@
+WB\QbankBundle\Entity\TermGroups:
+    type: entity
+    table: term_groups
+    repositoryClass: WB\QbankBundle\Entity\TermGroupsRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        alternateId:
+            type: string
+            length: '100'
+            column: alternate_id
+            nullable: TRUE
+        name:
+            type: string
+            length: '255'
+        description:
+            type: text
+            nullable: TRUE
+        pid:
+            type: integer
+            nullable: TRUE
+        weight:
+            type: integer
+            nullable: TRUE
+        published:
+            type: boolean
+            nullable: TRUE
+    oneToMany:
+        termGrpRef:
+            targetEntity: TermGrpRef
+            mappedBy: termGroupId
+            cascade: ["persist", "remove"]
+
+    lifecycleCallbacks: {  }

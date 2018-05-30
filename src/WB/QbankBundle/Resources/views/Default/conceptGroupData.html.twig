@@ -1,0 +1,39 @@
+{{ render(controller('WBQbankBundle:ConceptsBack:conceptGroupBreadcrumb', {
+    'grpId': group.id,
+    'public': true
+})) }}
+
+<h2>{{ group.name }}</h2>
+<p>{{ group.description|nl2br }}</p>
+
+{% if concepts %}
+    <ul class="nodes-for-group">
+        {% for concept in concepts %}
+            {% if concept.published %}
+                <li data-node="{{ concept.id }}"><a href="#">{{ concept.name }}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+{% if childGroupsTree %}
+    {% for childGroup in childGroupsTree %}
+        {% if (childGroup.published) and (childGroup.concepts | length > 0 ) %}
+            <h3><span class="glyphicon glyphicon-folder-open"></span>  {{ childGroup.name }}</h3>
+            <p>{{ childGroup.desc|nl2br }}</p>
+
+            {% if childGroup.concepts %}
+                <h4>{{ 'strings.related_concepts' | trans }}</h4>
+                <ul class="nodes-for-group">
+                    {% for concept in childGroup.concepts %}
+                        <li data-node="{{ concept.termId }}"><a href="#">{{ concept.termName }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endif %}
+
+
+    {% endfor %}
+{% endif %}
+

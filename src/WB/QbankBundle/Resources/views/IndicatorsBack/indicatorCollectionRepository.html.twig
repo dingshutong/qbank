@@ -1,0 +1,12 @@
+<span class="hidden" id="count-nodes">{{ countIndicators }}</span>
+<div id="node-repository-tree">
+    <ul id="repo-root" data-jstree='{ "opened" : true, "selected" : true }'>
+        {% for indicator in indicators %}
+            {% if indicator.indicatorCollRef|length %}
+                <li class="file" data-jstree='{"type":"file"}' data-node="{{ indicator.id }}" data-refgrp="{% for ref in indicator.indicatorCollRef %},{{ ref.indCollId.id }}{% endfor %}">{{ indicator.name }}</li>
+            {% else %}
+                <li class="file unclassified" data-jstree='{"type":"file"}' data-node="{{ indicator.id }}">{{ indicator.name }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>

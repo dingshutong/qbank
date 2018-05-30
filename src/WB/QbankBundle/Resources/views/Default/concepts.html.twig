@@ -1,0 +1,59 @@
+{% extends 'WBQbankBundle::base-front.html.twig' %}
+
+{% block body %}
+
+    <span id="node-type" class="hidden">concept</span>
+
+    <div class="container front-container">
+
+        {{ render(controller('WBQbankBundle:Default:frontHeaderMenu', { activeButton: active_button})) }}
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="groups-listing-container">
+                    <ul class="controls">
+                        <li class="ctrl1 active">
+                            <a class="show-groups" href="#" title="Groups">
+                                <span class="glyphicon glyphicon-th-large"></span>
+                                {{ 'strings.groups'|trans }}
+                            </a>
+                        </li>
+                        <li class="ctrl3">
+                            <a class="show-list" href="#" title="List">
+                                <span class="glyphicon glyphicon-th-list"></span>
+                                {{ 'strings.list'|trans }}
+                            </a>
+                        </li>
+                    </ul>
+                    <form class="search-form search-form-front" action="">
+                        <div>
+                            <input type="text" value="{{ app.request.query.get('q') }}"/>
+                            <button type="submit">{{ 'forms.search'|trans }}</button>
+                            <a href="#">{{ 'forms.reset'|trans }}</a>
+                        </div>
+                        <div class="files-count">
+                            <span>0</span> {{ 'strings.concept'|trans }}(s)
+                        </div>
+                    </form>
+                    <img class="ajax-loader" src="{{ asset('bundles/wbqbank/images/ajax-loader-2.gif') }}" alt="Loading...">
+                    <div class="groups-listing">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="content-show-wrap">
+                    <img class="ajax-loader" src="{{ asset('bundles/wbqbank/images/ajax-loader-2.gif') }}" alt="Loading...">
+                    <div class="content-show">
+                        <img src="{{ asset('bundles/wbqbank/images/top-concepts.png') }}" alt="concepts" />
+                        <h2 class="section-header">{{ 'strings.concepts'|trans }}</h2>
+                        <p>{{ 'text.text_conc2'|trans }}</p>
+                        <p>{{ 'text.text_conc3'|trans }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

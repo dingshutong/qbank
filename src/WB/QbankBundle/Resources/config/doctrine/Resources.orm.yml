@@ -1,0 +1,116 @@
+WB\QbankBundle\Entity\Resources:
+    type: entity
+    table: resources
+    repositoryClass: WB\QbankBundle\Entity\ResourcesRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        alternateId:
+            type: string
+            length: '100'
+            column: alternate_id
+            nullable: TRUE
+        description:
+            type: text
+            nullable: TRUE
+        title:
+            type: string
+            length: '300'
+            nullable: FALSE
+        subtitle:
+            type: text
+            nullable: true
+        creator:
+            type: string
+            length: '300'
+            nullable: TRUE
+        alternateTitle:
+            type: string
+            length: '100'
+            column: alternate_title
+            nullable: TRUE
+        publisher:
+            type: text
+            nullable: TRUE
+        contributor:
+            type: text
+            nullable: TRUE
+        pubDate:
+            type: text
+            column: pub_date
+            nullable: TRUE
+        language:
+            type: text
+            nullable: TRUE
+        intIdentifier:
+            type: text
+            column: int_identifier
+            nullable: TRUE
+        copyright:
+            type: text
+            nullable: TRUE
+        url:
+            type: text
+            nullable: TRUE
+        published:
+            type: boolean
+            nullable: TRUE
+        created:
+            type: datetime
+            nullable: TRUE
+        changed:
+            type: datetime
+            nullable: TRUE
+        filename:
+            type: string
+            nullable: TRUE
+        filesize:
+            type: string
+            nullable: TRUE
+        dateAccessed:
+            type: integer
+            column: date_accessed
+            nullable: TRUE
+    oneToMany:
+        classificationRelResources:
+            targetEntity: ClassificationRelResources
+            mappedBy: resourceId
+            cascade: ["persist", "remove"]
+        indicatorRelResources:
+            targetEntity: IndicatorRelResources
+            mappedBy: resourceId
+            cascade: ["persist", "remove"]
+        indicatorRelSources:
+            targetEntity: IndicatorRelSources
+            mappedBy: resourceId
+            cascade: ["persist", "remove"]    
+        termRelResources:
+            targetEntity: TermRelResources
+            mappedBy: resourceId
+            cascade: ["persist", "remove"]
+        termRelSources:
+            targetEntity: TermRelSources
+            mappedBy: resourceId
+            cascade: ["persist", "remove"]
+        questionnaireGroupRelResources:
+            targetEntity: QuestionnaireGroupRelResources
+            mappedBy: resourceId
+            cascade: ["persist", "remove"]
+        questionnaireModuleRelResources:
+            targetEntity: QuestionnaireModulesRelResources
+            mappedBy: resourceId
+            cascade: ["persist", "remove"]
+    manyToOne:
+        docType:
+            type: integer
+            targetEntity: WB\QbankBundle\Entity\DocTypes
+            column: doc_type
+            inversedBy: resources
+            joinColumn:
+                name: doc_type
+                referencedColumnName: id
+    lifecycleCallbacks: {  }

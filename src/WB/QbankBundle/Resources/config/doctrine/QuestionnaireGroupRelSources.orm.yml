@@ -1,0 +1,34 @@
+WB\QbankBundle\Entity\QuestionnaireGroupRelSources:
+    type: entity
+    table: questionnaire_group_rel_sources
+    repositoryClass: WB\QbankBundle\Entity\QuestionnaireGroupRelSourcesRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        weight:
+            type: integer
+            nullable: TRUE
+    manyToOne:
+        questGroupId:
+            type: integer
+            column: quest_group_id
+            targetEntity: QuestionnaireGroups
+            inversedBy: questionnaireGroupRelSources
+            joinColumn:
+                name: quest_group_id
+                referencedColumnName: id
+                onDelete: CASCADE
+        resourceId:
+            type: integer
+            column: resource_id
+            targetEntity: Resources
+            inversedBy: questionnaireGroupRelSources
+            joinColumn:
+                name: resource_id
+                referencedColumnName: id
+                onDelete: CASCADE
+    lifecycleCallbacks: {  }

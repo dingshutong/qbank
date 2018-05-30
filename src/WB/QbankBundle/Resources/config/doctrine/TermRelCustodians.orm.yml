@@ -1,0 +1,34 @@
+WB\QbankBundle\Entity\TermRelCustodians:
+    type: entity
+    table: term_rel_custodians
+    repositoryClass: WB\QbankBundle\Entity\TermRelCustodiansRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        weight:
+            type: integer
+            nullable: TRUE
+    manyToOne:
+       organizationId:
+          type: integer
+          column: organization_id
+          targetEntity: Organizations
+          inversedBy: termRelCustodians
+          joinColumn:
+              name: organization_id
+              referencedColumnName: id
+              onDelete: CASCADE
+       termId:
+          type: integer
+          column: term_id
+          targetEntity: Terms
+          inversedBy: termRelCustodians
+          joinColumn:
+              name: term_id
+              referencedColumnName: id
+              onDelete: CASCADE
+    lifecycleCallbacks: {  }

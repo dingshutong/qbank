@@ -1,0 +1,34 @@
+WB\QbankBundle\Entity\ClassificationRelTerms:
+    type: entity
+    table: classification_rel_terms
+    repositoryClass: WB\QbankBundle\Entity\ClassificationRelTermsRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        weight:
+            type: integer
+            nullable: TRUE
+    manyToOne:
+        classificationId:
+            type: integer
+            column: classification_id
+            targetEntity: Classifications
+            inversedBy: classificationRelTerms
+            joinColumn:
+                name: classification_id
+                referencedColumnName: id
+                onDelete: CASCADE
+        termId:
+            type: integer
+            column: term_id
+            targetEntity: Terms
+            inversedBy: classificationRelTerms
+            joinColumn:
+                name: term_id
+                referencedColumnName: id
+                onDelete: CASCADE
+    lifecycleCallbacks: {  }
